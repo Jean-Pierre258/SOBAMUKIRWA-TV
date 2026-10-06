@@ -1,0 +1,3684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>SOBANUKIRWA TV — Admin Dashboard</title>
+
+  <meta name="description"
+        content="SOBANUKIRWA TV administration dashboard">
+
+  <style>
+    :root {
+      --primary: #0b5ed7;
+      --primary-dark: #084298;
+      --secondary: #198754;
+      --danger: #dc3545;
+      --warning: #ffc107;
+      --dark: #132238;
+      --muted: #6c757d;
+      --light: #f5f7fb;
+      --white: #ffffff;
+      --border: #e2e8f0;
+      --shadow: 0 8px 25px rgba(0,0,0,.08);
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+      background: var(--light);
+      color: #1f2937;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* =========================
+       LOGIN
+    ========================= */
+
+    #loginScreen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background:
+        linear-gradient(
+          135deg,
+          #0b5ed7 0%,
+          #093f91 50%,
+          #061d40 100%
+        );
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 430px;
+      background: rgba(255,255,255,.98);
+      border-radius: 24px;
+      padding: 36px;
+      box-shadow: 0 30px 80px rgba(0,0,0,.25);
+    }
+
+    .login-logo {
+      width: 78px;
+      height: 78px;
+      margin: 0 auto 15px;
+      border-radius: 22px;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: 900;
+      box-shadow: var(--shadow);
+    }
+
+    .login-card h1 {
+      text-align: center;
+      font-size: 25px;
+      color: var(--dark);
+      margin-bottom: 7px;
+    }
+
+    .login-card .subtitle {
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 7px;
+      font-size: 14px;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      padding: 12px 14px;
+      outline: none;
+      background: white;
+      transition: .2s;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(11,94,215,.10);
+    }
+
+    .field textarea {
+      min-height: 105px;
+      resize: vertical;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 10px;
+      padding: 11px 16px;
+      font-weight: 750;
+      transition: .2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: #e9eef8;
+      color: #26364d;
+    }
+
+    .btn-success {
+      background: var(--secondary);
+      color: white;
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+    }
+
+    .btn-warning {
+      background: var(--warning);
+      color: #212529;
+    }
+
+    .btn-block {
+      width: 100%;
+    }
+
+    .login-error {
+      background: #fdecec;
+      color: #b42318;
+      border: 1px solid #f5c2c7;
+      padding: 10px 12px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      font-size: 14px;
+      display: none;
+    }
+
+    /* =========================
+       APP
+    ========================= */
+
+    #app {
+      min-height: 100vh;
+    }
+
+    .topbar {
+      height: 72px;
+      background: var(--dark);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 24px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 5px 20px rgba(0,0,0,.15);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-icon {
+      width: 45px;
+      height: 45px;
+      border-radius: 13px;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+
+    .brand-text {
+      min-width: 0;
+    }
+
+    .brand-text strong {
+      display: block;
+      font-size: 17px;
+      white-space: nowrap;
+    }
+
+    .brand-text span {
+      display: block;
+      font-size: 11px;
+      opacity: .75;
+      margin-top: 2px;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .top-actions .btn {
+      padding: 9px 12px;
+    }
+
+    .menu-button {
+      display: none;
+      border: 0;
+      background: transparent;
+      color: white;
+      font-size: 25px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      min-height: calc(100vh - 72px);
+    }
+
+    /* =========================
+       SIDEBAR
+    ========================= */
+
+    .sidebar {
+      background: white;
+      border-right: 1px solid var(--border);
+      padding: 18px 13px;
+      position: sticky;
+      top: 72px;
+      height: calc(100vh - 72px);
+      overflow-y: auto;
+    }
+
+    .sidebar-section {
+      margin-bottom: 22px;
+    }
+
+    .sidebar-title {
+      text-transform: uppercase;
+      font-size: 10px;
+      color: #93a0b0;
+      font-weight: 800;
+      padding: 0 10px 8px;
+      letter-spacing: .08em;
+    }
+
+    .side-link {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      padding: 11px 12px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      color: #344054;
+      font-weight: 650;
+      text-align: left;
+      margin-bottom: 3px;
+    }
+
+    .side-link:hover,
+    .side-link.active {
+      background: #eaf2ff;
+      color: var(--primary);
+    }
+
+    .side-icon {
+      width: 25px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    .main {
+      min-width: 0;
+      padding: 24px;
+    }
+
+    .page {
+      display: none;
+      animation: fadeIn .2s ease;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .page-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .page-heading h2 {
+      font-size: 28px;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+
+    .page-heading p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* =========================
+       STATS
+    ========================= */
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 15px;
+      margin-bottom: 22px;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .stat-info span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .stat-info strong {
+      font-size: 30px;
+      line-height: 1;
+      color: var(--dark);
+    }
+
+    .stat-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #edf4ff;
+      color: var(--primary);
+      font-size: 21px;
+      font-weight: 900;
+    }
+
+    /* =========================
+       CARDS
+    ========================= */
+
+    .card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .card-header h3 {
+      font-size: 17px;
+      color: var(--dark);
+    }
+
+    .card-header p {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    /* =========================
+       TABLE
+    ========================= */
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .toolbar input,
+    .toolbar select {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: white;
+      outline: none;
+    }
+
+    .toolbar input {
+      min-width: 230px;
+      flex: 1;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 950px;
+    }
+
+    th {
+      background: #f7f9fc;
+      color: #526071;
+      text-align: left;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .03em;
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 13px 12px;
+      border-bottom: 1px solid #edf0f4;
+      vertical-align: top;
+      font-size: 13px;
+    }
+
+    tr:hover td {
+      background: #fbfcfe;
+    }
+
+    .title-cell {
+      max-width: 280px;
+    }
+
+    .title-cell strong {
+      display: block;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+
+    .title-cell small {
+      color: var(--muted);
+      display: block;
+      line-height: 1.4;
+    }
+
+    /* =========================
+       BADGES
+    ========================= */
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 5px 9px;
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .badge-open {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .badge-closed {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .badge-notstarted {
+      background: #fff7d6;
+      color: #8a5a00;
+    }
+
+    .badge-news {
+      background: #e6f0ff;
+      color: #164e9b;
+    }
+
+    .badge-job {
+      background: #e6f8ef;
+      color: #0c6b3f;
+    }
+
+    .badge-scholarship {
+      background: #f1e9ff;
+      color: #6532a8;
+    }
+
+    .badge-event {
+      background: #fff0e7;
+      color: #9a4312;
+    }
+
+    /* =========================
+       FORM
+    ========================= */
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 15px;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .help-text {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 5px;
+      line-height: 1.5;
+    }
+
+    .required {
+      color: var(--danger);
+    }
+
+    /* =========================
+       STATUS
+    ========================= */
+
+    #toast {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 2000;
+      max-width: 360px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      color: white;
+      background: #233044;
+      box-shadow: 0 15px 40px rgba(0,0,0,.18);
+      display: none;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    #toast.success {
+      background: #157347;
+    }
+
+    #toast.error {
+      background: #b02a37;
+    }
+
+    #loading {
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,.75);
+      backdrop-filter: blur(3px);
+      z-index: 3000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .loading-card {
+      background: white;
+      border-radius: 15px;
+      padding: 23px 28px;
+      box-shadow: 0 15px 50px rgba(0,0,0,.15);
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 3px solid #e8eef8;
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      display: inline-block;
+      animation: spin .8s linear infinite;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* =========================
+       EMPTY
+    ========================= */
+
+    .empty {
+      padding: 45px 20px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .empty-icon {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+    /* =========================
+       SETTINGS
+    ========================= */
+
+    .connection-box {
+      border-radius: 12px;
+      padding: 13px 15px;
+      margin-bottom: 18px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .connection-box.connected {
+      background: #eaf8ef;
+      color: #136c3b;
+      border: 1px solid #b6e2c6;
+    }
+
+    .connection-box.disconnected {
+      background: #fff4e5;
+      color: #885200;
+      border: 1px solid #f2d299;
+    }
+
+    .api-display {
+      word-break: break-all;
+      font-family: Consolas, monospace;
+      font-size: 11px;
+      margin-top: 6px;
+    }
+
+    /* =========================
+       MODAL
+    ========================= */
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(8, 22, 40, .58);
+      z-index: 2500;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 750px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: white;
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 25px 80px rgba(0,0,0,.25);
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 1100px) {
+      .stats {
+        grid-template-columns: repeat(2, minmax(0,1fr));
+      }
+    }
+
+    @media (max-width: 850px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: fixed;
+        left: -270px;
+        top: 72px;
+        width: 250px;
+        z-index: 1500;
+        transition: .25s;
+        box-shadow: 8px 0 30px rgba(0,0,0,.15);
+      }
+
+      .sidebar.show {
+        left: 0;
+      }
+
+      .menu-button {
+        display: block;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-group.full {
+        grid-column: auto;
+      }
+
+      .main {
+        padding: 17px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .topbar {
+        padding: 0 12px;
+      }
+
+      .brand-text span {
+        display: none;
+      }
+
+      .top-actions .home-btn {
+        display: none;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .page-heading {
+        flex-direction: column;
+      }
+
+      .toolbar input {
+        min-width: 100%;
+      }
+
+      .card {
+        padding: 15px;
+      }
+
+      .login-card {
+        padding: 27px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================================================
+       LOGIN SCREEN
+  ========================================================== -->
+
+  <section id="loginScreen">
+    <div class="login-card">
+
+      <div class="login-logo">STV</div>
+
+      <h1>SOBANUKIRWA TV</h1>
+
+      <p class="subtitle">
+        Administration Dashboard
+      </p>
+
+      <div id="loginError" class="login-error"></div>
+
+      <div class="field">
+        <label for="loginUsername">Username</label>
+        <input
+          type="text"
+          id="loginUsername"
+          placeholder="Enter username"
+          autocomplete="username"
+        >
+      </div>
+
+      <div class="field">
+        <label for="loginPassword">Password / PIN</label>
+        <input
+          type="password"
+          id="loginPassword"
+          placeholder="Enter password"
+          autocomplete="current-password"
+        >
+      </div>
+
+      <button
+        class="btn btn-primary btn-block"
+        onclick="login()"
+      >
+        Sign In
+      </button>
+
+    </div>
+  </section>
+
+
+  <!-- =========================================================
+       ADMIN APP
+  ========================================================== -->
+
+  <div id="app" class="hidden">
+
+    <!-- TOPBAR -->
+
+    <header class="topbar">
+
+      <div class="brand">
+
+        <button
+          class="menu-button"
+          onclick="toggleSidebar()"
+          aria-label="Menu"
+        >
+          ☰
+        </button>
+
+        <div class="brand-icon">
+          STV
+        </div>
+
+        <div class="brand-text">
+          <strong>SOBANUKIRWA TV</strong>
+          <span>Content Management System</span>
+        </div>
+
+      </div>
+
+      <div class="top-actions">
+
+        <button
+          class="btn btn-secondary home-btn"
+          onclick="goHome()"
+        >
+          🏠 Home
+        </button>
+
+        <button
+          class="btn btn-danger"
+          onclick="logout()"
+        >
+          Logout
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <div class="layout">
+
+      <!-- SIDEBAR -->
+
+      <aside id="sidebar" class="sidebar">
+
+        <div class="sidebar-section">
+
+          <div class="sidebar-title">
+            Dashboard
+          </div>
+
+          <button
+            class="side-link active"
+            data-page="dashboardPage"
+            onclick="showPage('dashboardPage', this)"
+          >
+            <span class="side-icon">📊</span>
+            Dashboard
+          </button>
+
+        </div>
+
+
+        <div class="sidebar-section">
+
+          <div class="sidebar-title">
+            Content
+          </div>
+
+          <button
+            class="side-link"
+            data-page="managePage"
+            onclick="showPage('managePage', this)"
+          >
+            <span class="side-icon">📰</span>
+            Manage Content
+          </button>
+
+          <button
+            class="side-link"
+            data-page="addPage"
+            onclick="showPage('addPage', this); resetForm()"
+          >
+            <span class="side-icon">➕</span>
+            Add Content
+          </button>
+
+        </div>
+
+
+        <div class="sidebar-section">
+
+          <div class="sidebar-title">
+            Website
+          </div>
+
+          <button
+            class="side-link"
+            onclick="goHome()"
+          >
+            <span class="side-icon">🌐</span>
+            Open Website
+          </button>
+
+          <button
+            class="side-link"
+            onclick="refreshData()"
+          >
+            <span class="side-icon">🔄</span>
+            Refresh Data
+          </button>
+
+        </div>
+
+
+        <div class="sidebar-section">
+
+          <div class="sidebar-title">
+            System
+          </div>
+
+          <button
+            class="side-link"
+            data-page="settingsPage"
+            onclick="showPage('settingsPage', this)"
+          >
+            <span class="side-icon">⚙️</span>
+            Settings
+          </button>
+
+        </div>
+
+      </aside>
+
+
+      <!-- MAIN -->
+
+      <main class="main">
+
+        <!-- ===================================================
+             DASHBOARD PAGE
+        ==================================================== -->
+
+        <section id="dashboardPage" class="page active">
+
+          <div class="page-heading">
+
+            <div>
+              <h2>Dashboard</h2>
+
+              <p>
+                Manage SOBANUKIRWA TV content from one place.
+              </p>
+            </div>
+
+            <button
+              class="btn btn-primary"
+              onclick="refreshData()"
+            >
+              🔄 Refresh
+            </button>
+
+          </div>
+
+
+          <div class="stats">
+
+            <div class="stat-card">
+
+              <div class="stat-info">
+                <span>Total Content</span>
+                <strong id="totalCount">0</strong>
+              </div>
+
+              <div class="stat-icon">
+                📋
+              </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+              <div class="stat-info">
+                <span>News</span>
+                <strong id="newsCount">0</strong>
+              </div>
+
+              <div class="stat-icon">
+                📰
+              </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+              <div class="stat-info">
+                <span>Jobs</span>
+                <strong id="jobsCount">0</strong>
+              </div>
+
+              <div class="stat-icon">
+                💼
+              </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+              <div class="stat-info">
+                <span>Open Opportunities</span>
+                <strong id="openCount">0</strong>
+              </div>
+
+              <div class="stat-icon">
+                ✅
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="card">
+
+            <div class="card-header">
+
+              <div>
+                <h3>Recent Content</h3>
+
+                <p>
+                  Latest items stored in your Google Sheet
+                </p>
+              </div>
+
+              <button
+                class="btn btn-secondary"
+                onclick="showPage('managePage')"
+              >
+                View All
+              </button>
+
+            </div>
+
+            <div class="table-wrapper">
+
+              <table>
+
+                <thead>
+
+                  <tr>
+                    <th>Type</th>
+                    <th>Title</th>
+                    <th>Start</th>
+                    <th>Deadline</th>
+                    <th>Status</th>
+                  </tr>
+
+                </thead>
+
+                <tbody id="recentTableBody"></tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ===================================================
+             MANAGE PAGE
+        ==================================================== -->
+
+        <section id="managePage" class="page">
+
+          <div class="page-heading">
+
+            <div>
+              <h2>Manage Content</h2>
+
+              <p>
+                Search, edit and delete website content.
+              </p>
+            </div>
+
+            <button
+              class="btn btn-primary"
+              onclick="showPage('addPage'); resetForm()"
+            >
+              + Add New
+            </button>
+
+          </div>
+
+
+          <div class="card">
+
+            <div class="toolbar">
+
+              <input
+                type="search"
+                id="searchInput"
+                placeholder="Search title, category, description..."
+                oninput="filterContent()"
+              >
+
+              <select
+                id="typeFilter"
+                onchange="filterContent()"
+              >
+                <option value="">All Types</option>
+                <option value="News">News</option>
+                <option value="Jobs">Jobs</option>
+                <option value="Scholarships">Scholarships</option>
+                <option value="Events">Events</option>
+              </select>
+
+              <select
+                id="statusFilter"
+                onchange="filterContent()"
+              >
+                <option value="">All Statuses</option>
+                <option value="NOT STARTED">Not Started</option>
+                <option value="OPEN NOW">Open Now</option>
+                <option value="CLOSED">Closed</option>
+              </select>
+
+              <button
+                class="btn btn-secondary"
+                onclick="clearFilters()"
+              >
+                Clear
+              </button>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+              <table>
+
+                <thead>
+
+                  <tr>
+                    <th>Type</th>
+                    <th>Title</th>
+                    <th>Start Time</th>
+                    <th>Deadline</th>
+                    <th>Status</th>
+                    <th>Application Link</th>
+                    <th>Actions</th>
+                  </tr>
+
+                </thead>
+
+                <tbody id="contentTableBody"></tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ===================================================
+             ADD / EDIT PAGE
+        ==================================================== -->
+
+        <section id="addPage" class="page">
+
+          <div class="page-heading">
+
+            <div>
+              <h2 id="formPageTitle">Add New Content</h2>
+
+              <p>
+                Publish News, Jobs, Scholarships or Events.
+              </p>
+            </div>
+
+          </div>
+
+
+          <div class="card">
+
+            <form id="contentForm" onsubmit="saveContent(event)">
+
+              <input
+                type="hidden"
+                id="editId"
+              >
+
+
+              <div class="form-grid">
+
+                <!-- TYPE -->
+
+                <div class="form-group">
+
+                  <div class="field">
+
+                    <label for="contentType">
+                      Content Type <span class="required">*</span>
+                    </label>
+
+                    <select id="contentType" required>
+
+                      <option value="">
+                        Select Type
+                      </option>
+
+                      <option value="News">
+                        News
+                      </option>
+
+                      <option value="Jobs">
+                        Jobs
+                      </option>
+
+                      <option value="Scholarships">
+                        Scholarships
+                      </option>
+
+                      <option value="Events">
+                        Events
+                      </option>
+
+                    </select>
+
+                  </div>
+
+                </div>
+
+
+                <!-- CATEGORY -->
+
+                <div class="form-group">
+
+                  <div class="field">
+
+                    <label for="category">
+                      Category
+                    </label>
+
+                    <input
+                      type="text"
+                      id="category"
+                      placeholder="e.g. Education, Rwanda, Business"
+                    >
+
+                  </div>
+
+                </div>
+
+
+                <!-- TITLE -->
+
+                <div class="form-group full">
+
+                  <div class="field">
+
+                    <label for="title">
+                      Title <span class="required">*</span>
+                    </label>
+
+                    <input
+                      type="text"
+                      id="title"
+                      placeholder="Enter article or opportunity title"
+                      required
+                    >
+
+                  </div>
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group full">
+
+                  <div class="field">
+
+                    <label for="description">
+                      Description / Summary
+                    </label>
+
+                    <textarea
+                      id="description"
+                      placeholder="Enter the main description or summary..."
+                    ></textarea>
+
+                  </div>
+
+                </div>
+
+
+                <!-- START -->
+
+                <div class="form-group">
+
+                  <div class="field">
+
+                    <label for="startTime">
+                      Start Time
+                    </label>
+
+                    <input
+                      type="datetime-local"
+                      id="startTime"
+                    >
+
+                    <div class="help-text">
+                      Leave empty when the content does not have a start time.
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+                <!-- DEADLINE -->
+
+                <div class="form-group">
+
+                  <div class="field">
+
+                    <label for="deadline">
+                      Deadline
+                    </label>
+
+                    <input
+                      type="datetime-local"
+                      id="deadline"
+                    >
+
+                    <div class="help-text">
+                      The website automatically calculates the status.
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+                <!-- APPLICATION LINK -->
+
+                <div class="form-group full">
+
+                  <div class="field">
+
+                    <label for="applicationLink">
+                      Application / Read More Link
+                    </label>
+
+                    <input
+                      type="url"
+                      id="applicationLink"
+                      placeholder="https://example.com/application"
+                    >
+
+                  </div>
+
+                </div>
+
+
+                <!-- IMAGE -->
+
+                <div class="form-group full">
+
+                  <div class="field">
+
+                    <label for="imageUrl">
+                      Image URL
+                    </label>
+
+                    <input
+                      type="url"
+                      id="imageUrl"
+                      placeholder="https://example.com/image.jpg"
+                    >
+
+                    <div class="help-text">
+                      Optional. Use a public image URL.
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+                <!-- SOURCE -->
+
+                <div class="form-group">
+
+                  <div class="field">
+
+                    <label for="source">
+                      Source
+                    </label>
+
+                    <input
+                      type="text"
+                      id="source"
+                      placeholder="e.g. SOBANUKIRWA TV, Official Website"
+                    >
+
+                  </div>
+
+                </div>
+
+
+                <!-- FEATURED -->
+
+                <div class="form-group">
+
+                  <div class="field">
+
+                    <label for="featured">
+                      Featured
+                    </label>
+
+                    <select id="featured">
+
+                      <option value="No">
+                        No
+                      </option>
+
+                      <option value="Yes">
+                        Yes
+                      </option>
+
+                    </select>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <div class="form-actions">
+
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  onclick="resetForm()"
+                >
+                  Clear
+                </button>
+
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  id="saveButton"
+                >
+                  Save Content
+                </button>
+
+              </div>
+
+            </form>
+
+          </div>
+
+        </section>
+
+
+        <!-- ===================================================
+             SETTINGS PAGE
+        ==================================================== -->
+
+        <section id="settingsPage" class="page">
+
+          <div class="page-heading">
+
+            <div>
+
+              <h2>Settings</h2>
+
+              <p>
+                Configure the connection between SOBANUKIRWA TV and Google Apps Script.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="card">
+
+            <div class="card-header">
+
+              <div>
+
+                <h3>Google Apps Script Connection</h3>
+
+                <p>
+                  The HTML page communicates with your Google Sheet through this endpoint.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div
+              id="connectionStatus"
+              class="connection-box disconnected"
+            >
+              <span>●</span>
+
+              <div>
+
+                <strong>Not Connected</strong>
+
+                <div class="api-display" id="apiDisplay">
+                  Not configured
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <div class="field">
+
+              <label for="apiUrlInput">
+                Apps Script Web App URL
+              </label>
+
+              <input
+                type="url"
+                id="apiUrlInput"
+                placeholder="https://script.google.com/macros/s/XXXX/exec"
+              >
+
+              <div class="help-text">
+                Use the SOBANUKIRWA TV Apps Script deployment URL.
+                Do not use the NASHO Health Center URL.
+              </div>
+
+            </div>
+
+
+            <div class="form-actions">
+
+              <button
+                class="btn btn-secondary"
+                onclick="testConnection()"
+              >
+                Test Connection
+              </button>
+
+              <button
+                class="btn btn-primary"
+                onclick="saveApiUrl()"
+              >
+                Save Connection
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <div class="card">
+
+            <div class="card-header">
+
+              <div>
+
+                <h3>Google Sheet</h3>
+
+                <p>
+                  Data storage for SOBANUKIRWA TV.
+                </p>
+
+              </div>
+
+            </div>
+
+            <div
+              style="
+                background:#f7f9fc;
+                border:1px solid #e2e8f0;
+                padding:13px;
+                border-radius:10px;
+                font-family:Consolas,monospace;
+                font-size:12px;
+                word-break:break-all;
+              "
+            >
+              1nVnfjnrMnrsq34JTBTdSfjzFn3DPWfSt0I7vCS4D2aI
+            </div>
+
+          </div>
+
+        </section>
+
+      </main>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       TOAST
+  ========================================================== -->
+
+  <div id="toast"></div>
+
+
+  <!-- =========================================================
+       LOADING
+  ========================================================== -->
+
+  <div id="loading">
+
+    <div class="loading-card">
+
+      <span class="spinner"></span>
+
+      <span id="loadingText">
+        Loading...
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       EDIT MODAL
+  ========================================================== -->
+
+  <div id="deleteModal" class="modal">
+
+    <div class="modal-card">
+
+      <div class="card-header">
+
+        <div>
+
+          <h3>Delete Content</h3>
+
+          <p>
+            This action will remove the selected item.
+          </p>
+
+        </div>
+
+      </div>
+
+      <p
+        id="deleteMessage"
+        style="
+          font-size:14px;
+          line-height:1.6;
+          margin-bottom:20px;
+        "
+      ></p>
+
+      <div
+        style="
+          display:flex;
+          justify-content:flex-end;
+          gap:10px;
+        "
+      >
+
+        <button
+          class="btn btn-secondary"
+          onclick="closeDeleteModal()"
+        >
+          Cancel
+        </button>
+
+        <button
+          class="btn btn-danger"
+          onclick="confirmDelete()"
+        >
+          Delete
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <script>
+    /* ========================================================
+       SOBANUKIRWA TV ADMIN
+       GOOGLE SHEETS CONNECTION
+    ========================================================= */
+
+    /*
+      IMPORTANT:
+
+      Put the NEW SOBANUKIRWA TV Apps Script Web App URL here.
+
+      Example:
+      https://script.google.com/macros/s/XXXXXXXXXXXX/exec
+
+      Do NOT put the old NASHO URL here.
+    */
+
+    let API_URL =
+      localStorage.getItem("sobanukirwa_tv_api_url") || "";
+
+
+    /* ========================================================
+       ADMIN LOGIN
+    ========================================================= */
+
+    /*
+      These credentials are client-side.
+      For a production system, authentication should eventually
+      be moved to the Apps Script backend.
+    */
+
+    const ADMIN_USERNAME = "admin";
+    const ADMIN_PASSWORD = "STV@2026";
+
+
+    /* ========================================================
+       DATA
+    ========================================================= */
+
+    let allContent = [];
+    let filteredContent = [];
+    let deleteTargetId = null;
+
+
+    /* ========================================================
+       STARTUP
+    ========================================================= */
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+      document.getElementById("apiUrlInput").value = API_URL;
+
+      updateConnectionDisplay();
+
+      const loggedIn =
+        sessionStorage.getItem("sobanukirwa_admin_logged_in") === "true";
+
+      if (loggedIn) {
+        openAdmin();
+      }
+
+    });
+
+
+    /* ========================================================
+       LOGIN
+    ========================================================= */
+
+    function login() {
+
+      const username =
+        document.getElementById("loginUsername").value.trim();
+
+      const password =
+        document.getElementById("loginPassword").value;
+
+      const error =
+        document.getElementById("loginError");
+
+
+      if (!username || !password) {
+
+        error.textContent =
+          "Please enter your username and password.";
+
+        error.style.display = "block";
+
+        return;
+      }
+
+
+      if (
+        username === ADMIN_USERNAME &&
+        password === ADMIN_PASSWORD
+      ) {
+
+        sessionStorage.setItem(
+          "sobanukirwa_admin_logged_in",
+          "true"
+        );
+
+        error.style.display = "none";
+
+        openAdmin();
+
+      } else {
+
+        error.textContent =
+          "Invalid admin username or password.";
+
+        error.style.display = "block";
+
+      }
+
+    }
+
+
+    function openAdmin() {
+
+      document
+        .getElementById("loginScreen")
+        .classList.add("hidden");
+
+      document
+        .getElementById("app")
+        .classList.remove("hidden");
+
+      updateConnectionDisplay();
+
+      loadContent();
+
+    }
+
+
+    function logout() {
+
+      sessionStorage.removeItem(
+        "sobanukirwa_admin_logged_in"
+      );
+
+      location.reload();
+
+    }
+
+
+    /* ========================================================
+       NAVIGATION
+    ========================================================= */
+
+    function showPage(pageId, clickedButton = null) {
+
+      document
+        .querySelectorAll(".page")
+        .forEach(page => {
+          page.classList.remove("active");
+        });
+
+
+      const page =
+        document.getElementById(pageId);
+
+      if (page) {
+        page.classList.add("active");
+      }
+
+
+      document
+        .querySelectorAll(".side-link")
+        .forEach(btn => {
+          btn.classList.remove("active");
+        });
+
+
+      if (clickedButton) {
+        clickedButton.classList.add("active");
+      } else {
+
+        const matching =
+          document.querySelector(
+            `.side-link[data-page="${pageId}"]`
+          );
+
+        if (matching) {
+          matching.classList.add("active");
+        }
+
+      }
+
+
+      document
+        .getElementById("sidebar")
+        .classList.remove("show");
+
+    }
+
+
+    function toggleSidebar() {
+
+      document
+        .getElementById("sidebar")
+        .classList.toggle("show");
+
+    }
+
+
+    function goHome() {
+
+      /*
+        Change this if your Vercel website uses another domain.
+      */
+
+      window.open("/", "_blank");
+
+    }
+
+
+    /* ========================================================
+       API URL
+    ========================================================= */
+
+    function saveApiUrl() {
+
+      const input =
+        document.getElementById("apiUrlInput");
+
+      const value =
+        input.value.trim();
+
+
+      if (!value) {
+
+        showToast(
+          "Enter your SOBANUKIRWA TV Apps Script URL first.",
+          "error"
+        );
+
+        return;
+      }
+
+
+      if (!value.includes("/exec")) {
+
+        showToast(
+          "The URL should normally end with /exec.",
+          "error"
+        );
+
+        return;
+      }
+
+
+      API_URL = value;
+
+      localStorage.setItem(
+        "sobanukirwa_tv_api_url",
+        API_URL
+      );
+
+
+      updateConnectionDisplay();
+
+
+      showToast(
+        "Apps Script connection saved.",
+        "success"
+      );
+
+
+      testConnection();
+
+    }
+
+
+    function updateConnectionDisplay() {
+
+      const status =
+        document.getElementById("connectionStatus");
+
+      const display =
+        document.getElementById("apiDisplay");
+
+      if (!API_URL) {
+
+        status.className =
+          "connection-box disconnected";
+
+        status.innerHTML = `
+          <span>●</span>
+          <div>
+            <strong>Not Connected</strong>
+            <div class="api-display">
+              No Apps Script URL configured
+            </div>
+          </div>
+        `;
+
+        display.textContent =
+          "Not configured";
+
+        return;
+      }
+
+
+      status.className =
+        "connection-box connected";
+
+      status.innerHTML = `
+        <span>●</span>
+        <div>
+          <strong>Configured</strong>
+          <div class="api-display">${escapeHtml(API_URL)}</div>
+        </div>
+      `;
+
+      display.textContent =
+        API_URL;
+
+    }
+
+
+    /* ========================================================
+       TEST CONNECTION
+    ========================================================= */
+
+    async function testConnection() {
+
+      if (!API_URL) {
+
+        showToast(
+          "Configure the Apps Script URL first.",
+          "error"
+        );
+
+        return;
+      }
+
+
+      showLoading("Testing connection...");
+
+
+      try {
+
+        const separator =
+          API_URL.includes("?")
+            ? "&"
+            : "?";
+
+
+        const response =
+          await fetch(
+            API_URL +
+            separator +
+            "action=ping&_=" +
+            Date.now()
+          );
+
+
+        const text =
+          await response.text();
+
+
+        let result;
+
+        try {
+          result = JSON.parse(text);
+        } catch {
+          result = {
+            success: true,
+            raw: text
+          };
+        }
+
+
+        hideLoading();
+
+
+        updateConnectionDisplay();
+
+
+        showToast(
+          "Connection test completed successfully.",
+          "success"
+        );
+
+
+        console.log(
+          "Connection result:",
+          result
+        );
+
+      } catch (error) {
+
+        hideLoading();
+
+
+        showToast(
+          "Connection failed. Check the Apps Script deployment URL and access settings.",
+          "error"
+        );
+
+
+        console.error(error);
+
+      }
+
+    }
+
+
+    /* ========================================================
+       LOAD CONTENT
+    ========================================================= */
+
+    async function loadContent() {
+
+      if (!API_URL) {
+
+        renderTables();
+
+        updateStats();
+
+        return;
+      }
+
+
+      showLoading("Loading content...");
+
+
+      try {
+
+        const separator =
+          API_URL.includes("?")
+            ? "&"
+            : "?";
+
+
+        const response =
+          await fetch(
+            API_URL +
+            separator +
+            "action=content&_=" +
+            Date.now()
+          );
+
+
+        if (!response.ok) {
+          throw new Error(
+            "HTTP " + response.status
+          );
+        }
+
+
+        const data =
+          await response.json();
+
+
+        /*
+          Supported formats:
+
+          [
+            {...},
+            {...}
+          ]
+
+          OR
+
+          {
+            data: [...]
+          }
+
+          OR
+
+          {
+            content: [...]
+          }
+        */
+
+        if (Array.isArray(data)) {
+
+          allContent = data;
+
+        } else if (
+          data &&
+          Array.isArray(data.data)
+        ) {
+
+          allContent = data.data;
+
+        } else if (
+          data &&
+          Array.isArray(data.content)
+        ) {
+
+          allContent = data.content;
+
+        } else {
+
+          allContent = [];
+
+        }
+
+
+        normalizeContent();
+
+
+        updateStats();
+
+        renderTables();
+
+        hideLoading();
+
+
+      } catch (error) {
+
+        hideLoading();
+
+        console.error(
+          "loadContent error:",
+          error
+        );
+
+
+        allContent = [];
+
+        updateStats();
+
+        renderTables();
+
+
+        showToast(
+          "Could not load Google Sheet data. Check your Apps Script URL and deployment permissions.",
+          "error"
+        );
+
+      }
+
+    }
+
+
+    function refreshData() {
+
+      loadContent();
+
+    }
+
+
+    /* ========================================================
+       NORMALIZE CONTENT
+    ========================================================= */
+
+    function normalizeContent() {
+
+      allContent =
+        allContent.map((item, index) => {
+
+          return {
+
+            id:
+              item.id ??
+              item.ID ??
+              item.Id ??
+              item.rowId ??
+              index + 1,
+
+            type:
+              item.type ??
+              item.Type ??
+              item.categoryType ??
+              "",
+
+            category:
+              item.category ??
+              item.Category ??
+              "",
+
+            title:
+              item.title ??
+              item.Title ??
+              "",
+
+            description:
+              item.description ??
+              item.Description ??
+              item.summary ??
+              "",
+
+            startTime:
+              item.startTime ??
+              item.StartTime ??
+              item.start ??
+              item.Start ??
+              "",
+
+            deadline:
+              item.deadline ??
+              item.Deadline ??
+              item.endTime ??
+              "",
+
+            applicationLink:
+              item.applicationLink ??
+              item.ApplicationLink ??
+              item.link ??
+              item.Link ??
+              "",
+
+            imageUrl:
+              item.imageUrl ??
+              item.ImageURL ??
+              item.image ??
+              "",
+
+            source:
+              item.source ??
+              item.Source ??
+              "",
+
+            featured:
+              item.featured ??
+              item.Featured ??
+              "No",
+
+            createdAt:
+              item.createdAt ??
+              item.CreatedAt ??
+              "",
+
+            updatedAt:
+              item.updatedAt ??
+              item.UpdatedAt ??
+              ""
+
+          };
+
+        });
+
+    }
+
+
+    /* ========================================================
+       STATUS
+    ========================================================= */
+
+    function getStatus(item) {
+
+      const now =
+        new Date();
+
+
+      const start =
+        parseDate(item.startTime);
+
+      const deadline =
+        parseDate(item.deadline);
+
+
+      if (
+        start &&
+        now < start
+      ) {
+
+        return "NOT STARTED";
+
+      }
+
+
+      if (
+        deadline &&
+        now > deadline
+      ) {
+
+        return "CLOSED";
+
+      }
+
+
+      return "OPEN NOW";
+
+    }
+
+
+    function parseDate(value) {
+
+      if (!value) {
+        return null;
+      }
+
+
+      if (value instanceof Date) {
+        return value;
+      }
+
+
+      const date =
+        new Date(value);
+
+
+      if (
+        isNaN(date.getTime())
+      ) {
+
+        return null;
+
+      }
+
+
+      return date;
+
+    }
+
+
+    function formatDate(value) {
+
+      const date =
+        parseDate(value);
+
+
+      if (!date) {
+        return "—";
+      }
+
+
+      return date.toLocaleString(
+        undefined,
+        {
+          year: "numeric",
+          month: "short",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit"
+        }
+      );
+
+    }
+
+
+    /* ========================================================
+       STATS
+    ========================================================= */
+
+    function updateStats() {
+
+      const total =
+        allContent.length;
+
+
+      const news =
+        allContent.filter(
+          x =>
+            String(x.type)
+              .toLowerCase() === "news"
+        ).length;
+
+
+      const jobs =
+        allContent.filter(
+          x =>
+            String(x.type)
+              .toLowerCase() === "jobs"
+        ).length;
+
+
+      const open =
+        allContent.filter(
+          x =>
+            getStatus(x) === "OPEN NOW"
+        ).length;
+
+
+      document.getElementById("totalCount")
+        .textContent = total;
+
+      document.getElementById("newsCount")
+        .textContent = news;
+
+      document.getElementById("jobsCount")
+        .textContent = jobs;
+
+      document.getElementById("openCount")
+        .textContent = open;
+
+    }
+
+
+    /* ========================================================
+       RENDER TABLES
+    ========================================================= */
+
+    function renderTables() {
+
+      filteredContent =
+        applyCurrentFilters();
+
+
+      renderManagementTable(
+        filteredContent
+      );
+
+
+      renderRecentTable();
+
+    }
+
+
+    function renderManagementTable(items) {
+
+      const tbody =
+        document.getElementById(
+          "contentTableBody"
+        );
+
+
+      if (!items.length) {
+
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7">
+              <div class="empty">
+                <div class="empty-icon">📭</div>
+                <div>No content found.</div>
+              </div>
+            </td>
+          </tr>
+        `;
+
+        return;
+      }
+
+
+      tbody.innerHTML =
+        items.map(item => {
+
+          const status =
+            getStatus(item);
+
+
+          return `
+            <tr>
+
+              <td>
+                ${typeBadge(item.type)}
+              </td>
+
+              <td class="title-cell">
+
+                <strong>
+                  ${escapeHtml(item.title || "Untitled")}
+                </strong>
+
+                <small>
+                  ${escapeHtml(
+                    item.category || ""
+                  )}
+                </small>
+
+              </td>
+
+              <td>
+                ${formatDate(item.startTime)}
+              </td>
+
+              <td>
+                ${formatDate(item.deadline)}
+              </td>
+
+              <td>
+                ${statusBadge(status)}
+              </td>
+
+              <td>
+
+                ${
+                  item.applicationLink
+                    ? `
+                      <a
+                        href="${safeUrl(item.applicationLink)}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn btn-secondary"
+                        style="display:inline-block;text-decoration:none;"
+                      >
+                        Open
+                      </a>
+                    `
+                    : "—"
+                }
+
+              </td>
+
+              <td>
+
+                <div style="
+                  display:flex;
+                  gap:6px;
+                  flex-wrap:wrap;
+                ">
+
+                  <button
+                    class="btn btn-primary"
+                    onclick="editContent('${escapeAttr(item.id)}')"
+                  >
+                    Edit
+                  </button>
+
+                  <button
+                    class="btn btn-danger"
+                    onclick="deleteContent('${escapeAttr(item.id)}')"
+                  >
+                    Delete
+                  </button>
+
+                </div>
+
+              </td>
+
+            </tr>
+          `;
+
+        }).join("");
+
+    }
+
+
+    function renderRecentTable() {
+
+      const tbody =
+        document.getElementById(
+          "recentTableBody"
+        );
+
+
+      const recent =
+        [...allContent]
+          .sort((a,b) => {
+
+            const da =
+              parseDate(
+                a.createdAt
+              )?.getTime() || 0;
+
+            const db =
+              parseDate(
+                b.createdAt
+              )?.getTime() || 0;
+
+            return db - da;
+
+          })
+          .slice(0, 8);
+
+
+      if (!recent.length) {
+
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5">
+              <div class="empty">
+                <div class="empty-icon">📭</div>
+                <div>No content yet.</div>
+              </div>
+            </td>
+          </tr>
+        `;
+
+        return;
+
+      }
+
+
+      tbody.innerHTML =
+        recent.map(item => {
+
+          return `
+            <tr>
+
+              <td>
+                ${typeBadge(item.type)}
+              </td>
+
+              <td class="title-cell">
+
+                <strong>
+                  ${escapeHtml(item.title || "Untitled")}
+                </strong>
+
+                <small>
+                  ${escapeHtml(item.category || "")}
+                </small>
+
+              </td>
+
+              <td>
+                ${formatDate(item.startTime)}
+              </td>
+
+              <td>
+                ${formatDate(item.deadline)}
+              </td>
+
+              <td>
+                ${statusBadge(getStatus(item))}
+              </td>
+
+            </tr>
+          `;
+
+        }).join("");
+
+    }
+
+
+    /* ========================================================
+       TYPE BADGE
+    ========================================================= */
+
+    function typeBadge(type) {
+
+      const value =
+        String(type || "")
+          .trim();
+
+      const lower =
+        value.toLowerCase();
+
+
+      let cls =
+        "badge-news";
+
+      if (lower === "jobs") {
+        cls = "badge-job";
+      }
+
+      if (lower === "scholarships") {
+        cls = "badge-scholarship";
+      }
+
+      if (lower === "events") {
+        cls = "badge-event";
+      }
+
+
+      return `
+        <span class="badge ${cls}">
+          ${escapeHtml(value || "Other")}
+        </span>
+      `;
+
+    }
+
+
+    /* ========================================================
+       STATUS BADGE
+    ========================================================= */
+
+    function statusBadge(status) {
+
+      let cls =
+        "badge-open";
+
+      if (status === "CLOSED") {
+        cls = "badge-closed";
+      }
+
+      if (status === "NOT STARTED") {
+        cls = "badge-notstarted";
+      }
+
+
+      return `
+        <span class="badge ${cls}">
+          ${escapeHtml(status)}
+        </span>
+      `;
+
+    }
+
+
+    /* ========================================================
+       SEARCH / FILTER
+    ========================================================= */
+
+    function filterContent() {
+
+      renderTables();
+
+    }
+
+
+    function applyCurrentFilters() {
+
+      const search =
+        document
+          .getElementById("searchInput")
+          .value
+          .trim()
+          .toLowerCase();
+
+
+      const type =
+        document
+          .getElementById("typeFilter")
+          .value
+          .trim()
+          .toLowerCase();
+
+
+      const status =
+        document
+          .getElementById("statusFilter")
+          .value
+          .trim()
+          .toLowerCase();
+
+
+      return allContent.filter(item => {
+
+        const combined =
+          [
+            item.title,
+            item.description,
+            item.category,
+            item.source,
+            item.type
+          ]
+          .join(" ")
+          .toLowerCase();
+
+
+        const itemType =
+          String(item.type)
+            .toLowerCase();
+
+
+        const itemStatus =
+          getStatus(item)
+            .toLowerCase();
+
+
+        const searchMatch =
+          !search ||
+          combined.includes(search);
+
+
+        const typeMatch =
+          !type ||
+          itemType === type;
+
+
+        const statusMatch =
+          !status ||
+          itemStatus === status;
+
+
+        return (
+          searchMatch &&
+          typeMatch &&
+          statusMatch
+        );
+
+      });
+
+    }
+
+
+    function clearFilters() {
+
+      document.getElementById(
+        "searchInput"
+      ).value = "";
+
+      document.getElementById(
+        "typeFilter"
+      ).value = "";
+
+      document.getElementById(
+        "statusFilter"
+      ).value = "";
+
+
+      renderTables();
+
+    }
+
+
+    /* ========================================================
+       SAVE CONTENT
+    ========================================================= */
+
+    async function saveContent(event) {
+
+      event.preventDefault();
+
+
+      if (!API_URL) {
+
+        showToast(
+          "Configure the Apps Script URL first in Settings.",
+          "error"
+        );
+
+        showPage("settingsPage");
+
+        return;
+
+      }
+
+
+      const editId =
+        document
+          .getElementById("editId")
+          .value
+          .trim();
+
+
+      const payload = {
+
+        action:
+          editId
+            ? "update"
+            : "add",
+
+        id:
+          editId || "",
+
+        type:
+          document
+            .getElementById("contentType")
+            .value,
+
+        category:
+          document
+            .getElementById("category")
+            .value
+            .trim(),
+
+        title:
+          document
+            .getElementById("title")
+            .value
+            .trim(),
+
+        description:
+          document
+            .getElementById("description")
+            .value
+            .trim(),
+
+        startTime:
+          document
+            .getElementById("startTime")
+            .value,
+
+        deadline:
+          document
+            .getElementById("deadline")
+            .value,
+
+        applicationLink:
+          document
+            .getElementById("applicationLink")
+            .value
+            .trim(),
+
+        imageUrl:
+          document
+            .getElementById("imageUrl")
+            .value
+            .trim(),
+
+        source:
+          document
+            .getElementById("source")
+            .value
+            .trim(),
+
+        featured:
+          document
+            .getElementById("featured")
+            .value
+
+      };
+
+
+      if (!payload.type) {
+
+        showToast(
+          "Please select a content type.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      if (!payload.title) {
+
+        showToast(
+          "Please enter a title.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      showLoading(
+        editId
+          ? "Updating content..."
+          : "Saving content..."
+      );
+
+
+      try {
+
+        const result =
+          await postToApi(payload);
+
+
+        console.log(
+          "Save result:",
+          result
+        );
+
+
+        hideLoading();
+
+
+        showToast(
+          editId
+            ? "Content updated successfully."
+            : "Content added successfully.",
+          "success"
+        );
+
+
+        resetForm();
+
+        await loadContent();
+
+        showPage("managePage");
+
+
+      } catch (error) {
+
+        hideLoading();
+
+        console.error(error);
+
+        showToast(
+          "Failed to save content. Check your Apps Script backend.",
+          "error"
+        );
+
+      }
+
+    }
+
+
+    /* ========================================================
+       EDIT CONTENT
+    ========================================================= */
+
+    function editContent(id) {
+
+      const item =
+        allContent.find(
+          x => String(x.id) === String(id)
+        );
+
+
+      if (!item) {
+
+        showToast(
+          "Content not found.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      document.getElementById(
+        "editId"
+      ).value = item.id;
+
+
+      document.getElementById(
+        "contentType"
+      ).value = item.type || "";
+
+
+      document.getElementById(
+        "category"
+      ).value = item.category || "";
+
+
+      document.getElementById(
+        "title"
+      ).value = item.title || "";
+
+
+      document.getElementById(
+        "description"
+      ).value = item.description || "";
+
+
+      document.getElementById(
+        "startTime"
+      ).value = toDateTimeLocal(
+        item.startTime
+      );
+
+
+      document.getElementById(
+        "deadline"
+      ).value = toDateTimeLocal(
+        item.deadline
+      );
+
+
+      document.getElementById(
+        "applicationLink"
+      ).value =
+        item.applicationLink || "";
+
+
+      document.getElementById(
+        "imageUrl"
+      ).value =
+        item.imageUrl || "";
+
+
+      document.getElementById(
+        "source"
+      ).value =
+        item.source || "";
+
+
+      document.getElementById(
+        "featured"
+      ).value =
+        item.featured || "No";
+
+
+      document.getElementById(
+        "formPageTitle"
+      ).textContent =
+        "Edit Content";
+
+
+      document.getElementById(
+        "saveButton"
+      ).textContent =
+        "Update Content";
+
+
+      showPage("addPage");
+
+    }
+
+
+    /* ========================================================
+       RESET FORM
+    ========================================================= */
+
+    function resetForm() {
+
+      const form =
+        document.getElementById(
+          "contentForm"
+        );
+
+
+      form.reset();
+
+
+      document.getElementById(
+        "editId"
+      ).value = "";
+
+
+      document.getElementById(
+        "formPageTitle"
+      ).textContent =
+        "Add New Content";
+
+
+      document.getElementById(
+        "saveButton"
+      ).textContent =
+        "Save Content";
+
+    }
+
+
+    /* ========================================================
+       DELETE
+    ========================================================= */
+
+    function deleteContent(id) {
+
+      const item =
+        allContent.find(
+          x => String(x.id) === String(id)
+        );
+
+
+      if (!item) {
+
+        showToast(
+          "Content not found.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      deleteTargetId =
+        id;
+
+
+      document.getElementById(
+        "deleteMessage"
+      ).innerHTML = `
+        Are you sure you want to delete
+        <strong>
+          ${escapeHtml(item.title)}
+        </strong>?
+        <br><br>
+        This will send the delete request to your Google Apps Script backend.
+      `;
+
+
+      document.getElementById(
+        "deleteModal"
+      ).classList.add("show");
+
+    }
+
+
+    function closeDeleteModal() {
+
+      deleteTargetId = null;
+
+      document
+        .getElementById("deleteModal")
+        .classList.remove("show");
+
+    }
+
+
+    async function confirmDelete() {
+
+      if (!deleteTargetId) {
+        return;
+      }
+
+
+      if (!API_URL) {
+
+        showToast(
+          "Configure the Apps Script URL first.",
+          "error"
+        );
+
+        closeDeleteModal();
+
+        return;
+
+      }
+
+
+      const id =
+        deleteTargetId;
+
+
+      closeDeleteModal();
+
+
+      showLoading(
+        "Deleting content..."
+      );
+
+
+      try {
+
+        const result =
+          await postToApi({
+
+            action: "delete",
+
+            id: id
+
+          });
+
+
+        console.log(
+          "Delete result:",
+          result
+        );
+
+
+        hideLoading();
+
+
+        showToast(
+          "Content deleted successfully.",
+          "success"
+        );
+
+
+        await loadContent();
+
+
+      } catch (error) {
+
+        hideLoading();
+
+        console.error(error);
+
+        showToast(
+          "Delete failed. Check your Apps Script backend.",
+          "error"
+        );
+
+      }
+
+    }
+
+
+    /* ========================================================
+       POST TO API
+    ========================================================= */
+
+    async function postToApi(payload) {
+
+      const response =
+        await fetch(
+          API_URL,
+          {
+            method: "POST",
+
+            headers: {
+              "Content-Type":
+                "text/plain;charset=utf-8"
+            },
+
+            body:
+              JSON.stringify(payload)
+          }
+        );
+
+
+      const text =
+        await response.text();
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          "HTTP " + response.status
+        );
+
+      }
+
+
+      try {
+
+        return JSON.parse(text);
+
+      } catch {
+
+        return {
+          success: true,
+          raw: text
+        };
+
+      }
+
+    }
+
+
+    /* ========================================================
+       DATE/TIME LOCAL
+    ========================================================= */
+
+    function toDateTimeLocal(value) {
+
+      const date =
+        parseDate(value);
+
+
+      if (!date) {
+        return "";
+      }
+
+
+      const pad =
+        number =>
+          String(number)
+            .padStart(2, "0");
+
+
+      const year =
+        date.getFullYear();
+
+
+      const month =
+        pad(date.getMonth() + 1);
+
+
+      const day =
+        pad(date.getDate());
+
+
+      const hours =
+        pad(date.getHours());
+
+
+      const minutes =
+        pad(date.getMinutes());
+
+
+      return `
+        ${year}-${month}-${day}
+        T${hours}:${minutes}
+      `.replace(/\s+/g, "");
+
+    }
+
+
+    /* ========================================================
+       LOADING
+    ========================================================= */
+
+    function showLoading(message) {
+
+      document.getElementById(
+        "loadingText"
+      ).textContent =
+        message || "Loading...";
+
+
+      document.getElementById(
+        "loading"
+      ).style.display =
+        "flex";
+
+    }
+
+
+    function hideLoading() {
+
+      document.getElementById(
+        "loading"
+      ).style.display =
+        "none";
+
+    }
+
+
+    /* ========================================================
+       TOAST
+    ========================================================= */
+
+    let toastTimer = null;
+
+
+    function showToast(message, type = "") {
+
+      const toast =
+        document.getElementById(
+          "toast"
+        );
+
+
+      clearTimeout(
+        toastTimer
+      );
+
+
+      toast.className =
+        type;
+
+
+      toast.textContent =
+        message;
+
+
+      toast.style.display =
+        "block";
+
+
+      toastTimer =
+        setTimeout(() => {
+
+          toast.style.display =
+            "none";
+
+        }, 4500);
+
+    }
+
+
+    /* ========================================================
+       SAFE HTML
+    ========================================================= */
+
+    function escapeHtml(value) {
+
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+    }
+
+
+    function escapeAttr(value) {
+
+      return escapeHtml(value);
+
+    }
+
+
+    function safeUrl(value) {
+
+      try {
+
+        const url =
+          new URL(value);
+
+        if (
+          url.protocol === "http:" ||
+          url.protocol === "https:"
+        ) {
+
+          return url.href;
+
+        }
+
+        return "#";
+
+      } catch {
+
+        return "#";
+
+      }
+
+    }
+
+  </script>
+
+</body>
+</html>
