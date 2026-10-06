@@ -1,1075 +1,632 @@
-
 <!DOCTYPE html>
 <html lang="rw">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>SOBANUKIRWA TV | Amakuru n'Amakuru Agezweho</title>
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>SOBANUKIRWA TV</title>
 
 <style>
 
-:root{
-    --primary:#0866b3;
-    --primary-dark:#064b84;
-    --secondary:#0d8bd8;
-    --red:#e53935;
-    --green:#16a34a;
-    --orange:#f59e0b;
-    --bg:#f4f7fa;
-    --white:#ffffff;
-    --text:#243447;
-    --muted:#718096;
-    --border:#dce4ec;
-    --shadow:0 2px 8px rgba(0,0,0,.07);
-}
-
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-html{
-    scroll-behavior:smooth;
+ box-sizing:border-box;
 }
 
 body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:var(--bg);
-    color:var(--text);
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#f4f7fa;
+ color:#243447;
 }
 
-/* ================= HEADER ================= */
-
 .header{
-    height:58px;
-    background:var(--primary);
-    color:white;
-    display:flex;
-    align-items:center;
-    padding:0 16px;
-    gap:18px;
-    position:sticky;
-    top:0;
-    z-index:1000;
-    box-shadow:0 2px 6px rgba(0,0,0,.15);
+ height:58px;
+ background:#0866b3;
+ color:white;
+ display:flex;
+ align-items:center;
+ padding:0 16px;
+ gap:18px;
+ position:sticky;
+ top:0;
+ z-index:10;
 }
 
 .logo{
-    min-width:205px;
-    font-weight:bold;
-    font-size:19px;
-    letter-spacing:.4px;
+ min-width:205px;
+ font-size:19px;
+ font-weight:bold;
 }
 
 .logo small{
-    display:block;
-    font-size:9px;
-    font-weight:normal;
-    opacity:.9;
-    margin-top:2px;
+ display:block;
+ font-size:9px;
+ font-weight:normal;
 }
 
-.menu-btn{
-    display:none;
-    border:0;
-    background:transparent;
-    color:white;
-    font-size:24px;
-    cursor:pointer;
+.search{
+ flex:1;
+ max-width:540px;
+ margin:auto;
 }
 
-.search-box{
-    flex:1;
-    max-width:540px;
-    margin:auto;
-    position:relative;
+.search input{
+ width:100%;
+ padding:9px 13px;
+ border:0;
+ border-radius:5px;
 }
 
-.search-box input{
-    width:100%;
-    border:none;
-    outline:none;
-    padding:9px 40px 9px 13px;
-    border-radius:5px;
-    font-size:12px;
-}
-
-.search-icon{
-    position:absolute;
-    right:12px;
-    top:8px;
-    color:#777;
-}
-
-.header-right{
-    display:flex;
-    align-items:center;
-    gap:15px;
-}
-
-.header-right button{
-    background:none;
-    border:0;
-    color:white;
-    cursor:pointer;
-    font-size:14px;
+.right{
+ display:flex;
+ gap:15px;
+ align-items:center;
 }
 
 .profile{
-    width:31px;
-    height:31px;
-    border-radius:50%;
-    background:white;
-    color:var(--primary);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:bold;
+ width:31px;
+ height:31px;
+ border-radius:50%;
+ background:#fff;
+ color:#0866b3;
+ display:grid;
+ place-items:center;
+ font-weight:bold;
 }
 
 
-/* ================= TOP TIMING BAR ================= */
-
-.top-timing{
-    background:#ffffff;
-    border-bottom:1px solid var(--border);
-    min-height:38px;
-    padding:7px 18px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:15px;
-    position:sticky;
-    top:58px;
-    z-index:850;
-    box-shadow:0 1px 4px rgba(0,0,0,.04);
+.timing{
+ background:#fff;
+ border-bottom:1px solid #dce4ec;
+ min-height:38px;
+ padding:7px 18px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:15px;
+ position:sticky;
+ top:58px;
+ z-index:9;
+ font-size:10px;
 }
 
-.top-time{
-    display:flex;
-    align-items:center;
-    gap:7px;
-    color:#4b5563;
-    white-space:nowrap;
+.clock strong{
+ color:#0866b3;
 }
 
-.top-time strong{
-    color:var(--primary);
+.pills{
+ display:flex;
+ gap:8px;
+ overflow:auto;
 }
 
-.top-date{
-    color:#718096;
+.pill{
+ padding:5px 9px;
+ border-radius:20px;
+ background:#ecfdf3;
+ color:#15803d;
+ border:1px solid #bbf7d0;
+ white-space:nowrap;
 }
 
-.timing-scroll{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    overflow-x:auto;
-    scrollbar-width:none;
-}
-
-.timing-scroll::-webkit-scrollbar{
-    display:none;
-}
-
-.timing-label{
-    font-weight:bold;
-    color:#718096;
-    white-space:nowrap;
-}
-
-.timing-pill{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    padding:5px 9px;
-    border-radius:20px;
-    background:#f1f5f9;
-    color:#475569;
-    white-space:nowrap;
-    border:1px solid #e2e8f0;
-}
-
-.timing-pill.open{
-    background:#ecfdf3;
-    color:#15803d;
-    border-color:#bbf7d0;
-}
-
-.timing-pill.warning{
-    background:#fff7ed;
-    color:#c2410c;
-    border-color:#fed7aa;
-}
-
-.timing-pill.closed{
-    background:#fef2f2;
-    color:#dc2626;
-    border-color:#fecaca;
-}
-
-.timing-pill.not-started{
-    background:#eff6ff;
-    color:#1d4ed8;
-    border-color:#bfdbfe;
-}
-
-.timing-dot{
-    width:7px;
-    height:7px;
-    border-radius:50%;
-    background:currentColor;
-}
-
-
-/* ================= LAYOUT ================= */
 
 .layout{
-    display:flex;
-    min-height:calc(100vh - 96px);
+ display:flex;
 }
 
-
-/* ================= SIDEBAR ================= */
-
-.sidebar{
-    width:220px;
-    background:white;
-    border-right:1px solid var(--border);
-    padding:14px 10px;
-    position:sticky;
-    top:96px;
-    height:calc(100vh - 96px);
-    overflow-y:auto;
-    z-index:900;
+.side{
+ width:220px;
+ background:#fff;
+ border-right:1px solid #dce4ec;
+ min-height:calc(100vh - 96px);
+ padding:14px 10px;
+ position:sticky;
+ top:96px;
+ height:calc(100vh - 96px);
+ overflow:auto;
 }
 
-.sidebar-title{
-    font-size:10px;
-    color:#999;
-    margin:4px 9px 8px;
-    text-transform:uppercase;
-    font-weight:bold;
+.side h5{
+ color:#999;
+ margin:5px 9px 8px;
 }
 
-.nav-link{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:9px 10px;
-    margin:2px 0;
-    border-radius:5px;
-    color:#435466;
-    text-decoration:none;
-    font-size:12px;
-    transition:.2s;
+.nav{
+ display:block;
+ padding:9px 10px;
+ margin:2px 0;
+ border-radius:5px;
+ text-decoration:none;
+ color:#435466;
+ font-size:12px;
+ cursor:pointer;
 }
 
-.nav-link:hover{
-    background:#edf6fd;
-    color:var(--primary);
+.nav:hover,
+.nav.active{
+ background:#e4f1fb;
+ color:#0866b3;
+ font-weight:bold;
 }
-
-.nav-link.active{
-    background:#e4f1fb;
-    color:var(--primary);
-    font-weight:bold;
-    border-left:3px solid var(--primary);
-}
-
-.nav-icon{
-    width:19px;
-    text-align:center;
-}
-
-
-/* ================= MAIN ================= */
 
 .main{
-    flex:1;
-    padding:18px;
-    max-width:1450px;
-    width:100%;
-    margin:auto;
+ flex:1;
+ padding:18px;
+ max-width:1450px;
+ margin:auto;
+ width:100%;
 }
 
-.breadcrumb{
-    color:var(--muted);
-    font-size:11px;
-    margin-bottom:12px;
+.crumb{
+ font-size:11px;
+ color:#718096;
+ margin-bottom:12px;
 }
 
-
-/* ================= HERO ================= */
 
 .hero{
-    background:linear-gradient(110deg,#075b9e,#1286d2);
-    border-radius:8px;
-    min-height:190px;
-    color:white;
-    padding:25px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    overflow:hidden;
-    box-shadow:var(--shadow);
-}
-
-.hero-content{
-    max-width:700px;
-}
-
-.live-label{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    font-size:11px;
-    font-weight:bold;
-    margin-bottom:8px;
-}
-
-.live-dot{
-    width:8px;
-    height:8px;
-    background:#fff;
-    border-radius:50%;
-    animation:blink 1.2s infinite;
-}
-
-@keyframes blink{
-    50%{
-        opacity:.25
-    }
+ background:linear-gradient(
+  110deg,
+  #075b9e,
+  #1286d2
+ );
+ border-radius:8px;
+ min-height:190px;
+ color:#fff;
+ padding:25px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
 }
 
 .hero h1{
-    font-size:29px;
-    margin-bottom:9px;
+ font-size:29px;
+ margin:10px 0;
 }
 
 .hero p{
-    font-size:13px;
-    line-height:1.6;
-    opacity:.93;
-    margin-bottom:18px;
-}
-
-.hero-buttons{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
+ font-size:13px;
+ line-height:1.6;
+ max-width:700px;
 }
 
 .btn{
-    border:0;
-    padding:10px 15px;
-    border-radius:5px;
-    cursor:pointer;
-    text-decoration:none;
-    font-size:12px;
-    font-weight:bold;
-    display:inline-block;
+ display:inline-block;
+ padding:10px 15px;
+ border-radius:5px;
+ text-decoration:none;
+ font-size:12px;
+ font-weight:bold;
+ margin-right:7px;
+ cursor:pointer;
 }
 
-.btn-white{
-    background:white;
-    color:var(--primary);
+.white{
+ background:#fff;
+ color:#0866b3;
 }
 
-.btn-red{
-    background:var(--red);
-    color:white;
+.red{
+ background:#e53935;
+ color:#fff;
 }
 
-.hero-tv{
-    font-size:90px;
-    opacity:.9;
-    margin-right:40px;
+.tv{
+ font-size:90px;
+ margin-right:40px;
 }
 
-
-/* ================= SECTIONS ================= */
 
 .section{
-    margin-top:22px;
+ margin-top:22px;
 }
 
-.section-header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:10px;
+.head{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin-bottom:10px;
 }
 
-.section-title{
-    font-size:16px;
-    font-weight:bold;
+.head b{
+ font-size:16px;
 }
 
-.view-all{
-    color:var(--primary);
-    font-size:11px;
-    text-decoration:none;
-}
-
-
-/* ================= QUICK LINKS ================= */
-
-.quick-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:12px;
-}
-
-.quick-card{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:7px;
-    padding:15px;
-    min-height:105px;
-    text-decoration:none;
-    color:var(--text);
-    box-shadow:var(--shadow);
-    transition:.2s;
-}
-
-.quick-card:hover{
-    transform:translateY(-2px);
-    border-color:#b9d6eb;
-}
-
-.quick-icon{
-    font-size:24px;
-    margin-bottom:8px;
-}
-
-.quick-card h3{
-    font-size:13px;
-    margin-bottom:5px;
-}
-
-.quick-card p{
-    font-size:10px;
-    color:var(--muted);
-    line-height:1.5;
+.head a{
+ font-size:11px;
+ color:#0866b3;
 }
 
 
-/* ================= NEWS ================= */
-
-.news-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:14px;
+.grid4{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:12px;
 }
 
-.news-card{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:7px;
-    overflow:hidden;
-    box-shadow:var(--shadow);
-}
-
-.news-image{
-    height:145px;
-    background:linear-gradient(135deg,#dceaf5,#f1f5f9);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:50px;
-    position:relative;
-}
-
-.news-category{
-    position:absolute;
-    top:9px;
-    left:9px;
-    background:var(--primary);
-    color:white;
-    font-size:9px;
-    padding:4px 7px;
-    border-radius:3px;
-}
-
-.news-body{
-    padding:13px;
-}
-
-.news-body h3{
-    font-size:14px;
-    line-height:1.45;
-    margin:7px 0;
-}
-
-.news-body p{
-    font-size:11px;
-    color:var(--muted);
-    line-height:1.5;
-}
-
-.news-date{
-    margin-top:9px;
-    font-size:9px;
-    color:#999;
-}
-
-
-/* ================= TWO COLUMNS ================= */
-
-.two-columns{
-    display:grid;
-    grid-template-columns:2fr 1fr;
-    gap:14px;
-}
-
+.card,
 .panel{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:7px;
-    padding:15px;
-    box-shadow:var(--shadow);
+ background:#fff;
+ border:1px solid #dce4ec;
+ border-radius:7px;
+ padding:15px;
+ box-shadow:0 2px 8px #00000012;
 }
 
-.panel-title{
-    font-size:14px;
-    font-weight:bold;
-    margin-bottom:10px;
+.icon{
+ font-size:24px;
 }
 
-.list-item{
-    padding:11px 0;
-    border-bottom:1px solid #edf1f4;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px;
-    font-size:11px;
+.card h3{
+ font-size:13px;
+ margin:8px 0 5px;
 }
 
-.list-item:last-child{
-    border-bottom:0;
+.card p,
+.panel p{
+ font-size:10px;
+ color:#718096;
+ line-height:1.5;
+}
+
+
+.news{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:14px;
+}
+
+.newsimg{
+ height:145px;
+ background:#e8f0f7;
+ display:grid;
+ place-items:center;
+ font-size:50px;
+ overflow:hidden;
+}
+
+.newsimg img{
+ width:100%;
+ height:100%;
+ object-fit:cover;
+}
+
+.newsbody{
+ padding:13px;
+}
+
+.newsbody h3{
+ font-size:14px;
 }
 
 .tag{
-    background:#eaf4fb;
-    color:var(--primary);
-    padding:4px 7px;
-    border-radius:10px;
-    font-size:8px;
-    white-space:nowrap;
-}
-
-.tag.new{
-    background:#e9f8ef;
-    color:var(--green);
+ display:inline-block;
+ padding:4px 7px;
+ border-radius:10px;
+ background:#eaf4fb;
+ color:#0866b3;
+ font-size:8px;
+ font-weight:bold;
 }
 
 
-/* ================= DEADLINE SECTION ================= */
-
-.deadline-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:12px;
+.deadlines{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:12px;
 }
 
-.deadline-card{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:8px;
-    padding:15px;
-    box-shadow:var(--shadow);
-    position:relative;
-    overflow:hidden;
-    transition:.2s;
+.deadline{
+ position:relative;
 }
 
-.deadline-card:hover{
-    transform:translateY(-2px);
+.deadline:before{
+ content:"";
+ position:absolute;
+ left:0;
+ top:0;
+ bottom:0;
+ width:4px;
+ background:#16a34a;
 }
 
-.deadline-card::before{
-    content:"";
-    position:absolute;
-    left:0;
-    top:0;
-    bottom:0;
-    width:4px;
-    background:var(--primary);
+.deadline h3{
+ font-size:13px;
 }
 
-.deadline-card.open::before{
-    background:var(--green);
+.row{
+ display:flex;
+ justify-content:space-between;
+ gap:10px;
+ border-bottom:1px solid #eee;
+ padding:6px 0;
+ font-size:10px;
 }
 
-.deadline-card.closed::before{
-    background:var(--red);
+.status{
+ display:inline-block;
+ margin-top:9px;
+ padding:5px 8px;
+ border-radius:12px;
+ background:#e9f8ef;
+ color:#15803d;
+ font-size:8px;
+ font-weight:bold;
 }
 
-.deadline-card.not-started::before{
-    background:var(--orange);
+.status.closed{
+ background:#fee2e2;
+ color:#b91c1c;
 }
 
-.deadline-category{
-    font-size:9px;
-    font-weight:bold;
-    color:var(--primary);
-    text-transform:uppercase;
-    margin-bottom:6px;
+.status.notstarted{
+ background:#fff7ed;
+ color:#c2410c;
 }
 
-.deadline-card h3{
-    font-size:13px;
-    margin-bottom:9px;
-    line-height:1.4;
-}
-
-.deadline-row{
-    display:flex;
-    justify-content:space-between;
-    gap:8px;
-    padding:6px 0;
-    border-bottom:1px solid #f0f2f5;
-    font-size:10px;
-}
-
-.deadline-row:last-child{
-    border-bottom:0;
-}
-
-.deadline-row span:first-child{
-    color:#718096;
-}
-
-.deadline-status{
-    display:inline-block;
-    margin-top:9px;
-    padding:5px 8px;
-    border-radius:12px;
-    font-size:8px;
-    font-weight:bold;
-}
-
-.deadline-status.open{
-    background:#e9f8ef;
-    color:#15803d;
-}
-
-.deadline-status.closed{
-    background:#feecec;
-    color:#dc2626;
-}
-
-.deadline-status.not-started{
-    background:#fff7e6;
-    color:#b45309;
-}
-
-.countdown{
-    margin-top:8px;
-    font-weight:bold;
-    font-size:11px;
-    color:var(--primary);
-}
-
-.deadline-card.open .countdown{
-    color:var(--green);
-}
-
-.deadline-card.closed .countdown{
-    color:var(--red);
-}
-
-.deadline-card.not-started .countdown{
-    color:var(--orange);
+.count{
+ font-size:11px;
+ font-weight:bold;
+ color:#16a34a;
+ margin-top:8px;
 }
 
 
-/* ================= CATEGORIES ================= */
+.two{
+ display:grid;
+ grid-template-columns:2fr 1fr;
+ gap:14px;
+}
 
-.category-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:12px;
+.item{
+ padding:11px 0;
+ border-bottom:1px solid #edf1f4;
+ font-size:11px;
+ display:flex;
+ justify-content:space-between;
+ gap:10px;
+}
+
+
+.categories{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:12px;
+ text-align:center;
 }
 
 .category{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:7px;
-    padding:16px;
-    text-align:center;
-    box-shadow:var(--shadow);
+ background:#fff;
+ border:1px solid #dce4ec;
+ border-radius:7px;
+ padding:16px;
 }
 
-.category-icon{
-    font-size:28px;
-    margin-bottom:8px;
+.category .icon{
+ font-size:28px;
 }
 
-.category h3{
-    font-size:13px;
-    margin-bottom:5px;
-}
-
-.category p{
-    color:var(--muted);
-    font-size:10px;
-}
-
-
-/* ================= FOOTER ================= */
 
 .footer{
-    margin-top:25px;
-    padding:25px 15px;
-    background:white;
-    border-top:1px solid var(--border);
-    text-align:center;
-    color:var(--muted);
-    font-size:10px;
-}
-
-.footer strong{
-    color:var(--primary);
-    font-size:14px;
+ margin-top:25px;
+ padding:25px;
+ background:#fff;
+ border-top:1px solid #dce4ec;
+ text-align:center;
+ color:#718096;
+ font-size:10px;
 }
 
 .social{
-    margin:13px 0;
-    display:flex;
-    justify-content:center;
-    gap:8px;
+ margin:13px;
+ display:flex;
+ justify-content:center;
+ gap:8px;
 }
 
-.social a{
-    width:30px;
-    height:30px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:50%;
-    background:#edf5fb;
-    color:var(--primary);
-    text-decoration:none;
-}
-
-
-/* ================= SEARCH ================= */
-
-.no-results{
-    display:none;
-    background:white;
-    border:1px solid var(--border);
-    padding:20px;
-    text-align:center;
-    color:var(--muted);
-    border-radius:7px;
+.social span{
+ width:30px;
+ height:30px;
+ border-radius:50%;
+ background:#edf5fb;
+ display:grid;
+ place-items:center;
+ color:#0866b3;
 }
 
 
-/* ================= MOBILE ================= */
+.loading{
+ text-align:center;
+ padding:30px;
+ color:#64748b;
+}
+
+.empty{
+ background:#fff;
+ padding:25px;
+ text-align:center;
+ border-radius:7px;
+ color:#64748b;
+}
+
 
 @media(max-width:1000px){
 
-    .quick-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
+ .grid4,
+ .categories{
+  grid-template-columns:repeat(2,1fr);
+ }
 
-    .category-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
+ .news{
+  grid-template-columns:repeat(2,1fr);
+ }
 
-    .news-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
+ .deadlines{
+  grid-template-columns:repeat(2,1fr);
+ }
 
-    .deadline-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .two-columns{
-        grid-template-columns:1fr;
-    }
-
-    .hero-tv{
-        margin-right:10px;
-    }
+ .two{
+  grid-template-columns:1fr;
+ }
 
 }
 
 
 @media(max-width:700px){
 
-    .header{
-        height:55px;
-        padding:0 10px;
-        gap:10px;
-    }
+ .header{
+  height:55px;
+  padding:0 10px;
+ }
 
-    .menu-btn{
-        display:block;
-    }
+ .logo{
+  min-width:auto;
+  font-size:16px;
+ }
 
-    .logo{
-        min-width:auto;
-        font-size:16px;
-    }
+ .logo small,
+ .search{
+  display:none;
+ }
 
-    .logo small{
-        display:none;
-    }
+ .timing{
+  top:55px;
+  padding:6px 10px;
+ }
 
-    .search-box{
-        display:none;
-    }
+ .side{
+  display:none;
+ }
 
-    .header-right{
-        margin-left:auto;
-        gap:8px;
-    }
+ .main{
+  padding:11px;
+ }
 
-    .top-timing{
-        top:55px;
-        min-height:36px;
-        padding:6px 10px;
-        gap:10px;
-    }
+ .hero{
+  min-height:205px;
+  padding:20px;
+ }
 
-    .top-time{
-        font-size:9px;
-    }
+ .hero h1{
+  font-size:23px;
+ }
 
-    .top-date{
-        display:none;
-    }
+ .hero p{
+  font-size:11px;
+ }
 
-    .timing-label{
-        font-size:9px;
-    }
+ .tv{
+  font-size:55px;
+  margin:0;
+ }
 
-    .timing-pill{
-        font-size:9px;
-        padding:4px 7px;
-    }
+ .grid4,
+ .news,
+ .deadlines,
+ .categories{
+  grid-template-columns:1fr;
+ }
 
-    .sidebar{
-        position:fixed;
-        left:-245px;
-        top:91px;
-        width:230px;
-        height:calc(100vh - 91px);
-        transition:.25s;
-        box-shadow:4px 0 15px rgba(0,0,0,.15);
-    }
-
-    .sidebar.open{
-        left:0;
-    }
-
-    .main{
-        padding:11px;
-    }
-
-    .hero{
-        min-height:205px;
-        padding:20px;
-    }
-
-    .hero h1{
-        font-size:23px;
-    }
-
-    .hero p{
-        font-size:11px;
-    }
-
-    .hero-tv{
-        font-size:55px;
-        margin-right:0;
-    }
-
-    .quick-grid,
-    .news-grid,
-    .category-grid,
-    .deadline-grid{
-        grid-template-columns:1fr;
-    }
-
-    .news-image{
-        height:170px;
-    }
-
-}
-
-
-/* ================= EXTRA SMALL ================= */
-
-@media(max-width:400px){
-
-    .header-right button:nth-child(2){
-        display:none;
-    }
-
-    .logo{
-        font-size:14px;
-    }
-
-    .hero-tv{
-        font-size:45px;
-    }
+ .newsimg{
+  height:170px;
+ }
 
 }
 
 </style>
+
 </head>
 
 
 <body>
 
 
-<!-- =========================================================
-     HEADER
-========================================================= -->
+<!-- HEADER -->
 
 <header class="header">
 
-    <button
-        class="menu-btn"
-        onclick="toggleSidebar()">
-        ☰
-    </button>
+<div class="logo">
+
+SOBANUKIRWA TV
+
+<small>
+AMAKURU • UBUREZI • UBIZIMA • IMYIDAGADURO
+</small>
+
+</div>
 
 
-    <div class="logo">
+<div class="search">
 
-        SOBANUKIRWA TV
+<input
+id="searchInput"
+placeholder="Shakisha inkuru, video cyangwa topic..."
+oninput="renderAll()">
 
-        <small>
-            AMAKURU • UBUREZI • UBIZIMA • IMYIDAGADURO
-        </small>
-
-    </div>
-
-
-    <div class="search-box">
-
-        <input
-            type="search"
-            id="searchInput"
-            placeholder="Shakisha inkuru, video cyangwa topic..."
-        >
-
-        <span class="search-icon">
-            🔍
-        </span>
-
-    </div>
+</div>
 
 
-    <div class="header-right">
+<div class="right">
 
-        <button
-            onclick="showNotification()"
-            title="Notifications">
-            🔔
-        </button>
+<span>🔔</span>
 
-        <button
-            onclick="changeLanguage()"
-            title="Language">
-            🌐
-        </button>
+<span>🌐</span>
 
-        <div class="profile">
-            S
-        </div>
+<div class="profile">
+S
+</div>
 
-    </div>
+</div>
 
 </header>
 
 
-<!-- =========================================================
-     TOP TIME + DEADLINE BAR
-========================================================= -->
+<!-- TIMING -->
 
-<div class="top-timing">
+<div class="timing">
 
+<div class="clock">
 
-    <div class="top-time">
+🕐
 
-        🕐
+<strong id="clock">
+00:00:00
+</strong>
 
-        <strong id="currentTime">
-            00:00:00
-        </strong>
+<span id="date">
+</span>
 
-        <span
-            class="top-date"
-            id="currentDate">
-            00/00/0000
-        </span>
-
-    </div>
+</div>
 
 
-    <div class="timing-scroll">
+<div class="pills">
 
-        <span class="timing-label">
-            ⏰ DEADLINES:
-        </span>
+<span class="pill"
+id="jobsPill">
 
+Jobs: ...
 
-        <span
-            class="timing-pill"
-            id="topJobTiming">
+</span>
 
-            <span class="timing-dot"></span>
+<span class="pill"
+id="scholarshipPill">
 
-            Jobs:
+Scholarships: ...
 
-            <strong id="topJobCountdown">
-                Loading...
-            </strong>
+</span>
 
-        </span>
+<span class="pill"
+id="eventPill">
 
+Events: ...
 
-        <span
-            class="timing-pill"
-            id="topScholarshipTiming">
+</span>
 
-            <span class="timing-dot"></span>
-
-            Scholarships:
-
-            <strong id="topScholarshipCountdown">
-                Loading...
-            </strong>
-
-        </span>
-
-
-        <span
-            class="timing-pill"
-            id="topEventTiming">
-
-            <span class="timing-dot"></span>
-
-            Events:
-
-            <strong id="topEventCountdown">
-                Loading...
-            </strong>
-
-        </span>
-
-    </div>
+</div>
 
 </div>
 
@@ -1077,1376 +634,546 @@ body{
 <div class="layout">
 
 
-<!-- =========================================================
-     SIDEBAR
-========================================================= -->
+<!-- SIDEBAR -->
 
-<aside
-    class="sidebar"
-    id="sidebar">
+<aside class="side">
 
+<h5>PUBLIC</h5>
 
-    <div class="sidebar-title">
-        PUBLIC
-    </div>
+<a class="nav active">🏠 Home</a>
 
+<a class="nav">📰 Amakuru</a>
 
-    <nav>
+<a class="nav">🔴 Live TV</a>
 
+<a class="nav">🎥 Videos</a>
 
-        <a
-            class="nav-link active"
-            href="#home">
+<a class="nav">🎙️ Interviews</a>
 
-            <span class="nav-icon">
-                🏠
-            </span>
+<a class="nav">🎓 Uburezi</a>
 
-            Home
+<a class="nav">🏥 Ubuzima</a>
 
-        </a>
+<a class="nav">💼 Business</a>
 
+<a class="nav">⚽ Imikino</a>
 
-        <a
-            class="nav-link"
-            href="#news">
+<a class="nav">📢 Jobs & Opportunities</a>
 
-            <span class="nav-icon">
-                📰
-            </span>
+<a class="nav">⏰ Deadlines</a>
 
-            Amakuru
+<a class="nav">🇷🇼 Rwanda</a>
 
-        </a>
+<a class="nav">🌍 World</a>
 
+<a class="nav">📞 Contact</a>
 
-        <a
-            class="nav-link"
-            href="#live">
 
-            <span class="nav-icon">
-                🔴
-            </span>
+<h5 style="margin-top:20px">
+SYSTEM
+</h5>
 
-            Live TV
+<a class="nav">ℹ️ About Sobanukirwa TV</a>
 
-        </a>
+<a class="nav">❓ Help</a>
 
-
-        <a
-            class="nav-link"
-            href="#videos">
-
-            <span class="nav-icon">
-                🎥
-            </span>
-
-            Videos
-
-        </a>
-
-
-        <a
-            class="nav-link"
-            href="#interviews">
-
-            <span class="nav-icon">
-                🎙️
-            </span>
-
-            Interviews
-
-        </a>
-
-
-        <a
-            class="nav-link"
-            href="#education">
-
-            <span class="nav-icon">
-                🎓
-            </span>
-
-            Uburezi
-
-        </a>
-
-
-        <a
-            class="nav-link"
-            href="#health">
-
-            <span class="nav-icon">
-                🏥
-            </span>
-
-            Ubuzima
-
-        </a>
-
-
-        <a
-            class="nav-link"
-            href="#business">
-
-            <span class="nav-icon">
-                💼
-            </span>
-
-            Business
-
-        </a>
-
-
-        <a
-            class="nav-link"
-            href="#sports">
-
-            <span class="nav-icon">
-                ⚽
-            </span>
-
-            Imikino
-
-        </a>
-
-
-        <a
-            class="nav-link"
-            href="#jobs">
-
-            <span class="nav-icon">
-                📢
-            </span>
-
-            Jobs & Opportunities
-
-        </a>
-
-
-        <a
-            class="nav-link"
-            href="#deadlines">
-
-            <span class="nav-icon">
-                ⏰
-            </span>
-
-            Deadlines
-
-        </a>
-
-
-        <a
-            class="nav-link"
-            href="#rwanda">
-
-            <span class="nav-icon">
-                🇷🇼
-            </span>
-
-            Rwanda
-
-        </a>
-
-
-        <a
-            class="nav-link"
-            href="#world">
-
-            <span class="nav-icon">
-                🌍
-            </span>
-
-            World
-
-        </a>
-
-
-        <a
-            class="nav-link"
-            href="#contact">
-
-            <span class="nav-icon">
-                📞
-            </span>
-
-            Contact
-
-        </a>
-
-
-    </nav>
-
-
-    <div
-        class="sidebar-title"
-        style="margin-top:20px">
-
-        SYSTEM
-
-    </div>
-
-
-    <nav>
-
-
-        <a
-            class="nav-link"
-            href="#about">
-
-            <span class="nav-icon">
-                ℹ️
-            </span>
-
-            About Sobanukirwa TV
-
-        </a>
-
-
-        <a
-            class="nav-link"
-            href="#help">
-
-            <span class="nav-icon">
-                ❓
-            </span>
-
-            Help
-
-        </a>
-
-
-        <a
-            class="nav-link"
-            href="admin.html">
-
-            <span class="nav-icon">
-                🔐
-            </span>
-
-            Admin Login
-
-        </a>
-
-
-    </nav>
+<a class="nav"
+href="admin.html">
+🔐 Admin Login
+</a>
 
 </aside>
 
 
-<!-- =========================================================
-     MAIN
-========================================================= -->
+<!-- MAIN -->
 
-<main
-    class="main"
-    id="home">
+<main class="main">
 
 
-    <div class="breadcrumb">
-        SOBANUKIRWA TV / Dashboard
-    </div>
+<div class="crumb">
+SOBANUKIRWA TV / Home
+</div>
 
 
-    <!-- =====================================================
-         HERO
-    ====================================================== -->
+<!-- HERO -->
 
-    <section
-        class="hero"
-        id="live">
+<section class="hero">
 
+<div>
 
-        <div class="hero-content">
+<div>
+🔴 LIVE NOW
+</div>
 
+<h1>
+SOBANUKIRWA TV
+</h1>
 
-            <div class="live-label">
+<p>
 
-                <span class="live-dot"></span>
+Amakuru yizewe, uburezi, ubuzima,
+business, imikino n'amahirwe mu Rwanda
+no ku isi.
 
-                LIVE NOW
+</p>
 
-            </div>
+<a class="btn white">
+▶ REBA LIVE TV
+</a>
 
+<a class="btn red">
+📰 AMAKURU
+</a>
 
-            <h1>
-                SOBANUKIRWA TV
-            </h1>
+</div>
 
 
-            <p>
-                Amakuru yizewe, uburezi, ubuzima,
-                business, imikino n'amahirwe mu Rwanda
-                no ku isi.
-            </p>
+<div class="tv">
+📺
+</div>
 
+</section>
 
-            <div class="hero-buttons">
 
+<!-- QUICK LINKS -->
 
-                <a
-                    href="#"
-                    class="btn btn-white">
+<section class="section">
 
-                    ▶ REBA LIVE TV
+<div class="head">
 
-                </a>
+<b>
+Quick Links
+</b>
 
+</div>
 
-                <a
-                    href="#news"
-                    class="btn btn-red">
 
-                    📰 AMAKURU
+<div class="grid4">
 
-                </a>
 
+<div class="card">
 
-            </div>
+<div class="icon">
+📰
+</div>
 
+<h3>
+Amakuru
+</h3>
 
-        </div>
+<p>
+Inkuru nshya kandi z'ingenzi.
+</p>
 
+</div>
 
-        <div class="hero-tv">
-            📺
-        </div>
 
+<div class="card">
 
-    </section>
+<div class="icon">
+🎥
+</div>
 
+<h3>
+Videos
+</h3>
 
-    <!-- =====================================================
-         QUICK LINKS
-    ====================================================== -->
+<p>
+Reba ibiganiro na videos nshya.
+</p>
 
-    <section class="section">
+</div>
 
 
-        <div class="section-header">
+<div class="card">
 
-            <div class="section-title">
-                Quick Links
-            </div>
+<div class="icon">
+🔴
+</div>
 
-            <a
-                href="#"
-                class="view-all">
-                View all ›
-            </a>
+<h3>
+Live TV
+</h3>
 
-        </div>
+<p>
+Reba ibiganiro biri kuba ubu.
+</p>
 
+</div>
 
-        <div class="quick-grid">
 
+<div class="card">
 
-            <a
-                href="#news"
-                class="quick-card searchable">
+<div class="icon">
+💼
+</div>
 
-                <div class="quick-icon">
-                    📰
-                </div>
+<h3>
+Jobs & Opportunities
+</h3>
 
-                <h3>
-                    Amakuru
-                </h3>
+<p>
+Amahirwe y'akazi n'andi mahirwe.
+</p>
 
-                <p>
-                    Inkuru nshya kandi z'ingenzi.
-                </p>
+</div>
 
-            </a>
 
+</div>
 
-            <a
-                href="#videos"
-                class="quick-card searchable">
+</section>
 
-                <div class="quick-icon">
-                    🎥
-                </div>
 
-                <h3>
-                    Videos
-                </h3>
+<!-- NEWS -->
 
-                <p>
-                    Reba ibiganiro na videos nshya.
-                </p>
+<section class="section">
 
-            </a>
+<div class="head">
 
+<b>
+Latest News
+</b>
 
-            <a
-                href="#live"
-                class="quick-card searchable">
+</div>
 
-                <div class="quick-icon">
-                    🔴
-                </div>
 
-                <h3>
-                    Live TV
-                </h3>
+<div id="newsContainer"
+class="news">
 
-                <p>
-                    Reba ibiganiro biri kuba ubu.
-                </p>
+<div class="loading">
+Loading news...
+</div>
 
-            </a>
+</div>
 
+</section>
 
-            <a
-                href="#jobs"
-                class="quick-card searchable">
 
-                <div class="quick-icon">
-                    💼
-                </div>
+<!-- DEADLINES -->
 
-                <h3>
-                    Jobs & Opportunities
-                </h3>
+<section class="section">
 
-                <p>
-                    Amahirwe y'akazi n'andi mahirwe.
-                </p>
+<div class="head">
 
-            </a>
+<b>
+⏰ Start Times & Deadlines
+</b>
 
+</div>
 
-        </div>
 
-    </section>
+<div id="deadlineContainer"
+class="deadlines">
 
+<div class="loading">
+Loading opportunities...
+</div>
 
-    <!-- =====================================================
-         LATEST NEWS
-    ====================================================== -->
+</div>
 
-    <section
-        class="section"
-        id="news">
+</section>
 
 
-        <div class="section-header">
+<!-- VIDEOS / OPPORTUNITIES -->
 
-            <div class="section-title">
-                Latest News
-            </div>
+<section class="section">
 
-            <a
-                href="#"
-                class="view-all">
-                Andi makuru ›
-            </a>
+<div class="head">
 
-        </div>
+<b>
+Videos & Interviews
+</b>
 
+</div>
 
-        <div
-            class="news-grid"
-            id="newsGrid">
 
+<div class="two">
 
-            <article class="news-card searchable">
 
+<div class="panel">
 
-                <div class="news-image">
+<b>
+🎥 Latest Videos
+</b>
 
-                    <span class="news-category">
-                        RWANDA
-                    </span>
+<div class="item">
+▶ SOBANUKIRWA TV
+<span class="tag">
+VIDEO
+</span>
+</div>
 
-                    📰
+<div class="item">
+▶ Interview y'uyu munsi
+<span class="tag">
+INTERVIEW
+</span>
+</div>
 
-                </div>
+<div class="item">
+▶ Education Talk
+<span class="tag">
+EDUCATION
+</span>
+</div>
 
+</div>
 
-                <div class="news-body">
 
-                    <h3>
-                        Inkuru nshya ya SOBANUKIRWA TV
-                    </h3>
+<div class="panel">
 
-                    <p>
-                        Amakuru mashya y'u Rwanda
-                        n'ibikorwa by'ingenzi.
-                    </p>
+<b>
+📢 Opportunities
+</b>
 
-                    <div class="news-date">
-                        Uyu munsi • SOBANUKIRWA TV
-                    </div>
+<div id="opportunityList">
 
-                </div>
+</div>
 
+</div>
 
-            </article>
 
+</div>
 
-            <article class="news-card searchable">
+</section>
 
 
-                <div class="news-image">
+<!-- CATEGORIES -->
 
-                    <span class="news-category">
-                        EDUCATION
-                    </span>
+<section class="section">
 
-                    🎓
+<div class="head">
 
-                </div>
+<b>
+Categories
+</b>
 
+</div>
 
-                <div class="news-body">
 
-                    <h3>
-                        Amakuru mashya ajyanye n'uburezi
-                    </h3>
+<div class="categories">
 
-                    <p>
-                        Amakuru y'amashuri,
-                        exams, scholarships n'amasomo.
-                    </p>
 
-                    <div class="news-date">
-                        Uyu munsi • Education Desk
-                    </div>
+<div class="category">
 
-                </div>
+<div class="icon">
+🎓
+</div>
 
+<b>
+Uburezi
+</b>
 
-            </article>
+<p>
+Amakuru y'amashuri,
+scholarships n'ibizamini.
+</p>
 
+</div>
 
-            <article class="news-card searchable">
 
+<div class="category">
 
-                <div class="news-image">
+<div class="icon">
+🏥
+</div>
 
-                    <span class="news-category">
-                        OPPORTUNITY
-                    </span>
+<b>
+Ubuzima
+</b>
 
-                    💼
+<p>
+Amakuru n'ubumenyi ku buzima.
+</p>
 
-                </div>
+</div>
 
 
-                <div class="news-body">
+<div class="category">
 
-                    <h3>
-                        Amahirwe mashya y'akazi
-                    </h3>
+<div class="icon">
+💰
+</div>
 
-                    <p>
-                        Jobs, internships,
-                        scholarships n'andi mahirwe.
-                    </p>
+<b>
+Business
+</b>
 
-                    <div class="news-date">
-                        Uyu munsi • Opportunities Desk
-                    </div>
+<p>
+Ubucuruzi, finance n'iterambere.
+</p>
 
-                </div>
+</div>
 
 
-            </article>
+<div class="category">
 
+<div class="icon">
+⚽
+</div>
 
-        </div>
+<b>
+Imikino
+</b>
 
+<p>
+Football n'andi makuru y'imikino.
+</p>
 
-        <div
-            class="no-results"
-            id="noResults">
+</div>
 
-            Nta makuru ajyanye n'ibyo washakishije
-            yabonetse.
 
-        </div>
+</div>
 
+</section>
 
-    </section>
 
+<!-- RWANDA / WORLD -->
 
-    <!-- =====================================================
-         START TIMES AND DEADLINES
-    ====================================================== -->
+<div class="two section">
 
-    <section
-        class="section"
-        id="deadlines">
 
+<div class="panel">
 
-        <div class="section-header">
+<b>
+🇷🇼 Rwanda
+</b>
 
-            <div class="section-title">
-                ⏰ Start Times & Deadlines
-            </div>
+<div class="item">
+Amakuru y'u Rwanda
+<span class="tag">
+NEWS
+</span>
+</div>
 
-            <a
-                href="#jobs"
-                class="view-all">
+<div class="item">
+Development
+<span class="tag">
+NEWS
+</span>
+</div>
 
-                Opportunities ›
+</div>
 
-            </a>
 
-        </div>
+<div class="panel">
 
+<b>
+🌍 World
+</b>
 
-        <div class="deadline-grid">
+<div class="item">
+International News
+<span class="tag">
+WORLD
+</span>
+</div>
 
+<div class="item">
+Africa News
+<span class="tag">
+AFRICA
+</span>
+</div>
 
-            <!-- ================= JOB ================= -->
+</div>
 
-            <article
-                class="deadline-card searchable"
-                data-start="2026-10-01T08:00:00+02:00"
-                data-deadline="2026-10-30T23:59:00+02:00"
-                data-title="New Job Opportunity"
-                data-type="job">
+</div>
 
 
-                <div class="deadline-category">
-                    💼 JOB
-                </div>
+<!-- ABOUT -->
 
+<section class="section panel">
 
-                <h3>
-                    New Job Opportunity
-                </h3>
+<b>
+ℹ️ About SOBANUKIRWA TV
+</b>
 
+<p>
 
-                <div class="deadline-row">
+<strong>SOBANUKIRWA TV</strong>
+ni urubuga rugamije kugeza ku bantu
+amakuru, ibiganiro, uburezi, ubuzima,
+business, imikino n'amahirwe atandukanye.
 
-                    <span>
-                        Start Time
-                    </span>
+</p>
 
-                    <strong>
-                        01 Oct 2026 • 08:00
-                    </strong>
+</section>
 
-                </div>
 
+<!-- CONTACT -->
 
-                <div class="deadline-row">
+<section class="section panel">
 
-                    <span>
-                        Deadline
-                    </span>
+<b>
+📞 Contact SOBANUKIRWA TV
+</b>
 
-                    <strong>
-                        30 Oct 2026 • 23:59
-                    </strong>
+<div class="item">
 
-                </div>
+📱 Phone
 
+<strong>
+0787126902
+</strong>
 
-                <div class="countdown">
+</div>
 
-                    ⏳
+<div class="item">
 
-                    <span class="countdown-value">
-                        Calculating...
-                    </span>
+📍 Location
 
-                </div>
+<span>
+Kigali, Rwanda
+</span>
 
+</div>
 
-                <span class="deadline-status">
-                    CHECKING...
-                </span>
+</section>
 
 
-            </article>
+<!-- FOOTER -->
 
+<footer class="footer">
 
-            <!-- ================= SCHOLARSHIP ================= -->
+<strong
+style="color:#0866b3;font-size:14px">
 
-            <article
-                class="deadline-card searchable"
-                data-start="2026-10-05T08:00:00+02:00"
-                data-deadline="2026-11-15T23:59:00+02:00"
-                data-title="Scholarship Opportunity"
-                data-type="scholarship">
+SOBANUKIRWA TV
 
+</strong>
 
-                <div class="deadline-category">
-                    🎓 SCHOLARSHIP
-                </div>
+<br><br>
 
+Amakuru • Uburezi • Ubuzima •
+Business • Imikino • Opportunities
 
-                <h3>
-                    Scholarship Opportunity
-                </h3>
 
+<div class="social">
 
-                <div class="deadline-row">
+<span>
+f
+</span>
 
-                    <span>
-                        Start Time
-                    </span>
+<span>
+▶
+</span>
 
-                    <strong>
-                        05 Oct 2026 • 08:00
-                    </strong>
+<span>
+☎
+</span>
 
-                </div>
+<span>
+♪
+</span>
 
+</div>
 
-                <div class="deadline-row">
 
-                    <span>
-                        Deadline
-                    </span>
+© 2026 SOBANUKIRWA TV.
+All Rights Reserved.
 
-                    <strong>
-                        15 Nov 2026 • 23:59
-                    </strong>
-
-                </div>
-
-
-                <div class="countdown">
-
-                    ⏳
-
-                    <span class="countdown-value">
-                        Calculating...
-                    </span>
-
-                </div>
-
-
-                <span class="deadline-status">
-                    CHECKING...
-                </span>
-
-
-            </article>
-
-
-            <!-- ================= EVENT ================= -->
-
-            <article
-                class="deadline-card searchable"
-                data-start="2026-10-10T09:00:00+02:00"
-                data-deadline="2026-10-20T18:00:00+02:00"
-                data-title="SOBANUKIRWA TV Event"
-                data-type="event">
-
-
-                <div class="deadline-category">
-                    📅 EVENT
-                </div>
-
-
-                <h3>
-                    SOBANUKIRWA TV Event
-                </h3>
-
-
-                <div class="deadline-row">
-
-                    <span>
-                        Start Time
-                    </span>
-
-                    <strong>
-                        10 Oct 2026 • 09:00
-                    </strong>
-
-                </div>
-
-
-                <div class="deadline-row">
-
-                    <span>
-                        Deadline
-                    </span>
-
-                    <strong>
-                        20 Oct 2026 • 18:00
-                    </strong>
-
-                </div>
-
-
-                <div class="countdown">
-
-                    ⏳
-
-                    <span class="countdown-value">
-                        Calculating...
-                    </span>
-
-                </div>
-
-
-                <span class="deadline-status">
-                    CHECKING...
-                </span>
-
-
-            </article>
-
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         VIDEOS
-    ====================================================== -->
-
-    <section
-        class="section"
-        id="videos">
-
-
-        <div class="section-header">
-
-            <div class="section-title">
-                Videos & Interviews
-            </div>
-
-            <a
-                href="#"
-                class="view-all">
-
-                Videos zose ›
-
-            </a>
-
-        </div>
-
-
-        <div class="two-columns">
-
-
-            <div class="panel">
-
-
-                <div class="panel-title">
-                    🎥 Latest Videos
-                </div>
-
-
-                <div class="list-item">
-
-                    <span>
-                        ▶ Ikiganiro cya SOBANUKIRWA TV
-                    </span>
-
-                    <span class="tag">
-                        VIDEO
-                    </span>
-
-                </div>
-
-
-                <div class="list-item">
-
-                    <span>
-                        ▶ Interview y'uyu munsi
-                    </span>
-
-                    <span class="tag">
-                        INTERVIEW
-                    </span>
-
-                </div>
-
-
-                <div class="list-item">
-
-                    <span>
-                        ▶ Education Talk
-                    </span>
-
-                    <span class="tag">
-                        EDUCATION
-                    </span>
-
-                </div>
-
-
-                <div class="list-item">
-
-                    <span>
-                        ▶ Business & Development
-                    </span>
-
-                    <span class="tag">
-                        BUSINESS
-                    </span>
-
-                </div>
-
-
-            </div>
-
-
-            <!-- ================= OPPORTUNITIES ================= -->
-
-            <div
-                class="panel"
-                id="jobs">
-
-
-                <div class="panel-title">
-                    📢 Opportunities
-                </div>
-
-
-                <div class="list-item">
-
-                    <span>
-                        Jobs
-                    </span>
-
-                    <span class="tag new">
-                        NEW
-                    </span>
-
-                </div>
-
-
-                <div class="list-item">
-
-                    <span>
-                        Scholarships
-                    </span>
-
-                    <span class="tag new">
-                        NEW
-                    </span>
-
-                </div>
-
-
-                <div class="list-item">
-
-                    <span>
-                        Internships
-                    </span>
-
-                    <span class="tag new">
-                        NEW
-                    </span>
-
-                </div>
-
-
-            </div>
-
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         CATEGORIES
-    ====================================================== -->
-
-    <section class="section">
-
-
-        <div class="section-header">
-
-            <div class="section-title">
-                Categories
-            </div>
-
-        </div>
-
-
-        <div class="category-grid">
-
-
-            <div
-                class="category"
-                id="education">
-
-                <div class="category-icon">
-                    🎓
-                </div>
-
-                <h3>
-                    Uburezi
-                </h3>
-
-                <p>
-                    Amakuru y'amashuri,
-                    scholarships n'ibizamini.
-                </p>
-
-            </div>
-
-
-            <div
-                class="category"
-                id="health">
-
-                <div class="category-icon">
-                    🏥
-                </div>
-
-                <h3>
-                    Ubuzima
-                </h3>
-
-                <p>
-                    Amakuru n'ubumenyi
-                    ku buzima.
-                </p>
-
-            </div>
-
-
-            <div
-                class="category"
-                id="business">
-
-                <div class="category-icon">
-                    💰
-                </div>
-
-                <h3>
-                    Business
-                </h3>
-
-                <p>
-                    Ubucuruzi, finance
-                    n'iterambere.
-                </p>
-
-            </div>
-
-
-            <div
-                class="category"
-                id="sports">
-
-                <div class="category-icon">
-                    ⚽
-                </div>
-
-                <h3>
-                    Imikino
-                </h3>
-
-                <p>
-                    Football n'andi makuru
-                    y'imikino.
-                </p>
-
-            </div>
-
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         RWANDA & WORLD
-    ====================================================== -->
-
-    <section class="section">
-
-
-        <div class="two-columns">
-
-
-            <div
-                class="panel"
-                id="rwanda">
-
-
-                <div class="panel-title">
-                    🇷🇼 Rwanda
-                </div>
-
-
-                <div class="list-item">
-
-                    <span>
-                        Amakuru y'u Rwanda
-                    </span>
-
-                    <span class="tag">
-                        NEWS
-                    </span>
-
-                </div>
-
-
-                <div class="list-item">
-
-                    <span>
-                        Politics & Governance
-                    </span>
-
-                    <span class="tag">
-                        NEWS
-                    </span>
-
-                </div>
-
-
-                <div class="list-item">
-
-                    <span>
-                        Development
-                    </span>
-
-                    <span class="tag">
-                        NEWS
-                    </span>
-
-                </div>
-
-
-            </div>
-
-
-            <div
-                class="panel"
-                id="world">
-
-
-                <div class="panel-title">
-                    🌍 World
-                </div>
-
-
-                <div class="list-item">
-
-                    <span>
-                        International News
-                    </span>
-
-                    <span class="tag">
-                        WORLD
-                    </span>
-
-                </div>
-
-
-                <div class="list-item">
-
-                    <span>
-                        Africa News
-                    </span>
-
-                    <span class="tag">
-                        AFRICA
-                    </span>
-
-                </div>
-
-
-                <div class="list-item">
-
-                    <span>
-                        Technology
-                    </span>
-
-                    <span class="tag">
-                        TECH
-                    </span>
-
-                </div>
-
-
-            </div>
-
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         ABOUT
-    ====================================================== -->
-
-    <section
-        class="section"
-        id="about">
-
-
-        <div class="panel">
-
-
-            <div class="panel-title">
-                ℹ️ About SOBANUKIRWA TV
-            </div>
-
-
-            <p
-                style="
-                font-size:12px;
-                line-height:1.8;
-                color:#718096;
-                ">
-
-
-                <strong>
-                    SOBANUKIRWA TV
-                </strong>
-
-                ni urubuga rugamije kugeza ku bantu
-                amakuru, ibiganiro, uburezi, ubuzima,
-                business, imikino n'amahirwe atandukanye.
-
-
-                <br><br>
-
-
-                Intego yacu ni ugutanga amakuru
-                yizewe kandi afasha abaturage kumenya
-                ibibera mu Rwanda no ku isi.
-
-
-            </p>
-
-
-        </div>
-
-
-    </section>
-
-
-    <!-- =====================================================
-         CONTACT
-    ====================================================== -->
-
-    <section
-        class="section"
-        id="contact">
-
-
-        <div class="panel">
-
-
-            <div class="panel-title">
-                📞 Contact SOBANUKIRWA TV
-            </div>
-
-
-            <div class="list-item">
-
-                <span>
-                    📱 Phone
-                </span>
-
-                <strong>
-                    0787126902
-                </strong>
-
-            </div>
-
-
-            <div class="list-item">
-
-                <span>
-                    📍 Location
-                </span>
-
-                <span>
-                    Kigali, Rwanda
-                </span>
-
-            </div>
-
-
-            <div class="list-item">
-
-                <span>
-                    🌐 Website
-                </span>
-
-                <span>
-                    SOBANUKIRWA TV
-                </span>
-
-            </div>
-
-
-        </div>
-
-
-    </section>
-
-
-    <!-- =====================================================
-         FOOTER
-    ====================================================== -->
-
-    <footer class="footer">
-
-
-        <strong>
-            SOBANUKIRWA TV
-        </strong>
-
-
-        <br><br>
-
-
-        Amakuru • Uburezi • Ubuzima • Business •
-        Imikino • Opportunities
-
-
-        <div class="social">
-
-
-            <a
-                href="#"
-                title="Facebook">
-                f
-            </a>
-
-
-            <a
-                href="#"
-                title="YouTube">
-                ▶
-            </a>
-
-
-            <a
-                href="#"
-                title="WhatsApp">
-                ☎
-            </a>
-
-
-            <a
-                href="#"
-                title="TikTok">
-                ♪
-            </a>
-
-
-        </div>
-
-
-        © 2026 SOBANUKIRWA TV.
-        All Rights Reserved.
-
-
-    </footer>
+</footer>
 
 
 </main>
@@ -2456,665 +1183,640 @@ body{
 
 <script>
 
-/* =========================================================
-   SIDEBAR
-========================================================= */
+/************************************************
+ API
+************************************************/
 
-function toggleSidebar(){
-
-    document
-        .getElementById("sidebar")
-        .classList.toggle("open");
-
-}
+const API_URL =
+"https://script.google.com/macros/s/AKfycbxhQ1ibqGOXcd7j8JAZpOhLEY46_Pr8VTkLkclY2i-18O3N_1qwr71GgWm4-ycJYg8AmXQ/exec";
 
 
-/* =========================================================
-   NOTIFICATION
-========================================================= */
-
-function showNotification(){
-
-    alert(
-        "SOBANUKIRWA TV: Nta notification nshya ufite ubu."
-    );
-
-}
+let contents=[];
 
 
-/* =========================================================
-   LANGUAGE
-========================================================= */
+/************************************************
+ LOAD
+************************************************/
 
-function changeLanguage(){
+async function loadContent(){
 
-    alert(
-        "Language: Kinyarwanda / English"
-    );
+ try{
 
-}
+  const response =
+  await fetch(
+   API_URL+"?action=content"
+  );
 
+  const result =
+  await response.json();
 
-/* =========================================================
-   SEARCH
-========================================================= */
+  if(result.success){
 
-const searchInput =
-    document.getElementById("searchInput");
+   contents =
+   result.data || [];
 
-const searchable =
-    document.querySelectorAll(".searchable");
+   renderAll();
 
-const noResults =
-    document.getElementById("noResults");
+  }else{
 
+   showError();
 
-if(searchInput){
+  }
 
-    searchInput.addEventListener(
-        "input",
-        function(){
+ }catch(error){
 
-            const query =
-                this.value
-                .toLowerCase()
-                .trim();
+  console.error(error);
 
-            let found = 0;
+  showError();
 
-
-            searchable.forEach(function(item){
-
-                const text =
-                    item.innerText
-                    .toLowerCase();
-
-
-                if(
-                    query === "" ||
-                    text.includes(query)
-                ){
-
-                    item.style.display = "";
-
-                    found++;
-
-                }else{
-
-                    item.style.display = "none";
-
-                }
-
-            });
-
-
-            if(
-                query !== "" &&
-                found === 0
-            ){
-
-                noResults.style.display =
-                    "block";
-
-            }else{
-
-                noResults.style.display =
-                    "none";
-
-            }
-
-        }
-    );
+ }
 
 }
 
 
-/* =========================================================
-   ACTIVE MENU
-========================================================= */
+/************************************************
+ RENDER ALL
+************************************************/
 
-document
-    .querySelectorAll(".nav-link")
-    .forEach(function(link){
+function renderAll(){
 
-        link.addEventListener(
-            "click",
-            function(){
-
-                document
-                    .querySelectorAll(".nav-link")
-                    .forEach(function(item){
-
-                        item.classList.remove(
-                            "active"
-                        );
-
-                    });
+ const search =
+ document.getElementById(
+  "searchInput"
+ ).value
+ .toLowerCase();
 
 
-                this.classList.add("active");
+ const filtered =
+ contents.filter(item => {
+
+  return (
+
+   item.title+
+   " "+
+   item.description+
+   " "+
+   item.type
+
+  )
+  .toLowerCase()
+  .includes(search);
+
+ });
 
 
-                if(window.innerWidth <= 700){
+ renderNews(filtered);
 
-                    document
-                        .getElementById("sidebar")
-                        .classList.remove("open");
+ renderDeadlines(filtered);
 
-                }
+ renderOpportunities(filtered);
 
-            }
-        );
+ updateTiming();
 
-    });
+}
 
 
-/* =========================================================
-   CURRENT DATE & TIME
-========================================================= */
+/************************************************
+ NEWS
+************************************************/
 
-function updateCurrentTime(){
+function renderNews(data){
 
-    const now =
-        new Date();
+ const box =
+ document.getElementById(
+  "newsContainer"
+ );
 
-
-    const time =
-        now.toLocaleTimeString(
-            "en-GB",
-            {
-                hour:"2-digit",
-                minute:"2-digit",
-                second:"2-digit"
-            }
-        );
+ const news =
+ data.filter(
+  x => x.type==="NEWS"
+ );
 
 
-    const date =
-        now.toLocaleDateString(
-            "en-GB",
-            {
-                day:"2-digit",
-                month:"2-digit",
-                year:"numeric"
-            }
-        );
+ if(news.length===0){
+
+  box.innerHTML =
+  `<div class="empty">
+   Nta makuru ahari ubu.
+  </div>`;
+
+  return;
+
+ }
 
 
-    const timeElement =
-        document.getElementById(
-            "currentTime"
-        );
+ box.innerHTML="";
 
 
-    const dateElement =
-        document.getElementById(
-            "currentDate"
-        );
+ news.slice(0,6)
+ .forEach(item => {
+
+  const card =
+  document.createElement("div");
+
+  card.className="card";
+
+  card.style.padding="0";
+  card.style.overflow="hidden";
+
+  let imageHTML =
+  item.image
+  ? `<img src="${escapeAttr(item.image)}"
+       onerror="this.style.display='none'">`
+  : "📰";
 
 
-    if(timeElement){
+  card.innerHTML=`
 
-        timeElement.textContent =
-            time;
+   <div class="newsimg">
+    ${imageHTML}
+   </div>
 
+   <div class="newsbody">
+
+    <span class="tag">
+     ${escapeHTML(item.type)}
+    </span>
+
+    <h3>
+     ${escapeHTML(item.title)}
+    </h3>
+
+    <p>
+     ${escapeHTML(item.description)}
+    </p>
+
+    ${
+     item.link
+     ? `<a class="btn white"
+       href="${escapeAttr(item.link)}"
+       target="_blank">
+       Soma byinshi →
+       </a>`
+     : ""
     }
 
+   </div>
+  `;
 
-    if(dateElement){
+  box.appendChild(card);
 
-        dateElement.textContent =
-            date;
-
-    }
-
-}
-
-
-/* =========================================================
-   COUNTDOWN FORMAT
-========================================================= */
-
-function formatCountdown(milliseconds){
-
-    if(milliseconds <= 0){
-
-        return "00d 00h 00m 00s";
-
-    }
-
-
-    let totalSeconds =
-        Math.floor(
-            milliseconds / 1000
-        );
-
-
-    const days =
-        Math.floor(
-            totalSeconds / 86400
-        );
-
-
-    totalSeconds %=
-        86400;
-
-
-    const hours =
-        Math.floor(
-            totalSeconds / 3600
-        );
-
-
-    totalSeconds %=
-        3600;
-
-
-    const minutes =
-        Math.floor(
-            totalSeconds / 60
-        );
-
-
-    const seconds =
-        totalSeconds % 60;
-
-
-    return (
-
-        String(days).padStart(2,"0")
-        + "d " +
-
-        String(hours).padStart(2,"0")
-        + "h " +
-
-        String(minutes).padStart(2,"0")
-        + "m " +
-
-        String(seconds).padStart(2,"0")
-        + "s"
-
-    );
+ });
 
 }
 
 
-/* =========================================================
-   DEADLINE ENGINE
-========================================================= */
+/************************************************
+ DEADLINES
+************************************************/
 
-function updateDeadlines(){
+function renderDeadlines(data){
 
-    const now =
-        new Date();
+ const box =
+ document.getElementById(
+  "deadlineContainer"
+ );
 
-
-    const cards =
-        document.querySelectorAll(
-            ".deadline-card"
-        );
-
-
-    cards.forEach(function(card){
-
-        const start =
-            new Date(
-                card.dataset.start
-            );
+ const opportunities =
+ data.filter(
+  x =>
+   x.type==="JOB" ||
+   x.type==="SCHOLARSHIP" ||
+   x.type==="EVENT"
+ );
 
 
-        const deadline =
-            new Date(
-                card.dataset.deadline
-            );
+ if(opportunities.length===0){
+
+  box.innerHTML =
+  `<div class="empty">
+   Nta Jobs, Scholarships cyangwa Events
+   biriho ubu.
+  </div>`;
+
+  return;
+
+ }
 
 
-        const countdown =
-            card.querySelector(
-                ".countdown-value"
-            );
+ box.innerHTML="";
 
 
-        const status =
-            card.querySelector(
-                ".deadline-status"
-            );
+ opportunities.slice(0,9)
+ .forEach(item => {
+
+  const card =
+  document.createElement("div");
+
+  card.className=
+   "panel deadline";
 
 
-        card.classList.remove(
-            "open",
-            "closed",
-            "not-started"
-        );
+  const statusClass =
+   item.status==="CLOSED"
+   ? "closed"
+   : item.status==="NOT STARTED"
+   ? "notstarted"
+   : "";
 
 
-        status.classList.remove(
-            "open",
-            "closed",
-            "not-started"
-        );
+  card.innerHTML=`
+
+   <span class="tag">
+    ${iconForType(item.type)}
+    ${escapeHTML(item.type)}
+   </span>
+
+   <h3>
+    ${escapeHTML(item.title)}
+   </h3>
+
+   <p>
+    ${escapeHTML(item.description)}
+   </p>
+
+   <div class="row">
+
+    <span>
+     Start Time
+    </span>
+
+    <b>
+     ${formatDate(item.startTime)}
+    </b>
+
+   </div>
 
 
-        /* ==========================================
-           NOT STARTED
-        ========================================== */
+   <div class="row">
 
-        if(now < start){
+    <span>
+     Deadline
+    </span>
 
-            const remaining =
-                start.getTime()
-                -
-                now.getTime();
+    <b>
+     ${formatDate(item.deadline)}
+    </b>
 
-
-            card.classList.add(
-                "not-started"
-            );
+   </div>
 
 
-            status.classList.add(
-                "not-started"
-            );
+   <div class="count"
+   data-start="${escapeAttr(item.startTime)}"
+   data-deadline="${escapeAttr(item.deadline)}">
+
+   </div>
 
 
-            status.textContent =
-                "NOT STARTED";
+   <span class="status ${statusClass}">
+    ${escapeHTML(item.status)}
+   </span>
 
 
-            countdown.textContent =
-                "Starts in: "
-                +
-                formatCountdown(
-                    remaining
-                );
+   ${
+    item.link
+    ? `<br><br>
+       <a
+       class="btn white"
+       href="${escapeAttr(item.link)}"
+       target="_blank">
+       ${
+        item.type==="EVENT"
+        ? "Register →"
+        : "Apply Now →"
+       }
+       </a>`
+    : ""
+   }
 
+  `;
 
-            return;
+  box.appendChild(card);
 
-        }
+ });
 
-
-        /* ==========================================
-           CLOSED
-        ========================================== */
-
-        if(now >= deadline){
-
-            card.classList.add(
-                "closed"
-            );
-
-
-            status.classList.add(
-                "closed"
-            );
-
-
-            status.textContent =
-                "CLOSED";
-
-
-            countdown.textContent =
-                "Deadline has passed";
-
-
-            return;
-
-        }
-
-
-        /* ==========================================
-           OPEN NOW
-        ========================================== */
-
-        const remaining =
-            deadline.getTime()
-            -
-            now.getTime();
-
-
-        card.classList.add(
-            "open"
-        );
-
-
-        status.classList.add(
-            "open"
-        );
-
-
-        status.textContent =
-            "OPEN NOW";
-
-
-        countdown.textContent =
-            "Time left: "
-            +
-            formatCountdown(
-                remaining
-            );
-
-    });
+ updateCountdowns();
 
 }
 
 
-/* =========================================================
-   TOP DEADLINE BAR
-========================================================= */
+/************************************************
+ OPPORTUNITIES
+************************************************/
 
-function updateTopTiming(){
+function renderOpportunities(data){
 
-    const now =
-        new Date();
+ const box =
+ document.getElementById(
+  "opportunityList"
+ );
 
+ const list =
+ data.filter(
+  x =>
+   x.type==="JOB" ||
+   x.type==="SCHOLARSHIP"
+ );
 
-    const cards =
-        document.querySelectorAll(
-            ".deadline-card"
-        );
 
+ if(list.length===0){
 
-    cards.forEach(function(card){
+  box.innerHTML =
+  `<div class="item">
+   No new opportunities
+  </div>`;
 
-        const type =
-            card.dataset.type;
+  return;
 
+ }
 
-        const start =
-            new Date(
-                card.dataset.start
-            );
 
+ box.innerHTML="";
 
-        const deadline =
-            new Date(
-                card.dataset.deadline
-            );
 
+ list.slice(0,5)
+ .forEach(item => {
 
-        let pill = null;
-        let countdown = null;
+  const div =
+  document.createElement("div");
 
+  div.className="item";
 
-        /* JOB */
+  div.innerHTML=`
 
-        if(type === "job"){
+   <span>
+    ${escapeHTML(item.title)}
+   </span>
 
-            pill =
-                document.getElementById(
-                    "topJobTiming"
-                );
+   <span class="tag">
+    ${escapeHTML(item.type)}
+   </span>
 
+  `;
 
-            countdown =
-                document.getElementById(
-                    "topJobCountdown"
-                );
+  box.appendChild(div);
 
-        }
-
-
-        /* SCHOLARSHIP */
-
-        if(type === "scholarship"){
-
-            pill =
-                document.getElementById(
-                    "topScholarshipTiming"
-                );
-
-
-            countdown =
-                document.getElementById(
-                    "topScholarshipCountdown"
-                );
-
-        }
-
-
-        /* EVENT */
-
-        if(type === "event"){
-
-            pill =
-                document.getElementById(
-                    "topEventTiming"
-                );
-
-
-            countdown =
-                document.getElementById(
-                    "topEventCountdown"
-                );
-
-        }
-
-
-        if(!pill || !countdown){
-
-            return;
-
-        }
-
-
-        pill.classList.remove(
-            "open",
-            "warning",
-            "closed",
-            "not-started"
-        );
-
-
-        /* ==========================================
-           NOT STARTED
-        ========================================== */
-
-        if(now < start){
-
-            const remaining =
-                start.getTime()
-                -
-                now.getTime();
-
-
-            pill.classList.add(
-                "not-started"
-            );
-
-
-            countdown.textContent =
-                "Starts "
-                +
-                formatCountdown(
-                    remaining
-                );
-
-
-            return;
-
-        }
-
-
-        /* ==========================================
-           CLOSED
-        ========================================== */
-
-        if(now >= deadline){
-
-            pill.classList.add(
-                "closed"
-            );
-
-
-            countdown.textContent =
-                "CLOSED";
-
-
-            return;
-
-        }
-
-
-        /* ==========================================
-           OPEN
-        ========================================== */
-
-        const remaining =
-            deadline.getTime()
-            -
-            now.getTime();
-
-
-        pill.classList.add(
-            "open"
-        );
-
-
-        countdown.textContent =
-            formatCountdown(
-                remaining
-            );
-
-    });
+ });
 
 }
 
 
-/* =========================================================
-   UPDATE EVERYTHING
-========================================================= */
+/************************************************
+ COUNTDOWN
+************************************************/
 
-function updateAllTiming(){
+function updateCountdowns(){
 
-    updateCurrentTime();
+ document
+ .querySelectorAll(".count")
+ .forEach(el => {
 
-    updateDeadlines();
+  const start =
+  el.dataset.start;
 
-    updateTopTiming();
+  const deadline =
+  el.dataset.deadline;
+
+  const now =
+  new Date();
+
+  if(start){
+
+   const s =
+   new Date(start);
+
+   if(now<s){
+
+    el.innerHTML =
+    "⏳ Starts in: "+
+    countdown(s-now);
+
+    return;
+   }
+
+  }
+
+
+  if(deadline){
+
+   const d =
+   new Date(deadline);
+
+   if(now<d){
+
+    el.innerHTML =
+    "⏳ Time left: "+
+    countdown(d-now);
+
+    return;
+   }
+
+   el.innerHTML =
+   "⛔ Deadline passed";
+
+  }
+
+ });
 
 }
 
 
-/* =========================================================
-   INITIAL UPDATE
-========================================================= */
+function countdown(ms){
 
-updateAllTiming();
+ if(ms<=0)
+  return "0d 0h 0m";
+
+ let total =
+ Math.floor(ms/1000);
+
+ let days =
+ Math.floor(total/86400);
+
+ total%=86400;
+
+ let hours =
+ Math.floor(total/3600);
+
+ total%=3600;
+
+ let minutes =
+ Math.floor(total/60);
+
+ let seconds =
+ total%60;
+
+ return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+}
 
 
-/* =========================================================
-   UPDATE EVERY SECOND
-========================================================= */
+/************************************************
+ TIMING PILLS
+************************************************/
+
+function updateTiming(){
+
+ const now =
+ new Date();
+
+ const jobs =
+ contents.filter(
+  x =>
+   x.type==="JOB" &&
+   x.status==="OPEN NOW"
+ );
+
+ const scholarships =
+ contents.filter(
+  x =>
+   x.type==="SCHOLARSHIP" &&
+   x.status==="OPEN NOW"
+ );
+
+ const events =
+ contents.filter(
+  x =>
+   x.type==="EVENT"
+ );
+
+ document.getElementById(
+  "jobsPill"
+ ).innerText =
+ `🟢 Jobs: ${jobs.length} Open`;
+
+ document.getElementById(
+  "scholarshipPill"
+ ).innerText =
+ `🟢 Scholarships: ${scholarships.length} Open`;
+
+ document.getElementById(
+  "eventPill"
+ ).innerText =
+ `📅 Events: ${events.length}`;
+
+}
+
+
+/************************************************
+ CLOCK
+************************************************/
+
+function updateClock(){
+
+ const now =
+ new Date();
+
+ document.getElementById(
+  "clock"
+ ).innerText =
+ now.toLocaleTimeString(
+  "en-GB"
+ );
+
+ document.getElementById(
+  "date"
+ ).innerText =
+ now.toLocaleDateString(
+  "en-GB"
+ );
+
+ updateCountdowns();
+
+}
 
 setInterval(
-    updateAllTiming,
-    1000
+ updateClock,
+ 1000
 );
+
+
+/************************************************
+ HELPERS
+************************************************/
+
+function formatDate(value){
+
+ if(!value)
+  return "-";
+
+ const d =
+ new Date(value);
+
+ if(isNaN(d.getTime()))
+  return value;
+
+ return d.toLocaleString(
+  "en-GB",
+  {
+   dateStyle:"medium",
+   timeStyle:"short"
+  }
+ );
+
+}
+
+
+function iconForType(type){
+
+ if(type==="JOB")
+  return "💼";
+
+ if(type==="SCHOLARSHIP")
+  return "🎓";
+
+ if(type==="EVENT")
+  return "📅";
+
+ return "📰";
+
+}
+
+
+function escapeHTML(str){
+
+ return String(str || "")
+ .replace(/&/g,"&amp;")
+ .replace(/</g,"&lt;")
+ .replace(/>/g,"&gt;")
+ .replace(/"/g,"&quot;")
+ .replace(/'/g,"&#039;");
+
+}
+
+
+function escapeAttr(str){
+
+ return String(str || "")
+ .replace(/"/g,"%22")
+ .replace(/'/g,"%27");
+
+}
+
+
+function showError(){
+
+ document.getElementById(
+  "newsContainer"
+ ).innerHTML =
+ `<div class="empty">
+  ⚠️ Website ntishoboye kubona amakuru
+  muri Google Sheets.
+ </div>`;
+
+}
+
+
+/************************************************
+ START
+************************************************/
+
+updateClock();
+
+loadContent();
 
 </script>
 
 
 </body>
-</html>
 
+</html>
