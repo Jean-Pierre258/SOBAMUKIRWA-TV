@@ -1,3484 +1,792 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>SOBANUKIRWA TV — Admin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SOBANUKIRWA TV — Admin Dashboard</title>
 
 <style>
 :root{
-  --primary:#0b5ed7;
-  --primary-dark:#084298;
-  --success:#198754;
-  --danger:#dc3545;
-  --warning:#ffc107;
+  --blue:#0b5ed7;
   --dark:#132238;
-  --muted:#6b7280;
-  --light:#f4f7fb;
-  --white:#fff;
+  --green:#198754;
+  --red:#dc3545;
+  --orange:#f59e0b;
+  --bg:#f3f6fb;
   --border:#e2e8f0;
-  --shadow:0 10px 30px rgba(0,0,0,.07);
+  --muted:#64748b;
 }
-
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-body{
-  font-family:Inter,Arial,sans-serif;
-  background:var(--light);
-  color:#1f2937;
-}
-
-button,input,select,textarea{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-.hidden{
-  display:none!important;
-}
-
-/* LOGIN */
-
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:#263445}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+.btn{border:0;border-radius:8px;padding:10px 14px;font-weight:bold}
+.primary{background:var(--blue);color:white}
+.success{background:var(--green);color:white}
+.danger{background:var(--red);color:white}
+.warning{background:#fbbf24;color:#222}
+.light{background:#eaf0f7;color:#263445}
 #loginScreen{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  background:linear-gradient(
-    135deg,
-    #0b5ed7,
-    #084298,
-    #071c38
-  );
+ min-height:100vh;display:flex;align-items:center;justify-content:center;
+ padding:20px;background:linear-gradient(135deg,#0b5ed7,#06345f,#071c38)
 }
-
-.login-box{
-  width:100%;
-  max-width:420px;
-  background:#fff;
-  border-radius:24px;
-  padding:34px;
-  box-shadow:0 30px 80px rgba(0,0,0,.25);
+.login-card{
+ width:100%;max-width:420px;background:white;padding:32px;
+ border-radius:20px;box-shadow:0 20px 60px #0003
 }
-
 .logo{
-  width:78px;
-  height:78px;
-  margin:auto auto 15px;
-  border-radius:22px;
-  background:var(--primary);
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:900;
-  font-size:25px;
+ width:70px;height:70px;border-radius:18px;background:var(--blue);
+ color:white;display:grid;place-items:center;margin:auto auto 15px;
+ font-size:24px;font-weight:900
 }
-
-.login-box h1{
-  text-align:center;
-  font-size:25px;
-  color:var(--dark);
+.login-card h2{text-align:center;margin:5px}
+.login-card p{text-align:center;color:var(--muted)}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:13px;font-weight:bold;margin-bottom:6px}
+.field input,.field select,.field textarea{
+ width:100%;padding:11px;border:1px solid var(--border);
+ border-radius:8px;background:white
 }
-
-.login-box p{
-  text-align:center;
-  color:var(--muted);
-  margin:7px 0 25px;
-}
-
-.error{
-  display:none;
-  background:#fdecec;
-  border:1px solid #f4b8b8;
-  color:#a61b1b;
-  padding:11px;
-  border-radius:10px;
-  margin-bottom:15px;
-}
-
-.field{
-  margin-bottom:16px;
-}
-
-.field label{
-  display:block;
-  margin-bottom:7px;
-  font-weight:700;
-  font-size:13px;
-}
-
-.field input,
-.field select,
-.field textarea{
-  width:100%;
-  padding:12px 13px;
-  border:1px solid var(--border);
-  border-radius:11px;
-  outline:none;
-  background:#fff;
-}
-
-.field textarea{
-  min-height:130px;
-  resize:vertical;
-}
-
-.field input:focus,
-.field select:focus,
-.field textarea:focus{
-  border-color:var(--primary);
-  box-shadow:0 0 0 3px rgba(11,94,215,.1);
-}
-
-/* BUTTONS */
-
-.btn{
-  border:0;
-  border-radius:10px;
-  padding:10px 15px;
-  font-weight:750;
-}
-
-.btn-primary{
-  background:var(--primary);
-  color:#fff;
-}
-
-.btn-primary:hover{
-  background:var(--primary-dark);
-}
-
-.btn-success{
-  background:var(--success);
-  color:#fff;
-}
-
-.btn-danger{
-  background:var(--danger);
-  color:#fff;
-}
-
-.btn-warning{
-  background:var(--warning);
-  color:#111;
-}
-
-.btn-light{
-  background:#edf2f7;
-  color:#26364d;
-}
-
-.btn-block{
-  width:100%;
-}
-
-/* TOP */
-
+.field textarea{min-height:120px;resize:vertical}
+.error{color:#b42318;background:#fee4e2;padding:10px;border-radius:8px;margin:12px 0}
 .topbar{
-  height:70px;
-  background:var(--dark);
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 20px;
-  position:sticky;
-  top:0;
-  z-index:1000;
+ height:68px;background:var(--dark);color:white;display:flex;
+ justify-content:space-between;align-items:center;padding:0 18px;
+ position:sticky;top:0;z-index:10
 }
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:11px;
-}
-
-.brand-icon{
-  width:44px;
-  height:44px;
-  border-radius:12px;
-  background:var(--primary);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:900;
-}
-
-.brand-text strong{
-  display:block;
-}
-
-.brand-text span{
-  display:block;
-  font-size:11px;
-  opacity:.7;
-}
-
-.top-actions{
-  display:flex;
-  gap:8px;
-}
-
-.menu-btn{
-  display:none;
-  border:0;
-  background:transparent;
-  color:#fff;
-  font-size:24px;
-}
-
-/* LAYOUT */
-
-.layout{
-  min-height:calc(100vh - 70px);
-  display:grid;
-  grid-template-columns:245px 1fr;
-}
-
+.brand{display:flex;align-items:center;gap:10px;font-weight:bold}
+.brand-icon{background:var(--blue);padding:12px;border-radius:10px}
+.top-actions{display:flex;gap:8px}
+.layout{display:grid;grid-template-columns:235px 1fr;min-height:calc(100vh - 68px)}
 .sidebar{
-  background:#fff;
-  border-right:1px solid var(--border);
-  padding:15px 12px;
-  position:sticky;
-  top:70px;
-  height:calc(100vh - 70px);
-  overflow-y:auto;
+ background:white;border-right:1px solid var(--border);
+ padding:15px;position:sticky;top:68px;height:calc(100vh - 68px);
+ overflow:auto
 }
-
-.sidebar-title{
-  font-size:10px;
-  color:#97a1b0;
-  text-transform:uppercase;
-  letter-spacing:.08em;
-  font-weight:800;
-  padding:12px 10px 7px;
+.nav-title{font-size:11px;color:#94a3b8;font-weight:bold;margin:18px 8px 7px}
+.nav-btn{
+ display:block;width:100%;border:0;background:white;text-align:left;
+ padding:12px;border-radius:8px;margin:3px 0;color:#344054;font-weight:bold
 }
-
-.side-link{
-  width:100%;
-  border:0;
-  background:transparent;
-  text-align:left;
-  padding:11px 12px;
-  border-radius:10px;
-  display:flex;
-  gap:10px;
-  align-items:center;
-  color:#344054;
-  font-weight:650;
-  margin-bottom:3px;
+.nav-btn:hover,.nav-btn.active{background:#eaf2ff;color:var(--blue)}
+main{padding:22px;min-width:0}
+.page{display:none}
+.page.active{display:block}
+.page-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:20px}
+.page-head h2{margin:0;color:var(--dark)}
+.page-head p{color:var(--muted);font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:13px;margin-bottom:20px}
+.stat,.card{
+ background:white;border:1px solid var(--border);border-radius:13px;
+ padding:17px;box-shadow:0 4px 15px #14243b0a
 }
-
-.side-link:hover,
-.side-link.active{
-  background:#eaf2ff;
-  color:var(--primary);
+.stat span{font-size:11px;color:var(--muted);font-weight:bold;text-transform:uppercase}
+.stat strong{display:block;font-size:28px;margin-top:8px;color:var(--dark)}
+.card{margin-bottom:18px}
+.card h3{margin:0 0 15px}
+.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:15px}
+.toolbar input,.toolbar select{
+ padding:10px;border:1px solid var(--border);border-radius:8px;background:white
 }
-
-/* MAIN */
-
-.main{
-  padding:22px;
-  min-width:0;
-}
-
-.page{
-  display:none;
-}
-
-.page.active{
-  display:block;
-}
-
-.page-head{
-  display:flex;
-  justify-content:space-between;
-  gap:15px;
-  margin-bottom:20px;
-}
-
-.page-head h2{
-  color:var(--dark);
-  font-size:27px;
-}
-
-.page-head p{
-  color:var(--muted);
-  margin-top:4px;
-  font-size:13px;
-}
-
-/* CARDS */
-
-.card{
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:16px;
-  box-shadow:var(--shadow);
-  padding:19px;
-  margin-bottom:18px;
-}
-
-.card-head{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  margin-bottom:16px;
-}
-
-.card-head h3{
-  font-size:17px;
-  color:var(--dark);
-}
-
-/* STATS */
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:14px;
-  margin-bottom:20px;
-}
-
-.stat{
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:15px;
-  padding:19px;
-  box-shadow:var(--shadow);
-}
-
-.stat span{
-  display:block;
-  color:var(--muted);
-  font-size:11px;
-  font-weight:750;
-  text-transform:uppercase;
-}
-
-.stat strong{
-  display:block;
-  color:var(--dark);
-  font-size:29px;
-  margin-top:7px;
-}
-
-/* FORM */
-
-.form-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:15px;
-}
-
-.full{
-  grid-column:1/-1;
-}
-
-.checkbox-row{
-  display:flex;
-  flex-wrap:wrap;
-  gap:20px;
-  padding:12px;
-  background:#f8fafc;
-  border:1px solid var(--border);
-  border-radius:11px;
-}
-
-.checkbox-row label{
-  display:flex;
-  align-items:center;
-  gap:7px;
-  font-weight:650;
-  font-size:13px;
-}
-
-.form-actions{
-  display:flex;
-  justify-content:flex-end;
-  gap:10px;
-  margin-top:18px;
-}
-
-/* TOOLBAR */
-
-.toolbar{
-  display:flex;
-  flex-wrap:wrap;
-  gap:9px;
-  margin-bottom:15px;
-}
-
-.toolbar input,
-.toolbar select{
-  padding:10px 12px;
-  border:1px solid var(--border);
-  border-radius:10px;
-  background:#fff;
-}
-
-.toolbar input{
-  min-width:230px;
-  flex:1;
-}
-
-/* TABLE */
-
-.table-wrap{
-  overflow-x:auto;
-}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:1100px;
-}
-
-th{
-  text-align:left;
-  background:#f7f9fc;
-  color:#5b6878;
-  padding:11px;
-  font-size:11px;
-  border-bottom:1px solid var(--border);
-  white-space:nowrap;
-}
-
-td{
-  padding:12px 11px;
-  border-bottom:1px solid #edf0f3;
-  vertical-align:top;
-  font-size:12px;
-}
-
-.badge{
-  display:inline-flex;
-  padding:5px 9px;
-  border-radius:999px;
-  font-size:10px;
-  font-weight:800;
-  white-space:nowrap;
-}
-
-.badge-open{
-  background:#dcfce7;
-  color:#166534;
-}
-
-.badge-closed{
-  background:#fee2e2;
-  color:#991b1b;
-}
-
-.badge-not{
-  background:#fff7d6;
-  color:#8a5a00;
-}
-
-.badge-published{
-  background:#dcfce7;
-  color:#166534;
-}
-
-.badge-draft{
-  background:#edf2f7;
-  color:#4b5563;
-}
-
-.muted{
-  color:var(--muted);
-}
-
-/* SETTINGS */
-
-.connection{
-  padding:14px;
-  border-radius:12px;
-  margin-bottom:15px;
-}
-
-.connection.ok{
-  background:#eaf8ef;
-  border:1px solid #b9dfc6;
-  color:#136c3b;
-}
-
-.connection.bad{
-  background:#fff4e5;
-  border:1px solid #efd49d;
-  color:#885200;
-}
-
-.mono{
-  word-break:break-all;
-  font-family:Consolas,monospace;
-  font-size:11px;
-}
-
-/* LOADING */
-
+.toolbar input{flex:1;min-width:180px}
+.table-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:850px}
+th,td{padding:11px;border-bottom:1px solid #edf0f3;text-align:left;font-size:12px}
+th{background:#f7f9fc;color:#526174;white-space:nowrap}
+.badge{padding:5px 8px;border-radius:20px;font-size:10px;font-weight:bold}
+.badge-green{background:#dcfce7;color:#166534}
+.badge-gray{background:#e2e8f0;color:#475569}
+.badge-orange{background:#ffedd5;color:#9a3412}
+.badge-red{background:#fee2e2;color:#991b1b}
+.actions{display:flex;gap:5px;flex-wrap:wrap}
+.actions .btn{padding:7px 9px;font-size:11px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.full{grid-column:1/-1}
+.form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:15px}
+.empty{text-align:center;padding:30px;color:var(--muted)}
 #loading{
-  position:fixed;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  background:rgba(255,255,255,.76);
-  z-index:3000;
+ display:none;position:fixed;inset:0;background:#ffffffbb;
+ z-index:50;align-items:center;justify-content:center;font-weight:bold
 }
-
-.loading-card{
-  background:#fff;
-  padding:22px 27px;
-  border-radius:14px;
-  box-shadow:0 20px 60px rgba(0,0,0,.15);
-  font-weight:700;
-}
-
-/* TOAST */
-
 #toast{
-  position:fixed;
-  right:20px;
-  bottom:20px;
-  max-width:370px;
-  padding:13px 15px;
-  background:#243143;
-  color:#fff;
-  border-radius:11px;
-  box-shadow:0 15px 35px rgba(0,0,0,.15);
-  display:none;
-  z-index:4000;
+ display:none;position:fixed;right:18px;bottom:18px;z-index:60;
+ background:#243143;color:white;padding:13px 17px;border-radius:9px;
+ max-width:350px
 }
-
-#toast.success{
-  background:#157347;
-}
-
-#toast.error{
-  background:#b02a37;
-}
-
-/* EMPTY */
-
-.empty{
-  text-align:center;
-  color:var(--muted);
-  padding:38px;
-}
-
-/* RESPONSIVE */
-
-@media(max-width:1100px){
-  .stats{
-    grid-template-columns:repeat(3,1fr);
-  }
-}
-
-@media(max-width:850px){
-
-  .layout{
-    grid-template-columns:1fr;
-  }
-
-  .sidebar{
-    position:fixed;
-    top:70px;
-    left:-260px;
-    width:245px;
-    z-index:1800;
-    transition:.25s;
-  }
-
-  .sidebar.show{
-    left:0;
-  }
-
-  .menu-btn{
-    display:block;
-  }
-
-  .form-grid{
-    grid-template-columns:1fr;
-  }
-
-  .full{
-    grid-column:auto;
-  }
-
-}
-
-@media(max-width:600px){
-
-  .stats{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .topbar{
-    padding:0 11px;
-  }
-
-  .brand-text span{
-    display:none;
-  }
-
-  .top-actions .home{
-    display:none;
-  }
-
-  .main{
-    padding:14px;
-  }
-
-  .page-head{
-    flex-direction:column;
-  }
-
+#toast.success{background:#157347}
+#toast.error{background:#b02a37}
+.connection{padding:12px;border-radius:8px;background:#fff7ed;color:#9a3412}
+@media(max-width:1000px){.stats{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:760px){
+ .layout{grid-template-columns:1fr}
+ .sidebar{position:static;height:auto;display:none}
+ .sidebar.show{display:block}
+ .stats{grid-template-columns:1fr 1fr}
+ main{padding:13px}
+ .form-grid{grid-template-columns:1fr}
+ .full{grid-column:auto}
+ .page-head{align-items:flex-start;flex-direction:column}
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
-
 <section id="loginScreen">
+ <div class="login-card">
+  <div class="logo">STV</div>
+  <h2>SOBANUKIRWA TV</h2>
+  <p>Administration Dashboard</p>
 
-  <div class="login-box">
+  <div id="loginError" class="error hidden"></div>
 
-    <div class="logo">STV</div>
-
-    <h1>SOBANUKIRWA TV</h1>
-
-    <p>Administration Dashboard</p>
-
-    <div id="loginError" class="error"></div>
-
-    <div class="field">
-
-      <label>Username</label>
-
-      <input
-        id="username"
-        type="text"
-        placeholder="admin"
-      >
-
-    </div>
-
-    <div class="field">
-
-      <label>Password / PIN</label>
-
-      <input
-        id="password"
-        type="password"
-        placeholder="Password"
-      >
-
-    </div>
-
-    <button
-      class="btn btn-primary btn-block"
-      onclick="login()"
-    >
-      Sign In
-    </button>
-
+  <div class="field">
+   <label>Admin Username</label>
+   <input id="username" autocomplete="username" placeholder="Enter username">
   </div>
 
+  <div class="field">
+   <label>Admin Password</label>
+   <input id="password" type="password" autocomplete="current-password" placeholder="Enter password">
+  </div>
+
+  <button class="btn primary" style="width:100%" onclick="login()" id="loginButton">
+   Sign In
+  </button>
+ </div>
 </section>
-
-
-<!-- APP -->
 
 <div id="app" class="hidden">
 
-  <!-- TOPBAR -->
+ <header class="topbar">
+  <div class="brand">
+   <button class="btn light" onclick="toggleMenu()">☰</button>
+   <div class="brand-icon">STV</div>
+   <div>
+    <div>SOBANUKIRWA TV</div>
+    <small>Content Management System</small>
+   </div>
+  </div>
+  <div class="top-actions">
+   <button class="btn light" onclick="goHome()">Website</button>
+   <button class="btn danger" onclick="logout()">Logout</button>
+  </div>
+ </header>
 
-  <header class="topbar">
+ <div class="layout">
 
-    <div class="brand">
+  <aside class="sidebar" id="sidebar">
+   <div class="nav-title">MAIN</div>
+   <button class="nav-btn active" onclick="showPage('dashboardPage',this)">📊 Dashboard</button>
 
-      <button
-        class="menu-btn"
-        onclick="toggleSidebar()"
-      >
-        ☰
-      </button>
+   <div class="nav-title">CONTENT</div>
+   <button class="nav-btn" onclick="showPage('managePage',this)">📰 Manage Content</button>
+   <button class="nav-btn" onclick="newContent()">➕ Add Content</button>
+   <button class="nav-btn" onclick="showPage('rssPage',this);loadContent()">🗞 RSS News Review</button>
 
-      <div class="brand-icon">
-        STV
-      </div>
+   <div class="nav-title">AUDIENCE</div>
+   <button class="nav-btn" onclick="showPage('subscribersPage',this);loadSubscribers()">📧 Subscribers</button>
 
-      <div class="brand-text">
-        <strong>SOBANUKIRWA TV</strong>
-        <span>Content Management System</span>
-      </div>
+   <div class="nav-title">SYSTEM</div>
+   <button class="nav-btn" onclick="showPage('settingsPage',this)">⚙ Settings</button>
+   <button class="nav-btn" onclick="refreshAll()">🔄 Refresh Data</button>
+   <button class="nav-btn" onclick="goHome()">🌐 Open Website</button>
+  </aside>
 
+  <main>
+
+   <!-- DASHBOARD -->
+   <section id="dashboardPage" class="page active">
+    <div class="page-head">
+     <div>
+      <h2>Dashboard</h2>
+      <p>Manage SOBANUKIRWA TV content and audience.</p>
+     </div>
+     <button class="btn primary" onclick="newContent()">+ Add Content</button>
     </div>
 
-    <div class="top-actions">
-
-      <button
-        class="btn btn-light home"
-        onclick="goHome()"
-      >
-        🏠 Home
-      </button>
-
-      <button
-        class="btn btn-danger"
-        onclick="logout()"
-      >
-        Logout
-      </button>
-
+    <div class="stats">
+     <div class="stat"><span>Total Content</span><strong id="statTotal">0</strong></div>
+     <div class="stat"><span>Published</span><strong id="statPublished">0</strong></div>
+     <div class="stat"><span>Drafts</span><strong id="statDrafts">0</strong></div>
+     <div class="stat"><span>News</span><strong id="statNews">0</strong></div>
+     <div class="stat"><span>Subscribers</span><strong id="statSubscribers">0</strong></div>
     </div>
 
-  </header>
+    <div class="card">
+     <h3>Recent Content</h3>
+     <div class="table-wrap">
+      <table>
+       <thead><tr><th>Section</th><th>Type</th><th>Title</th><th>Deadline</th><th>Publication</th></tr></thead>
+       <tbody id="recentBody"></tbody>
+      </table>
+     </div>
+    </div>
+   </section>
 
+   <!-- MANAGE CONTENT -->
+   <section id="managePage" class="page">
+    <div class="page-head">
+     <div><h2>Manage Content</h2><p>Search, edit, publish and delete content.</p></div>
+     <button class="btn primary" onclick="newContent()">+ Add New</button>
+    </div>
+    <div class="card">
+     <div class="toolbar">
+      <input id="search" placeholder="Search content..." oninput="renderContent()">
+      <select id="sectionFilter" onchange="renderContent()">
+       <option value="">All Sections</option>
+      </select>
+      <select id="typeFilter" onchange="renderContent()">
+       <option value="">All Types</option>
+      </select>
+      <select id="publicationFilter" onchange="renderContent()">
+       <option value="">Published + Drafts</option>
+       <option value="Yes">Published</option>
+       <option value="No">Drafts</option>
+      </select>
+     </div>
+     <div class="table-wrap">
+      <table>
+       <thead><tr><th>Section</th><th>Type</th><th>Title</th><th>Start</th><th>Deadline</th><th>Status</th><th>Published</th><th>Actions</th></tr></thead>
+       <tbody id="contentBody"></tbody>
+      </table>
+     </div>
+    </div>
+   </section>
 
-  <div class="layout">
-
-    <!-- SIDEBAR -->
-
-    <aside id="sidebar" class="sidebar">
-
-      <div class="sidebar-title">
-        Dashboard
+   <!-- ADD / EDIT -->
+   <section id="addPage" class="page">
+    <div class="page-head"><div><h2 id="formHeading">Add New Content</h2><p>Enter content details.</p></div></div>
+    <div class="card">
+     <form id="contentForm" onsubmit="saveContent(event)">
+      <input type="hidden" id="editId">
+      <div class="form-grid">
+       <div class="field">
+        <label>Section *</label>
+        <select id="section" required></select>
+       </div>
+       <div class="field">
+        <label>Type *</label>
+        <select id="type" required>
+         <option value="">Select Type</option>
+         <option>News</option><option>Jobs</option><option>Scholarships</option>
+         <option>Events</option><option>Video</option><option>Interview</option>
+         <option>Page</option><option>Live</option>
+        </select>
+       </div>
+       <div class="field"><label>Category</label><input id="category"></div>
+       <div class="field"><label>Source</label><input id="source"></div>
+       <div class="field full"><label>Title *</label><input id="title" required></div>
+       <div class="field full"><label>Description</label><textarea id="description"></textarea></div>
+       <div class="field"><label>Start Time</label><input type="datetime-local" id="startTime"></div>
+       <div class="field"><label>Deadline</label><input type="datetime-local" id="deadline"></div>
+       <div class="field"><label>Application / Read More URL</label><input type="url" id="applicationLink"></div>
+       <div class="field"><label>Media / Video URL</label><input type="url" id="mediaUrl"></div>
+       <div class="field"><label>Image URL</label><input type="url" id="imageUrl"></div>
+       <div class="field">
+        <label>Featured</label>
+        <select id="featured"><option>No</option><option>Yes</option></select>
+       </div>
+       <div class="field">
+        <label>Publication</label>
+        <select id="published"><option value="No">Save as Draft</option><option value="Yes">Publish Now</option></select>
+       </div>
+       <div class="field">
+        <label>Notify Subscribers?</label>
+        <select id="notifySubscribers"><option value="No">No</option><option value="Yes">Yes</option></select>
+       </div>
       </div>
-
-      <button
-        class="side-link active"
-        data-page="dashboardPage"
-        onclick="showPage('dashboardPage',this)"
-      >
-        📊 Dashboard
-      </button>
-
-
-      <div class="sidebar-title">
-        Content
+      <div class="form-actions">
+       <button type="button" class="btn light" onclick="newContent()">Clear</button>
+       <button type="submit" class="btn primary" id="saveButton">Save Content</button>
       </div>
-
-      <button
-        class="side-link"
-        data-page="managePage"
-        onclick="showPage('managePage',this)"
-      >
-        📰 Manage Content
-      </button>
-
-      <button
-        class="side-link"
-        data-page="addPage"
-        onclick="newContent()"
-      >
-        ➕ Add Content
-      </button>
-
-
-      <div class="sidebar-title">
-        Subscribers
-      </div>
-
-      <button
-        class="side-link"
-        data-page="subscribersPage"
-        onclick="showPage('subscribersPage',this);loadSubscribers()"
-      >
-        📧 Email Subscribers
-      </button>
-
-
-      <div class="sidebar-title">
-        Website
-      </div>
-
-      <button
-        class="side-link"
-        onclick="goHome()"
-      >
-        🌐 Open Website
-      </button>
-
-      <button
-        class="side-link"
-        onclick="loadAll()"
-      >
-        🔄 Refresh
-      </button>
-
-
-      <div class="sidebar-title">
-        System
-      </div>
-
-      <button
-        class="side-link"
-        data-page="settingsPage"
-        onclick="showPage('settingsPage',this)"
-      >
-        ⚙️ Settings
-      </button>
-
-    </aside>
-
-
-    <!-- MAIN -->
-
-    <main class="main">
-
-      <!-- DASHBOARD -->
-
-      <section
-        id="dashboardPage"
-        class="page active"
-      >
-
-        <div class="page-head">
-
-          <div>
-            <h2>Dashboard</h2>
-
-            <p>
-              Manage the complete SOBANUKIRWA TV public website.
-            </p>
-          </div>
-
-          <button
-            class="btn btn-primary"
-            onclick="newContent()"
-          >
-            + Add Content
-          </button>
-
-        </div>
-
-
-        <div class="stats">
-
-          <div class="stat">
-            <span>Total Content</span>
-            <strong id="statTotal">0</strong>
-          </div>
-
-          <div class="stat">
-            <span>Published</span>
-            <strong id="statPublished">0</strong>
-          </div>
-
-          <div class="stat">
-            <span>News</span>
-            <strong id="statNews">0</strong>
-          </div>
-
-          <div class="stat">
-            <span>Jobs</span>
-            <strong id="statJobs">0</strong>
-          </div>
-
-          <div class="stat">
-            <span>Subscribers</span>
-            <strong id="statSubscribers">0</strong>
-          </div>
-
-        </div>
-
-
-        <div class="card">
-
-          <div class="card-head">
-
-            <div>
-              <h3>Recent Published Content</h3>
-            </div>
-
-            <button
-              class="btn btn-light"
-              onclick="showPage('managePage')"
-            >
-              View All
-            </button>
-
-          </div>
-
-          <div class="table-wrap">
-
-            <table>
-
-              <thead>
-                <tr>
-                  <th>Section</th>
-                  <th>Type</th>
-                  <th>Title</th>
-                  <th>Deadline</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-
-              <tbody id="recentBody"></tbody>
-
-            </table>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- MANAGE -->
-
-      <section
-        id="managePage"
-        class="page"
-      >
-
-        <div class="page-head">
-
-          <div>
-            <h2>Manage Content</h2>
-
-            <p>
-              Search, edit, publish or delete content.
-            </p>
-          </div>
-
-          <button
-            class="btn btn-primary"
-            onclick="newContent()"
-          >
-            + Add New
-          </button>
-
-        </div>
-
-
-        <div class="card">
-
-          <div class="toolbar">
-
-            <input
-              id="search"
-              type="search"
-              placeholder="Search..."
-              oninput="renderManage()"
-            >
-
-            <select
-              id="sectionFilter"
-              onchange="renderManage()"
-            >
-              <option value="">All Sections</option>
-            </select>
-
-            <select
-              id="typeFilter"
-              onchange="renderManage()"
-            >
-              <option value="">All Types</option>
-            </select>
-
-            <select
-              id="publicationFilter"
-              onchange="renderManage()"
-            >
-              <option value="">Published + Drafts</option>
-              <option value="Yes">Published</option>
-              <option value="No">Drafts</option>
-            </select>
-
-            <button
-              class="btn btn-light"
-              onclick="clearFilters()"
-            >
-              Clear
-            </button>
-
-          </div>
-
-
-          <div class="table-wrap">
-
-            <table>
-
-              <thead>
-
-                <tr>
-                  <th>Section</th>
-                  <th>Type</th>
-                  <th>Title</th>
-                  <th>Start</th>
-                  <th>Deadline</th>
-                  <th>Status</th>
-                  <th>Published</th>
-                  <th>Notify</th>
-                  <th>Actions</th>
-                </tr>
-
-              </thead>
-
-              <tbody id="manageBody"></tbody>
-
-            </table>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- ADD/EDIT -->
-
-      <section
-        id="addPage"
-        class="page"
-      >
-
-        <div class="page-head">
-
-          <div>
-
-            <h2 id="formTitle">
-              Add New Content
-            </h2>
-
-            <p>
-              Control what appears on the public website.
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <div class="card">
-
-          <form
-            id="contentForm"
-            onsubmit="saveContent(event)"
-          >
-
-            <input
-              type="hidden"
-              id="editId"
-            >
-
-
-            <div class="form-grid">
-
-              <div class="field">
-
-                <label>
-                  Public Section *
-                </label>
-
-                <select
-                  id="section"
-                  required
-                ></select>
-
-              </div>
-
-
-              <div class="field">
-
-                <label>
-                  Content Type *
-                </label>
-
-                <select
-                  id="type"
-                  required
-                >
-                  <option value="">
-                    Select Type
-                  </option>
-                  <option>News</option>
-                  <option>Jobs</option>
-                  <option>Scholarships</option>
-                  <option>Events</option>
-                  <option>Video</option>
-                  <option>Interview</option>
-                  <option>Page</option>
-                  <option>Live</option>
-                </select>
-
-              </div>
-
-
-              <div class="field">
-
-                <label>
-                  Category
-                </label>
-
-                <input
-                  id="category"
-                  placeholder="e.g. Rwanda, Education, Business"
-                >
-
-              </div>
-
-
-              <div class="field">
-
-                <label>
-                  Source
-                </label>
-
-                <input
-                  id="source"
-                  placeholder="Official source / SOBANUKIRWA TV"
-                >
-
-              </div>
-
-
-              <div class="field full">
-
-                <label>
-                  Title *
-                </label>
-
-                <input
-                  id="title"
-                  required
-                  placeholder="Enter title"
-                >
-
-              </div>
-
-
-              <div class="field full">
-
-                <label>
-                  Description / Page Content
-                </label>
-
-                <textarea
-                  id="description"
-                  placeholder="Write the content..."
-                ></textarea>
-
-              </div>
-
-
-              <div class="field">
-
-                <label>
-                  Start Time
-                </label>
-
-                <input
-                  type="datetime-local"
-                  id="startTime"
-                >
-
-              </div>
-
-
-              <div class="field">
-
-                <label>
-                  Deadline
-                </label>
-
-                <input
-                  type="datetime-local"
-                  id="deadline"
-                >
-
-              </div>
-
-
-              <div class="field">
-
-                <label>
-                  Application / Read More URL
-                </label>
-
-                <input
-                  type="url"
-                  id="applicationLink"
-                  placeholder="https://..."
-                >
-
-              </div>
-
-
-              <div class="field">
-
-                <label>
-                  Media / Video / Live URL
-                </label>
-
-                <input
-                  type="url"
-                  id="mediaUrl"
-                  placeholder="YouTube / video / live URL"
-                >
-
-              </div>
-
-
-              <div class="field">
-
-                <label>
-                  Image URL
-                </label>
-
-                <input
-                  type="url"
-                  id="imageUrl"
-                  placeholder="https://..."
-                >
-
-              </div>
-
-
-              <div class="field">
-
-                <label>
-                  Featured
-                </label>
-
-                <select id="featured">
-
-                  <option value="No">
-                    No
-                  </option>
-
-                  <option value="Yes">
-                    Yes
-                  </option>
-
-                </select>
-
-              </div>
-
-
-              <div class="full">
-
-                <div class="checkbox-row">
-
-                  <label>
-
-                    <input
-                      type="checkbox"
-                      id="published"
-                      checked
-                    >
-
-                    Publish on public website
-
-                  </label>
-
-
-                  <label>
-
-                    <input
-                      type="checkbox"
-                      id="notifySubscribers"
-                    >
-
-                    Send email notification
-
-                  </label>
-
-                </div>
-
-              </div>
-
-            </div>
-
-
-            <div class="form-actions">
-
-              <button
-                type="button"
-                class="btn btn-light"
-                onclick="newContent()"
-              >
-                Clear
-              </button>
-
-              <button
-                type="submit"
-                class="btn btn-primary"
-                id="saveButton"
-              >
-                Save Content
-              </button>
-
-            </div>
-
-          </form>
-
-        </div>
-
-      </section>
-
-
-      <!-- SUBSCRIBERS -->
-
-      <section
-        id="subscribersPage"
-        class="page"
-      >
-
-        <div class="page-head">
-
-          <div>
-
-            <h2>Email Subscribers</h2>
-
-            <p>
-              People who subscribed to SOBANUKIRWA TV notifications.
-            </p>
-
-          </div>
-
-          <button
-            class="btn btn-light"
-            onclick="loadSubscribers()"
-          >
-            🔄 Refresh
-          </button>
-
-        </div>
-
-
-        <div class="stats">
-
-          <div class="stat">
-
-            <span>Total</span>
-
-            <strong
-              id="subscriberTotal"
-            >
-              0
-            </strong>
-
-          </div>
-
-          <div class="stat">
-
-            <span>Active</span>
-
-            <strong
-              id="subscriberActive"
-            >
-              0
-            </strong>
-
-          </div>
-
-          <div class="stat">
-
-            <span>Unsubscribed</span>
-
-            <strong
-              id="subscriberUnsubscribed"
-            >
-              0
-            </strong>
-
-          </div>
-
-        </div>
-
-
-        <div class="card">
-
-          <div class="table-wrap">
-
-            <table>
-
-              <thead>
-
-                <tr>
-                  <th>Email</th>
-                  <th>Subscribed</th>
-                  <th>Status</th>
-                  <th>Last Notification</th>
-                </tr>
-
-              </thead>
-
-              <tbody
-                id="subscriberBody"
-              ></tbody>
-
-            </table>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- SETTINGS -->
-
-      <section
-        id="settingsPage"
-        class="page"
-      >
-
-        <div class="page-head">
-
-          <div>
-
-            <h2>Settings</h2>
-
-            <p>
-              SOBANUKIRWA TV connection settings.
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <div class="card">
-
-          <h3>
-            Google Apps Script
-          </h3>
-
-          <div
-            id="connection"
-            class="connection bad"
-            style="margin-top:15px"
-          >
-            Not tested
-          </div>
-
-
-          <div class="field">
-
-            <label>
-              Apps Script Web App URL
-            </label>
-
-            <input
-              id="apiUrl"
-              type="url"
-              readonly
-            >
-
-          </div>
-
-
-          <div class="field">
-
-            <label>
-              Google Sheet ID
-            </label>
-
-            <input
-              value="1nVnfjnrMnrsq34JTBTdSfjzFn3DPWfSt0I7vCS4D2aI"
-              readonly
-            >
-
-          </div>
-
-
-          <button
-            class="btn btn-primary"
-            onclick="testConnection()"
-          >
-            Test Connection
-          </button>
-
-        </div>
-
-      </section>
-
-    </main>
-
-  </div>
-
+     </form>
+    </div>
+   </section>
+
+   <!-- RSS REVIEW -->
+   <section id="rssPage" class="page">
+    <div class="page-head">
+     <div><h2>RSS News Review</h2><p>Review imported RSS stories before publishing them.</p></div>
+     <button class="btn light" onclick="loadContent()">Refresh</button>
+    </div>
+    <div class="card">
+     <div class="toolbar">
+      <input id="rssSearch" placeholder="Search RSS stories..." oninput="renderRSS()">
+     </div>
+     <div class="table-wrap">
+      <table>
+       <thead><tr><th>Source</th><th>Title</th><th>Date</th><th>Review</th></tr></thead>
+       <tbody id="rssBody"></tbody>
+      </table>
+     </div>
+    </div>
+   </section>
+
+   <!-- SUBSCRIBERS -->
+   <section id="subscribersPage" class="page">
+    <div class="page-head">
+     <div><h2>Email Subscribers</h2><p>Manage the audience subscribed to notifications.</p></div>
+     <button class="btn light" onclick="loadSubscribers()">Refresh</button>
+    </div>
+    <div class="stats" style="grid-template-columns:repeat(3,1fr)">
+     <div class="stat"><span>Total</span><strong id="subTotal">0</strong></div>
+     <div class="stat"><span>Active</span><strong id="subActive">0</strong></div>
+     <div class="stat"><span>Unsubscribed</span><strong id="subInactive">0</strong></div>
+    </div>
+    <div class="card">
+     <div class="table-wrap">
+      <table>
+       <thead><tr><th>Email</th><th>Subscribed At</th><th>Status</th><th>Last Notified</th></tr></thead>
+       <tbody id="subscriberBody"></tbody>
+      </table>
+     </div>
+    </div>
+   </section>
+
+   <!-- SETTINGS -->
+   <section id="settingsPage" class="page">
+    <div class="page-head"><div><h2>Settings</h2><p>System connection and website settings.</p></div></div>
+    <div class="card">
+     <h3>Google Apps Script Connection</h3>
+     <div id="connectionStatus" class="connection">Not tested yet.</div>
+     <div class="field" style="margin-top:15px">
+      <label>API URL</label><input id="apiDisplay" readonly>
+     </div>
+     <div class="field">
+      <label>Google Sheet ID</label>
+      <input value="1nVnfjnrMnrsq34JTBTdSfjzFn3DPWfSt0I7vCS4D2aI" readonly>
+     </div>
+     <button class="btn primary" onclick="testConnection()">Test Connection</button>
+    </div>
+   </section>
+
+  </main>
+ </div>
 </div>
 
-
-<!-- LOADING -->
-
-<div id="loading">
-
-  <div class="loading-card">
-    Loading...
-  </div>
-
-</div>
-
-
-<!-- TOAST -->
-
+<div id="loading">Please wait...</div>
 <div id="toast"></div>
 
-
 <script>
-
-/* ======================================================
-   CONFIG
-====================================================== */
+"use strict";
 
 const API_URL =
-  "https://script.google.com/macros/s/AKfycbwC9wpbjVPqUoa4c39jn4daPxofqw4RrCQi4bMcOh1Isq2b6XONQnovJeNtxV1E2Wi1/exec";
+"https://script.google.com/macros/s/AKfycbwC9wpbjVPqUoa4c39jn4daPxofqw4rRrCQi4bMcOh1Isq2b6XONQnovJeNtxV1E2Wi1/exec";
 
+const WEBSITE_URL = "https://sobanukirwatv.vercel.app/";
 
-const ADMIN_USERNAME = "admin";
-const ADMIN_PASSWORD = "STV@2026";
-
-
-const PUBLIC_SECTIONS = [
-  "Home",
-  "Amakuru",
-  "Live TV",
-  "Videos",
-  "Interviews",
-  "Uburezi",
-  "Ubuzima",
-  "Business",
-  "Imikino",
-  "Jobs & Opportunities",
-  "Deadlines",
-  "Rwanda",
-  "World",
-  "Contact",
-  "About Sobanukirwa TV",
-  "Help"
+const SECTIONS = [
+ "Home","Amakuru","Live TV","Videos","Interviews","Uburezi",
+ "Ubuzima","Business","Imikino","Jobs & Opportunities",
+ "Deadlines","Rwanda","World","Contact","About Sobanukirwa TV","Help"
 ];
 
+const TYPES = ["News","Jobs","Scholarships","Events","Video","Interview","Page","Live"];
 
+let adminToken = sessionStorage.getItem("stv_admin_token") || "";
 let allContent = [];
 let allSubscribers = [];
 
+document.addEventListener("DOMContentLoaded",()=>{
+ document.getElementById("apiDisplay").value=API_URL;
+ buildSelects();
+ if(adminToken) openAdmin();
+});
 
-/* ======================================================
-   START
-====================================================== */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
-
-    document
-      .getElementById("apiUrl")
-      .value =
-      API_URL;
-
-
-    buildSectionSelects();
-
-    buildFilters();
-
-
-    if (
-      sessionStorage.getItem(
-        "stv_admin_login"
-      ) === "true"
-    ) {
-
-      openAdmin();
-
-    }
-
-  }
-);
-
-
-/* ======================================================
-   LOGIN
-====================================================== */
-
-function login(){
-
-  const username =
-    document
-      .getElementById("username")
-      .value
-      .trim();
-
-
-  const password =
-    document
-      .getElementById("password")
-      .value;
-
-
-  const error =
-    document
-      .getElementById("loginError");
-
-
-  if(
-    username === ADMIN_USERNAME &&
-    password === ADMIN_PASSWORD
-  ){
-
-    sessionStorage.setItem(
-      "stv_admin_login",
-      "true"
-    );
-
-
-    error.style.display =
-      "none";
-
-
-    openAdmin();
-
-
-  }else{
-
-    error.textContent =
-      "Invalid username or password.";
-
-    error.style.display =
-      "block";
-
-  }
-
+function buildSelects(){
+ const form=document.getElementById("section");
+ const filter=document.getElementById("sectionFilter");
+ form.innerHTML='<option value="">Select Section</option>';
+ filter.innerHTML='<option value="">All Sections</option>';
+ SECTIONS.forEach(s=>{
+  form.add(new Option(s,s));
+  filter.add(new Option(s,s));
+ });
+ const tf=document.getElementById("typeFilter");
+ TYPES.forEach(t=>tf.add(new Option(t,t)));
 }
 
+function showLoading(show){
+ document.getElementById("loading").style.display=show?"flex":"none";
+}
+function toast(message,type=""){
+ const el=document.getElementById("toast");
+ el.textContent=message;
+ el.className=type;
+ el.style.display="block";
+ setTimeout(()=>el.style.display="none",4000);
+}
+function esc(value){
+ return String(value??"").replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
+function dateText(value){
+ if(!value)return "—";
+ const d=new Date(value);
+ return isNaN(d)?"—":d.toLocaleString("en-GB");
+}
+function localDate(value){
+ if(!value)return "";
+ const d=new Date(value);
+ if(isNaN(d))return "";
+ const pad=n=>String(n).padStart(2,"0");
+ return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+function publishedBadge(value){
+ return String(value).toLowerCase()==="yes"
+ ?'<span class="badge badge-green">PUBLISHED</span>'
+ :'<span class="badge badge-gray">DRAFT</span>';
+}
+
+async function apiGet(action,extra={}){
+ const params=new URLSearchParams({action,...extra,_:Date.now()});
+ if(adminToken)params.set("token",adminToken);
+ const response=await fetch(API_URL+"?"+params.toString(),{cache:"no-store"});
+ const result=await response.json();
+ if(!response.ok||result.success===false)throw new Error(result.message||result.error||"API request failed");
+ return result;
+}
+
+async function apiPost(payload){
+ const data={...payload};
+ if(adminToken)data.token=adminToken;
+ const response=await fetch(API_URL,{
+  method:"POST",
+  headers:{"Content-Type":"text/plain;charset=utf-8"},
+  body:JSON.stringify(data)
+ });
+ const result=await response.json();
+ if(!response.ok||result.success===false)throw new Error(result.message||result.error||"Request failed");
+ return result;
+}
+
+async function login(){
+ const username=document.getElementById("username").value.trim();
+ const password=document.getElementById("password").value;
+ const error=document.getElementById("loginError");
+ const button=document.getElementById("loginButton");
+ error.classList.add("hidden");
+ button.disabled=true;
+ button.textContent="Signing in...";
+ try{
+  const result=await apiPost({action:"adminlogin",username,password});
+  if(!result.token)throw new Error("Server did not return an admin token.");
+  adminToken=result.token;
+  sessionStorage.setItem("stv_admin_token",adminToken);
+  document.getElementById("password").value="";
+  openAdmin();
+ }catch(e){
+  error.textContent=e.message;
+  error.classList.remove("hidden");
+ }finally{
+  button.disabled=false;
+  button.textContent="Sign In";
+ }
+}
 
 function openAdmin(){
-
-  document
-    .getElementById("loginScreen")
-    .classList
-    .add("hidden");
-
-
-  document
-    .getElementById("app")
-    .classList
-    .remove("hidden");
-
-
-  loadAll();
-
+ document.getElementById("loginScreen").classList.add("hidden");
+ document.getElementById("app").classList.remove("hidden");
+ refreshAll();
 }
 
-
-/* ======================================================
-   LOGOUT
-====================================================== */
-
-function logout(){
-
-  sessionStorage.removeItem(
-    "stv_admin_login"
-  );
-
-  location.reload();
-
+async function logout(){
+ try{await apiPost({action:"adminlogout"});}catch(e){}
+ adminToken="";
+ sessionStorage.removeItem("stv_admin_token");
+ location.reload();
 }
 
+function toggleMenu(){
+ document.getElementById("sidebar").classList.toggle("show");
+}
+function goHome(){window.open(WEBSITE_URL,"_blank","noopener");}
 
-/* ======================================================
-   SIDEBAR
-====================================================== */
-
-function toggleSidebar(){
-
-  document
-    .getElementById("sidebar")
-    .classList
-    .toggle("show");
-
+function showPage(id,button){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ const page=document.getElementById(id);
+ if(page)page.classList.add("active");
+ document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
+ if(button)button.classList.add("active");
+ document.getElementById("sidebar").classList.remove("show");
 }
 
-
-/* ======================================================
-   SHOW PAGE
-====================================================== */
-
-function showPage(
-  pageId,
-  button = null
-){
-
-  document
-    .querySelectorAll(".page")
-    .forEach(
-      page =>
-        page.classList.remove("active")
-    );
-
-
-  const page =
-    document.getElementById(
-      pageId
-    );
-
-
-  if(page){
-    page.classList.add("active");
-  }
-
-
-  document
-    .querySelectorAll(".side-link")
-    .forEach(
-      btn =>
-        btn.classList.remove("active")
-    );
-
-
-  if(button){
-
-    button.classList.add(
-      "active"
-    );
-
-  }else{
-
-    const match =
-      document.querySelector(
-        `.side-link[data-page="${pageId}"]`
-      );
-
-    if(match){
-      match.classList.add(
-        "active"
-      );
-    }
-
-  }
-
-
-  document
-    .getElementById("sidebar")
-    .classList
-    .remove("show");
-
+async function refreshAll(){
+ await loadContent();
+ await loadSubscriberStats();
 }
 
-
-/* ======================================================
-   HOME
-====================================================== */
-
-function goHome(){
-
-  window.open(
-    "/",
-    "_blank"
-  );
-
+async function loadContent(){
+ showLoading(true);
+ try{
+  const result=await apiGet("admincontent");
+  allContent=Array.isArray(result.content)?result.content:[];
+  updateStats();
+  renderRecent();
+  renderContent();
+  renderRSS();
+ }catch(e){
+  toast("Could not load content: "+e.message,"error");
+  if(/token|session|unauthor/i.test(e.message))logout();
+ }finally{showLoading(false);}
 }
-
-
-/* ======================================================
-   BUILD SELECTS
-====================================================== */
-
-function buildSectionSelects(){
-
-  const formSelect =
-    document.getElementById(
-      "section"
-    );
-
-
-  formSelect.innerHTML =
-    `<option value="">Select Section</option>` +
-    PUBLIC_SECTIONS
-      .map(
-        s =>
-          `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`
-      )
-      .join("");
-
-}
-
-
-function buildFilters(){
-
-  const sectionFilter =
-    document.getElementById(
-      "sectionFilter"
-    );
-
-
-  sectionFilter.innerHTML =
-    `<option value="">All Sections</option>` +
-    PUBLIC_SECTIONS
-      .map(
-        s =>
-          `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`
-      )
-      .join("");
-
-
-  const types = [
-    "News",
-    "Jobs",
-    "Scholarships",
-    "Events",
-    "Video",
-    "Interview",
-    "Page",
-    "Live"
-  ];
-
-
-  const typeFilter =
-    document.getElementById(
-      "typeFilter"
-    );
-
-
-  typeFilter.innerHTML =
-    `<option value="">All Types</option>` +
-    types
-      .map(
-        s =>
-          `<option value="${s}">${s}</option>`
-      )
-      .join("");
-
-}
-
-
-/* ======================================================
-   NEW CONTENT
-====================================================== */
-
-function newContent(){
-
-  document
-    .getElementById("contentForm")
-    .reset();
-
-
-  document
-    .getElementById("editId")
-    .value =
-    "";
-
-
-  document
-    .getElementById("published")
-    .checked =
-    true;
-
-
-  document
-    .getElementById("notifySubscribers")
-    .checked =
-    false;
-
-
-  document
-    .getElementById("formTitle")
-    .textContent =
-    "Add New Content";
-
-
-  document
-    .getElementById("saveButton")
-    .textContent =
-    "Save Content";
-
-
-  showPage(
-    "addPage"
-  );
-
-}
-
-
-/* ======================================================
-   SAVE
-====================================================== */
-
-async function saveContent(
-  event
-){
-
-  event.preventDefault();
-
-
-  const editId =
-    document
-      .getElementById("editId")
-      .value
-      .trim();
-
-
-  const payload = {
-
-    action:
-      editId
-        ? "update"
-        : "add",
-
-    id:
-      editId,
-
-    section:
-      document
-        .getElementById("section")
-        .value,
-
-    type:
-      document
-        .getElementById("type")
-        .value,
-
-    category:
-      document
-        .getElementById("category")
-        .value
-        .trim(),
-
-    title:
-      document
-        .getElementById("title")
-        .value
-        .trim(),
-
-    description:
-      document
-        .getElementById("description")
-        .value
-        .trim(),
-
-    startTime:
-      document
-        .getElementById("startTime")
-        .value,
-
-    deadline:
-      document
-        .getElementById("deadline")
-        .value,
-
-    applicationLink:
-      document
-        .getElementById("applicationLink")
-        .value
-        .trim(),
-
-    mediaUrl:
-      document
-        .getElementById("mediaUrl")
-        .value
-        .trim(),
-
-    imageUrl:
-      document
-        .getElementById("imageUrl")
-        .value
-        .trim(),
-
-    source:
-      document
-        .getElementById("source")
-        .value
-        .trim(),
-
-    featured:
-      document
-        .getElementById("featured")
-        .value,
-
-    published:
-      document
-        .getElementById("published")
-        .checked
-        ? "Yes"
-        : "No",
-
-    notifySubscribers:
-      document
-        .getElementById("notifySubscribers")
-        .checked
-        ? "Yes"
-        : "No"
-
-  };
-
-
-  if(!payload.section){
-
-    toast(
-      "Please select a section.",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  if(!payload.type){
-
-    toast(
-      "Please select a content type.",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  if(!payload.title){
-
-    toast(
-      "Please enter the title.",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  loading(
-    true,
-    editId
-      ? "Updating content..."
-      : "Saving content..."
-  );
-
-
-  try{
-
-    const result =
-      await postApi(
-        payload
-      );
-
-
-    if(
-      result &&
-      result.success === false
-    ){
-
-      throw new Error(
-        result.error ||
-        "Request failed."
-      );
-
-    }
-
-
-    toast(
-      editId
-        ? "Content updated successfully."
-        : "Content published successfully.",
-      "success"
-    );
-
-
-    newContent();
-
-
-    await loadAll();
-
-
-    showPage(
-      "managePage"
-    );
-
-
-  }catch(error){
-
-    console.error(error);
-
-
-    toast(
-      error.message ||
-      "Could not save content.",
-      "error"
-    );
-
-  }finally{
-
-    loading(
-      false
-    );
-
-  }
-
-}
-
-
-/* ======================================================
-   LOAD ALL
-====================================================== */
-
-async function loadAll(){
-
-  loading(
-    true,
-    "Loading SOBANUKIRWA TV..."
-  );
-
-
-  try{
-
-    const data =
-      await getApi(
-        "content"
-      );
-
-
-    if(
-      data &&
-      data.success === false
-    ){
-
-      throw new Error(
-        data.error ||
-        "Unable to load content."
-      );
-
-    }
-
-
-    allContent =
-      Array.isArray(
-        data.content
-      )
-        ? data.content
-        : [];
-
-
-    /*
-      For admin, the content endpoint
-      only returns published content.
-      So we separately load an admin feed.
-    */
-
-    const adminData =
-      await getApi(
-        "info"
-      );
-
-
-    /*
-      The public content endpoint is enough
-      for dashboard published information.
-    */
-
-
-    updateStats();
-
-    renderRecent();
-
-    renderManage();
-
-
-    const stats =
-      await getApi(
-        "subscriberstats"
-      );
-
-
-    document
-      .getElementById(
-        "statSubscribers"
-      )
-      .textContent =
-      stats.active ||
-      0;
-
-
-  }catch(error){
-
-    console.error(error);
-
-
-    toast(
-      "API connection failed: " +
-      error.message,
-      "error"
-    );
-
-  }finally{
-
-    loading(
-      false
-    );
-
-  }
-
-}
-
-
-/* ======================================================
-   GET API
-====================================================== */
-
-async function getApi(
-  action
-){
-
-  const url =
-    API_URL +
-    "?action=" +
-    encodeURIComponent(
-      action
-    ) +
-    "&_=" +
-    Date.now();
-
-
-  const response =
-    await fetch(
-      url,
-      {
-        method:"GET",
-        cache:"no-store"
-      }
-    );
-
-
-  const text =
-    await response.text();
-
-
-  try{
-
-    return JSON.parse(
-      text
-    );
-
-  }catch(error){
-
-    throw new Error(
-      "Invalid API response."
-    );
-
-  }
-
-}
-
-
-/* ======================================================
-   POST API
-====================================================== */
-
-async function postApi(
-  payload
-){
-
-  const response =
-    await fetch(
-      API_URL,
-      {
-        method:"POST",
-        headers:{
-          "Content-Type":
-            "text/plain;charset=utf-8"
-        },
-        body:
-          JSON.stringify(
-            payload
-          )
-      }
-    );
-
-
-  const text =
-    await response.text();
-
-
-  try{
-
-    return JSON.parse(
-      text
-    );
-
-  }catch(error){
-
-    throw new Error(
-      "Invalid server response."
-    );
-
-  }
-
-}
-
-
-/* ======================================================
-   STATS
-====================================================== */
 
 function updateStats(){
-
-  document
-    .getElementById(
-      "statTotal"
-    )
-    .textContent =
-    allContent.length;
-
-
-  document
-    .getElementById(
-      "statPublished"
-    )
-    .textContent =
-    allContent.length;
-
-
-  document
-    .getElementById(
-      "statNews"
-    )
-    .textContent =
-    allContent.filter(
-      x =>
-        String(x.type)
-          .toLowerCase()
-          ===
-        "news"
-    ).length;
-
-
-  document
-    .getElementById(
-      "statJobs"
-    )
-    .textContent =
-    allContent.filter(
-      x =>
-        String(x.type)
-          .toLowerCase()
-          ===
-        "jobs"
-    ).length;
-
+ const published=allContent.filter(x=>String(x.published??x.Published).toLowerCase()==="yes");
+ const drafts=allContent.filter(x=>String(x.published??x.Published).toLowerCase()!=="yes");
+ const news=allContent.filter(x=>String(x.type??x.Type).toLowerCase()==="news");
+ document.getElementById("statTotal").textContent=allContent.length;
+ document.getElementById("statPublished").textContent=published.length;
+ document.getElementById("statDrafts").textContent=drafts.length;
+ document.getElementById("statNews").textContent=news.length;
 }
-
-
-/* ======================================================
-   RECENT
-====================================================== */
 
 function renderRecent(){
-
-  const body =
-    document.getElementById(
-      "recentBody"
-    );
-
-
-  if(
-    !allContent.length
-  ){
-
-    body.innerHTML = `
-      <tr>
-        <td colspan="5">
-          <div class="empty">
-            No published content yet.
-          </div>
-        </td>
-      </tr>
-    `;
-
-    return;
-
-  }
-
-
-  const items =
-    allContent
-      .slice(
-        0,
-        8
-      );
-
-
-  body.innerHTML =
-    items.map(
-      item => `
-        <tr>
-
-          <td>
-            ${escapeHtml(item.section)}
-          </td>
-
-          <td>
-            ${escapeHtml(item.type)}
-          </td>
-
-          <td>
-            <strong>
-              ${escapeHtml(item.title)}
-            </strong>
-          </td>
-
-          <td>
-            ${formatDate(item.deadline)}
-          </td>
-
-          <td>
-            ${statusBadge(item.status)}
-          </td>
-
-        </tr>
-      `
-    )
-    .join("");
-
+ const body=document.getElementById("recentBody");
+ const items=allContent.filter(x=>String(x.published??x.Published).toLowerCase()==="yes").slice(0,8);
+ if(!items.length){body.innerHTML='<tr><td colspan="5" class="empty">No published content.</td></tr>';return;}
+ body.innerHTML=items.map(x=>`
+ <tr><td>${esc(x.section??x.Section)}</td>
+ <td>${esc(x.type??x.Type)}</td><td>${esc(x.title??x.Title)}</td>
+ <td>${dateText(x.deadline??x.Deadline)}</td>
+ <td>${publishedBadge(x.published??x.Published)}</td></tr>`).join("");
 }
 
+function renderContent(){
+ const body=document.getElementById("contentBody");
+ const search=(document.getElementById("search").value||"").toLowerCase();
+ const section=document.getElementById("sectionFilter").value;
+ const type=document.getElementById("typeFilter").value;
+ const publication=document.getElementById("publicationFilter").value;
 
-/* ======================================================
-   MANAGE
-====================================================== */
-
-function renderManage(){
-
-  const body =
-    document.getElementById(
-      "manageBody"
-    );
-
-
-  const search =
-    (
-      document
-        .getElementById("search")
-        .value ||
-      ""
-    )
-      .toLowerCase()
-      .trim();
-
-
-  const section =
-    document
-      .getElementById(
-        "sectionFilter"
-      )
-      .value;
-
-
-  const type =
-    document
-      .getElementById(
-        "typeFilter"
-      )
-      .value;
-
-
-  /*
-    Public endpoint returns published content.
-    This means this table currently manages
-    published content. Draft support is handled
-    by the backend when publishing.
-  */
-
-  let items =
-    allContent.filter(
-      item => {
-
-        const text =
-          [
-            item.title,
-            item.description,
-            item.category,
-            item.source,
-            item.section,
-            item.type
-          ]
-          .join(" ")
-          .toLowerCase();
-
-
-        return (
-          (!search ||
-            text.includes(search)) &&
-
-          (!section ||
-            item.section === section) &&
-
-          (!type ||
-            item.type === type)
-        );
-
-      }
-    );
-
-
-  if(
-    !items.length
-  ){
-
-    body.innerHTML = `
-      <tr>
-        <td colspan="9">
-          <div class="empty">
-            No published content found.
-          </div>
-        </td>
-      </tr>
-    `;
-
-    return;
-
-  }
-
-
-  body.innerHTML =
-    items
-      .map(
-        item => {
-
-          return `
-          <tr>
-
-            <td>
-              ${escapeHtml(item.section)}
-            </td>
-
-            <td>
-              ${escapeHtml(item.type)}
-            </td>
-
-            <td>
-              <strong>
-                ${escapeHtml(item.title)}
-              </strong>
-
-              <div class="muted">
-                ${escapeHtml(item.category || "")}
-              </div>
-            </td>
-
-            <td>
-              ${formatDate(item.startTime)}
-            </td>
-
-            <td>
-              ${formatDate(item.deadline)}
-            </td>
-
-            <td>
-              ${statusBadge(item.status)}
-            </td>
-
-            <td>
-              <span class="badge badge-published">
-                PUBLISHED
-              </span>
-            </td>
-
-            <td>
-              ${
-                String(item.notifySubscribers)
-                  .toLowerCase()
-                  === "yes"
-                  ? "YES"
-                  : "NO"
-              }
-            </td>
-
-            <td>
-
-              <div style="
-                display:flex;
-                gap:6px;
-                flex-wrap:wrap;
-              ">
-
-                <button
-                  class="btn btn-primary"
-                  onclick="editContent('${escapeAttr(item.id)}')"
-                >
-                  Edit
-                </button>
-
-                <button
-                  class="btn btn-success"
-                  onclick="sendNotification('${escapeAttr(item.id)}')"
-                >
-                  Notify
-                </button>
-
-                <button
-                  class="btn btn-danger"
-                  onclick="deleteItem('${escapeAttr(item.id)}')"
-                >
-                  Delete
-                </button>
-
-              </div>
-
-            </td>
-
-          </tr>
-          `;
-
-        }
-      )
-      .join("");
-
+ const items=allContent.filter(x=>{
+  const title=x.title??x.Title??"";
+  const description=x.description??x.Description??"";
+  const sec=x.section??x.Section??"";
+  const typ=x.type??x.Type??"";
+  const pub=x.published??x.Published??"No";
+  const hay=[title,description,sec,typ,x.category??x.Category,x.source??x.Source].join(" ").toLowerCase();
+  return (!search||hay.includes(search))&&(!section||sec===section)&&(!type||typ===type)&&(!publication||String(pub).toLowerCase()===publication.toLowerCase());
+ });
+ if(!items.length){body.innerHTML='<tr><td colspan="8" class="empty">No content found.</td></tr>';return;}
+ body.innerHTML=items.map(x=>{
+  const id=x.id??x.ID;
+  const pub=x.published??x.Published??"No";
+  return `<tr>
+   <td>${esc(x.section??x.Section)}</td>
+   <td>${esc(x.type??x.Type)}</td>
+   <td><b>${esc(x.title??x.Title)}</b><br><small>${esc(x.category??x.Category)}</small></td>
+   <td>${dateText(x.startTime??x.StartTime)}</td>
+   <td>${dateText(x.deadline??x.Deadline)}</td>
+   <td>${esc(x.status??x.Status??"—")}</td>
+   <td>${publishedBadge(pub)}</td>
+   <td><div class="actions">
+    <button class="btn primary" onclick="editContent('${esc(id)}')">Edit</button>
+    ${String(pub).toLowerCase()==="yes"
+      ?`<button class="btn warning" onclick="sendNotification('${esc(id)}')">Notify</button>`
+      :`<button class="btn success" onclick="publishContent('${esc(id)}')">Publish</button>`}
+    <button class="btn danger" onclick="deleteContent('${esc(id)}')">Delete</button>
+   </div></td>
+  </tr>`;
+ }).join("");
 }
 
-
-/* ======================================================
-   EDIT
-====================================================== */
-
-function editContent(
-  id
-){
-
-  const item =
-    allContent.find(
-      x =>
-        String(x.id) ===
-        String(id)
-    );
-
-
-  if(!item){
-
-    toast(
-      "Content not found.",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  document
-    .getElementById("editId")
-    .value =
-    item.id;
-
-
-  document
-    .getElementById("section")
-    .value =
-    item.section;
-
-
-  document
-    .getElementById("type")
-    .value =
-    item.type;
-
-
-  document
-    .getElementById("category")
-    .value =
-    item.category || "";
-
-
-  document
-    .getElementById("title")
-    .value =
-    item.title || "";
-
-
-  document
-    .getElementById("description")
-    .value =
-    item.description || "";
-
-
-  document
-    .getElementById("startTime")
-    .value =
-    toLocalDatetime(
-      item.startTime
-    );
-
-
-  document
-    .getElementById("deadline")
-    .value =
-    toLocalDatetime(
-      item.deadline
-    );
-
-
-  document
-    .getElementById("applicationLink")
-    .value =
-    item.applicationLink || "";
-
-
-  document
-    .getElementById("mediaUrl")
-    .value =
-    item.mediaUrl || "";
-
-
-  document
-    .getElementById("imageUrl")
-    .value =
-    item.imageUrl || "";
-
-
-  document
-    .getElementById("source")
-    .value =
-    item.source || "";
-
-
-  document
-    .getElementById("featured")
-    .value =
-    item.featured || "No";
-
-
-  document
-    .getElementById("published")
-    .checked =
-    String(
-      item.published
-    ).toLowerCase()
-      ===
-    "yes";
-
-
-  document
-    .getElementById("notifySubscribers")
-    .checked =
-    false;
-
-
-  document
-    .getElementById("formTitle")
-    .textContent =
-    "Edit Content";
-
-
-  document
-    .getElementById("saveButton")
-    .textContent =
-    "Update Content";
-
-
-  showPage(
-    "addPage"
-  );
-
+function renderRSS(){
+ const body=document.getElementById("rssBody");
+ const search=(document.getElementById("rssSearch").value||"").toLowerCase();
+ const items=allContent.filter(x=>{
+  const source=String(x.source??x.Source??"").toLowerCase();
+  const type=String(x.type??x.Type??"").toLowerCase();
+  const pub=String(x.published??x.Published??"").toLowerCase();
+  const title=String(x.title??x.Title??"");
+  return (source.includes("rss")||source.includes("feed"))&&type==="news"&&pub!=="yes"&&title.toLowerCase().includes(search);
+ });
+ if(!items.length){body.innerHTML='<tr><td colspan="4" class="empty">No pending RSS stories found.</td></tr>';return;}
+ body.innerHTML=items.map(x=>{
+  const id=x.id??x.ID;
+  return `<tr>
+   <td>${esc(x.source??x.Source)}</td>
+   <td><b>${esc(x.title??x.Title)}</b><br><small>${esc(x.description??x.Description).slice(0,180)}</small></td>
+   <td>${dateText(x.createdAt??x.CreatedAt)}</td>
+   <td><div class="actions">
+    <button class="btn success" onclick="reviewRSS('${esc(id)}','approve')">Approve</button>
+    <button class="btn danger" onclick="reviewRSS('${esc(id)}','reject')">Reject</button>
+    <button class="btn light" onclick="editContent('${esc(id)}')">Edit</button>
+   </div></td>
+  </tr>`;
+ }).join("");
 }
 
-
-/* ======================================================
-   SEND NOTIFICATION
-====================================================== */
-
-async function sendNotification(
-  id
-){
-
-  if(
-    !confirm(
-      "Send an email notification for this content to all active subscribers?"
-    )
-  ){
-    return;
-  }
-
-
-  loading(
-    true,
-    "Sending email notifications..."
-  );
-
-
-  try{
-
-    const result =
-      await postApi({
-
-        action:
-          "sendnotification",
-
-        id:
-          id
-
-      });
-
-
-    if(
-      result.success === false
-    ){
-
-      throw new Error(
-        result.error ||
-        "Notification failed."
-      );
-
-    }
-
-
-    toast(
-      (
-        result.sent || 0
-      ) +
-      " subscriber notification(s) sent.",
-      "success"
-    );
-
-
-  }catch(error){
-
-    toast(
-      error.message,
-      "error"
-    );
-
-  }finally{
-
-    loading(
-      false
-    );
-
-  }
-
+function newContent(){
+ document.getElementById("contentForm").reset();
+ document.getElementById("editId").value="";
+ document.getElementById("published").value="No";
+ document.getElementById("formHeading").textContent="Add New Content";
+ document.getElementById("saveButton").textContent="Save Content";
+ showPage("addPage");
 }
 
-
-/* ======================================================
-   DELETE
-====================================================== */
-
-async function deleteItem(
-  id
-){
-
-  const item =
-    allContent.find(
-      x =>
-        String(x.id) ===
-        String(id)
-    );
-
-
-  if(!item){
-    return;
-  }
-
-
-  if(
-    !confirm(
-      `Delete "${item.title}"?`
-    )
-  ){
-    return;
-  }
-
-
-  loading(
-    true,
-    "Deleting..."
-  );
-
-
-  try{
-
-    const result =
-      await postApi({
-
-        action:
-          "delete",
-
-        id:
-          id
-
-      });
-
-
-    if(
-      result.success === false
-    ){
-
-      throw new Error(
-        result.error ||
-        "Delete failed."
-      );
-
-    }
-
-
-    toast(
-      "Content deleted successfully.",
-      "success"
-    );
-
-
-    await loadAll();
-
-
-  }catch(error){
-
-    toast(
-      error.message,
-      "error"
-    );
-
-  }finally{
-
-    loading(
-      false
-    );
-
-  }
-
+function editContent(id){
+ const x=allContent.find(a=>String(a.id??a.ID)===String(id));
+ if(!x){toast("Content not found.","error");return;}
+ document.getElementById("editId").value=x.id??x.ID;
+ document.getElementById("section").value=x.section??x.Section??"";
+ document.getElementById("type").value=x.type??x.Type??"";
+ document.getElementById("category").value=x.category??x.Category??"";
+ document.getElementById("source").value=x.source??x.Source??"";
+ document.getElementById("title").value=x.title??x.Title??"";
+ document.getElementById("description").value=x.description??x.Description??"";
+ document.getElementById("startTime").value=localDate(x.startTime??x.StartTime);
+ document.getElementById("deadline").value=localDate(x.deadline??x.Deadline);
+ document.getElementById("applicationLink").value=x.applicationLink??x.ApplicationLink??"";
+ document.getElementById("mediaUrl").value=x.mediaUrl??x.MediaURL??"";
+ document.getElementById("imageUrl").value=x.imageUrl??x.ImageURL??"";
+ document.getElementById("featured").value=x.featured??x.Featured??"No";
+ document.getElementById("published").value=x.published??x.Published??"No";
+ document.getElementById("notifySubscribers").value="No";
+ document.getElementById("formHeading").textContent="Edit Content";
+ document.getElementById("saveButton").textContent="Update Content";
+ showPage("addPage");
 }
 
+async function saveContent(event){
+ event.preventDefault();
+ const id=document.getElementById("editId").value;
+ const payload={
+  action:id?"update":"add",id,
+  section:document.getElementById("section").value,
+  type:document.getElementById("type").value,
+  category:document.getElementById("category").value.trim(),
+  source:document.getElementById("source").value.trim(),
+  title:document.getElementById("title").value.trim(),
+  description:document.getElementById("description").value.trim(),
+  startTime:document.getElementById("startTime").value,
+  deadline:document.getElementById("deadline").value,
+  applicationLink:document.getElementById("applicationLink").value.trim(),
+  mediaUrl:document.getElementById("mediaUrl").value.trim(),
+  imageUrl:document.getElementById("imageUrl").value.trim(),
+  featured:document.getElementById("featured").value,
+  published:document.getElementById("published").value,
+  notifySubscribers:document.getElementById("notifySubscribers").value
+ };
+ showLoading(true);
+ try{
+  const result=await apiPost(payload);
+  toast(result.message||"Content saved successfully.","success");
+  newContent();
+  await loadContent();
+  showPage("managePage");
+ }catch(e){toast(e.message,"error");}
+ finally{showLoading(false);}
+}
 
-/* ======================================================
-   SUBSCRIBERS
-====================================================== */
+async function publishContent(id){
+ if(!confirm("Publish this content on the public website?"))return;
+ const x=allContent.find(a=>String(a.id??a.ID)===String(id));
+ if(!x)return;
+ try{
+  showLoading(true);
+  await apiPost({
+   action:"update",id,
+   section:x.section??x.Section,type:x.type??x.Type,
+   category:x.category??x.Category,title:x.title??x.Title,
+   description:x.description??x.Description,
+   startTime:x.startTime??x.StartTime,deadline:x.deadline??x.Deadline,
+   applicationLink:x.applicationLink??x.ApplicationLink,
+   mediaUrl:x.mediaUrl??x.MediaURL,imageUrl:x.imageUrl??x.ImageURL,
+   source:x.source??x.Source,featured:x.featured??x.Featured,
+   published:"Yes",notifySubscribers:"No"
+  });
+  toast("Content published.","success");
+  await loadContent();
+ }catch(e){toast(e.message,"error");}
+ finally{showLoading(false);}
+}
+
+async function deleteContent(id){
+ if(!confirm("Delete this content? It will be moved to the deleted content sheet."))return;
+ try{
+  showLoading(true);
+  await apiPost({action:"delete",id});
+  toast("Content deleted.","success");
+  await loadContent();
+ }catch(e){toast(e.message,"error");}
+ finally{showLoading(false);}
+}
+
+async function sendNotification(id){
+ if(!confirm("Send this content notification to all active subscribers?"))return;
+ try{
+  showLoading(true);
+  const result=await apiPost({action:"sendnotification",id});
+  toast(result.message||"Notification process completed.","success");
+ }catch(e){toast(e.message,"error");}
+ finally{showLoading(false);}
+}
+
+async function reviewRSS(id,decision){
+ const label=decision==="approve"?"approve and publish":"reject";
+ if(!confirm("Are you sure you want to "+label+" this RSS story?"))return;
+ try{
+  showLoading(true);
+  await apiPost({action:"reviewnews",id,decision});
+  toast("RSS review completed.","success");
+  await loadContent();
+ }catch(e){toast(e.message,"error");}
+ finally{showLoading(false);}
+}
 
 async function loadSubscribers(){
-
-  loading(
-    true,
-    "Loading subscribers..."
-  );
-
-
-  try{
-
-    const result =
-      await getApi(
-        "subscribers"
-      );
-
-
-    allSubscribers =
-      result.subscribers ||
-      [];
-
-
-    renderSubscribers();
-
-
-    const stats =
-      await getApi(
-        "subscriberstats"
-      );
-
-
-    document
-      .getElementById(
-        "subscriberTotal"
-      )
-      .textContent =
-      stats.total || 0;
-
-
-    document
-      .getElementById(
-        "subscriberActive"
-      )
-      .textContent =
-      stats.active || 0;
-
-
-    document
-      .getElementById(
-        "subscriberUnsubscribed"
-      )
-      .textContent =
-      stats.unsubscribed || 0;
-
-
-  }catch(error){
-
-    toast(
-      error.message,
-      "error"
-    );
-
-  }finally{
-
-    loading(
-      false
-    );
-
-  }
-
+ showLoading(true);
+ try{
+  const result=await apiGet("subscribers");
+  allSubscribers=Array.isArray(result.subscribers)?result.subscribers:[];
+  renderSubscribers();
+  await loadSubscriberStats();
+ }catch(e){toast(e.message,"error");}
+ finally{showLoading(false);}
 }
-
 
 function renderSubscribers(){
-
-  const body =
-    document.getElementById(
-      "subscriberBody"
-    );
-
-
-  if(
-    !allSubscribers.length
-  ){
-
-    body.innerHTML = `
-      <tr>
-        <td colspan="4">
-          <div class="empty">
-            No subscribers yet.
-          </div>
-        </td>
-      </tr>
-    `;
-
-    return;
-
-  }
-
-
-  body.innerHTML =
-    allSubscribers
-      .map(
-        item => `
-          <tr>
-
-            <td>
-              ${escapeHtml(item.email)}
-            </td>
-
-            <td>
-              ${formatDate(item.subscribedAt)}
-            </td>
-
-            <td>
-              ${
-                String(item.status)
-                  .toUpperCase()
-                  ===
-                "ACTIVE"
-
-                  ? `<span class="badge badge-published">ACTIVE</span>`
-
-                  : `<span class="badge badge-draft">UNSUBSCRIBED</span>`
-              }
-            </td>
-
-            <td>
-              ${formatDate(item.lastNotifiedAt)}
-            </td>
-
-          </tr>
-        `
-      )
-      .join("");
-
+ const body=document.getElementById("subscriberBody");
+ if(!allSubscribers.length){body.innerHTML='<tr><td colspan="4" class="empty">No subscribers found.</td></tr>';return;}
+ body.innerHTML=allSubscribers.map(s=>`
+ <tr><td>${esc(s.email)}</td>
+ <td>${dateText(s.subscribedAt)}</td>
+ <td>${String(s.status).toUpperCase()==="ACTIVE"?'<span class="badge badge-green">ACTIVE</span>':'<span class="badge badge-gray">UNSUBSCRIBED</span>'}</td>
+ <td>${dateText(s.lastNotifiedAt)}</td></tr>`).join("");
 }
 
-
-/* ======================================================
-   FILTERS
-====================================================== */
-
-function clearFilters(){
-
-  document
-    .getElementById("search")
-    .value =
-    "";
-
-
-  document
-    .getElementById("sectionFilter")
-    .value =
-    "";
-
-
-  document
-    .getElementById("typeFilter")
-    .value =
-    "";
-
-
-  document
-    .getElementById("publicationFilter")
-    .value =
-    "";
-
-
-  renderManage();
-
+async function loadSubscriberStats(){
+ try{
+  const result=await apiGet("subscriberstats");
+  document.getElementById("statSubscribers").textContent=result.active||0;
+  document.getElementById("subTotal").textContent=result.total||0;
+  document.getElementById("subActive").textContent=result.active||0;
+  document.getElementById("subInactive").textContent=result.unsubscribed||0;
+ }catch(e){console.warn(e);}
 }
-
-
-/* ======================================================
-   TEST CONNECTION
-====================================================== */
 
 async function testConnection(){
-
-  loading(
-    true,
-    "Testing connection..."
-  );
-
-
-  try{
-
-    const result =
-      await getApi(
-        "ping"
-      );
-
-
-    if(
-      !result.success
-    ){
-
-      throw new Error(
-        result.error ||
-        "Connection failed."
-      );
-
-    }
-
-
-    const box =
-      document.getElementById(
-        "connection"
-      );
-
-
-    box.className =
-      "connection ok";
-
-
-    box.innerHTML =
-      `
-      <strong>Connected successfully.</strong>
-      <div class="mono">
-        ${escapeHtml(
-          result.spreadsheetName
-        )}
-      </div>
-      `;
-
-
-    toast(
-      "Google Apps Script connection is working.",
-      "success"
-    );
-
-
-  }catch(error){
-
-    const box =
-      document.getElementById(
-        "connection"
-      );
-
-
-    box.className =
-      "connection bad";
-
-
-    box.textContent =
-      "Connection failed: " +
-      error.message;
-
-
-    toast(
-      error.message,
-      "error"
-    );
-
-  }finally{
-
-    loading(
-      false
-    );
-
-  }
-
+ const el=document.getElementById("connectionStatus");
+ el.textContent="Testing connection...";
+ try{
+  const result=await apiGet("ping");
+  el.textContent=result.success?"Google Apps Script is online.":"Connection failed.";
+  el.style.background="#dcfce7";
+  el.style.color="#166534";
+  toast("Connection successful.","success");
+ }catch(e){
+  el.textContent="Connection failed: "+e.message;
+  el.style.background="#fee2e2";
+  el.style.color="#991b1b";
+  toast(e.message,"error");
+ }
 }
-
-
-/* ======================================================
-   STATUS
-====================================================== */
-
-function statusBadge(
-  status
-){
-
-  let cls =
-    "badge-open";
-
-
-  if(
-    status === "CLOSED"
-  ){
-    cls =
-      "badge-closed";
-  }
-
-
-  if(
-    status === "NOT STARTED"
-  ){
-    cls =
-      "badge-not";
-  }
-
-
-  return `
-    <span class="badge ${cls}">
-      ${escapeHtml(status || "OPEN NOW")}
-    </span>
-  `;
-
-}
-
-
-/* ======================================================
-   DATE
-====================================================== */
-
-function formatDate(
-  value
-){
-
-  if(!value){
-    return "—";
-  }
-
-
-  const date =
-    new Date(
-      value
-    );
-
-
-  if(
-    isNaN(
-      date.getTime()
-    )
-  ){
-    return "—";
-  }
-
-
-  return date.toLocaleString(
-    undefined,
-    {
-      year:"numeric",
-      month:"short",
-      day:"2-digit",
-      hour:"2-digit",
-      minute:"2-digit"
-    }
-  );
-
-}
-
-
-function toLocalDatetime(
-  value
-){
-
-  if(!value){
-    return "";
-  }
-
-
-  const date =
-    new Date(
-      value
-    );
-
-
-  if(
-    isNaN(
-      date.getTime()
-    )
-  ){
-    return "";
-  }
-
-
-  const pad =
-    n =>
-      String(n)
-        .padStart(
-          2,
-          "0"
-        );
-
-
-  return (
-    date.getFullYear() +
-    "-" +
-    pad(
-      date.getMonth()+1
-    ) +
-    "-" +
-    pad(
-      date.getDate()
-    ) +
-    "T" +
-    pad(
-      date.getHours()
-    ) +
-    ":" +
-    pad(
-      date.getMinutes()
-    )
-  );
-
-}
-
-
-/* ======================================================
-   LOADING
-====================================================== */
-
-function loading(
-  show,
-  message = "Loading..."
-){
-
-  const box =
-    document.getElementById(
-      "loading"
-    );
-
-
-  box
-    .querySelector(
-      ".loading-card"
-    )
-    .textContent =
-    message;
-
-
-  box.style.display =
-    show
-      ? "flex"
-      : "none";
-
-}
-
-
-/* ======================================================
-   TOAST
-====================================================== */
-
-let toastTimer;
-
-
-function toast(
-  message,
-  type=""
-){
-
-  const box =
-    document.getElementById(
-      "toast"
-    );
-
-
-  clearTimeout(
-    toastTimer
-  );
-
-
-  box.className =
-    type;
-
-
-  box.textContent =
-    message;
-
-
-  box.style.display =
-    "block";
-
-
-  toastTimer =
-    setTimeout(
-      () => {
-        box.style.display =
-          "none";
-      },
-      4500
-    );
-
-}
-
-
-/* ======================================================
-   SAFE HTML
-====================================================== */
-
-function escapeHtml(
-  value
-){
-
-  return String(
-    value ?? ""
-  )
-  .replace(
-    /&/g,
-    "&amp;"
-  )
-  .replace(
-    /</g,
-    "&lt;"
-  )
-  .replace(
-    />/g,
-    "&gt;"
-  )
-  .replace(
-    /"/g,
-    "&quot;"
-  )
-  .replace(
-    /'/g,
-    "&#039;"
-  );
-
-}
-
-
-function escapeAttr(
-  value
-){
-  return escapeHtml(
-    value
-  );
-}
-
 </script>
-
 </body>
 </html>
