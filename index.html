@@ -5018,32 +5018,28 @@ str
 
 }
 
-</script>
-
-
-<script>
-const STV_API_URL = "https://script.google.com/macros/s/AKfycbwC9wpbjVPqUoa4c39jn4daPxofqw4RrCQi4bMcOh1Isq2b6XONQnovJeNtxV1E2Wi1/exec";
+function getStvLanguage() {
+  return localStorage.getItem("stv_language") || "rw";
+}
 
 function setStvLanguage(language) {
   localStorage.setItem("stv_language", language);
 
-  const selector = document.getElementById("stvLanguageSelector");
-  if (selector) selector.value = language;
-
-  if (typeof loadContent === "function") {
-    loadContent();
-  } else {
-    location.reload();
-  }
+  // Reload homepage to fetch articles in selected language.
+  window.location.reload();
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  const savedLanguage = localStorage.getItem("stv_language") || "rw";
+document.addEventListener("DOMContentLoaded", function() {
   const selector = document.getElementById("stvLanguageSelector");
 
-  if (selector) selector.value = savedLanguage;
+  if (selector) {
+    selector.value = getStvLanguage();
+  }
 });
+
 </script>
+
+
 
 
 </body>
