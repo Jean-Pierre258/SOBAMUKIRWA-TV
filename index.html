@@ -772,58 +772,6 @@ button{
 
 
 <body>
-
-<!-- HEADER -->
-
-<header class="header">
-
-
-<button
-class="mobile-menu"
-onclick="toggleMobileMenu()">
-☰
-</button>
-
-
-<div class="logo">
-
-SOBANUKIRWA TV
-
-<small>
-AMAKURU • UBUREZI • UBIZIMA • IMYIDAGADURO
-</small>
-
-</div>
-
-
-<div class="search">
-
-<input
-id="searchInput"
-placeholder="Shakisha inkuru, video cyangwa topic..."
-oninput="renderAll()">
-
-</div>
-
-
-<div class="right">
-
-<span
-onclick="showSubscribe()"
-title="Get notifications">
-🔔
-</span>
-
-<span
-onclick="scrollToFooter()"
-title="Website">
-🌐
-</span>
-
-<div class="profile">
-S
-</div>
-
 <div class="stv-language-box">
 
   <style>
@@ -881,7 +829,7 @@ S
     }
   </style>
 
-  <label for="stvLanguageSelector">🌐 Ururimi / Language:</label>
+  <label for="stvLanguageSelector">🌐 Language:</label>
 
   <select id="stvLanguageSelector" onchange="setStvLanguage(this.value)">
     <option value="rw">🇷🇼 Kinyarwanda</option>
@@ -897,6 +845,56 @@ S
 
 </div>
 
+<!-- HEADER -->
+
+<header class="header">
+
+
+<button
+class="mobile-menu"
+onclick="toggleMobileMenu()">
+☰
+</button>
+
+
+<div class="logo">
+
+SOBANUKIRWA TV
+
+<small>
+AMAKURU • UBUREZI • UBIZIMA • IMYIDAGADURO
+</small>
+
+</div>
+
+
+<div class="search">
+
+<input
+id="searchInput"
+placeholder="Shakisha inkuru, video cyangwa topic..."
+oninput="renderAll()">
+
+</div>
+
+
+<div class="right">
+
+<span
+onclick="showSubscribe()"
+title="Get notifications">
+🔔
+</span>
+
+<span
+onclick="scrollToFooter()"
+title="Website">
+🌐
+</span>
+
+<div class="profile">
+S
+</div>
  
 </div>
 
