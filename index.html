@@ -1765,18 +1765,43 @@ let currentSection = "Home";
  START
 ************************************************/
 
+
 document.addEventListener(
-"DOMContentLoaded",
-function(){
-
- updateClock();
-
- loadContent();
-
- scheduleSubscriptionPopup();
-
-}
+  "DOMContentLoaded",
+  function() {
+    updateClock();
+    loadContent();
+    startAutomaticRefresh();
+    scheduleSubscriptionPopup();
+  }
 );
+
+/* AUTO REFRESH EVERY 15 MINUTES */
+let automaticRefreshTimer = null;
+let automaticRefreshRunning = false;
+
+function startAutomaticRefresh() {
+  if (automaticRefreshTimer) {
+    clearInterval(automaticRefreshTimer);
+  }
+
+  automaticRefreshTimer = setInterval(async function() {
+    if (document.visibilityState !== "visible") return;
+    if (automaticRefreshRunning) return;
+
+    automaticRefreshRunning = true;
+
+    try {
+      await loadContent();
+      console.log("SOBANUKIRWA TV content refreshed:", new Date());
+    } catch (error) {
+      console.error("Automatic refresh failed:", error);
+    } finally {
+      automaticRefreshRunning = false;
+    }
+
+  }, 15 * 60 * 1000);
+}
 
 
 /************************************************
