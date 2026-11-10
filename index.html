@@ -5021,6 +5021,30 @@ str
 </script>
 
 
+<script>
+const STV_API_URL = "SHYIRAMO_APPS_SCRIPT_WEB_APP_URL";
+
+function setStvLanguage(language) {
+  localStorage.setItem("stv_language", language);
+
+  const selector = document.getElementById("stvLanguageSelector");
+  if (selector) selector.value = language;
+
+  if (typeof loadContent === "function") {
+    loadContent();
+  } else {
+    location.reload();
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const savedLanguage = localStorage.getItem("stv_language") || "rw";
+  const selector = document.getElementById("stvLanguageSelector");
+
+  if (selector) selector.value = savedLanguage;
+});
+</script>
+
 
 </body>
 </html>
