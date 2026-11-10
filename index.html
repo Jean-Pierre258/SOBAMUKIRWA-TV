@@ -824,6 +824,80 @@ title="Website">
 S
 </div>
 
+<div class="stv-language-box">
+
+  <style>
+    .stv-language-box {
+      position: fixed;
+      top: 12px;
+      right: 15px;
+      z-index: 99999;
+
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+
+      background: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+      font-family: Arial, sans-serif;
+    }
+
+    .stv-language-box label {
+      font-weight: bold;
+      color: #123456;
+      font-size: 13px;
+    }
+
+    .stv-language-box select {
+      padding: 8px;
+      border: 1px solid #0866b3;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      background: #f5f9ff;
+      color: #123456;
+    }
+
+    @media(max-width:600px) {
+      .stv-language-box {
+        top: 8px;
+        right: 8px;
+        padding: 5px 7px;
+        gap: 5px;
+      }
+
+      .stv-language-box label {
+        font-size: 11px;
+      }
+
+      .stv-language-box select {
+        max-width: 135px;
+        padding: 6px;
+        font-size: 11px;
+      }
+    }
+  </style>
+
+  <label for="stvLanguageSelector">🌐 Ururimi / Language:</label>
+
+  <select id="stvLanguageSelector" onchange="setStvLanguage(this.value)">
+    <option value="rw">🇷🇼 Kinyarwanda</option>
+    <option value="en">🇬🇧 English</option>
+    <option value="fr">🇫🇷 Français</option>
+    <option value="sw">🇹🇿 Kiswahili</option>
+    <option value="pt">🇵🇹 Português</option>
+    <option value="es">🇪🇸 Español</option>
+    <option value="ar">🇸🇦 العربية</option>
+    <option value="de">🇩🇪 Deutsch</option>
+    <option value="zh-CN">🇨🇳 中文</option>
+  </select>
+
+</div>
+
+ 
 </div>
 
 </header>
@@ -1742,79 +1816,6 @@ Subscribe
 
 
 <script>
-
-<div class="stv-language-box">
-
-  <style>
-    .stv-language-box {
-      position: fixed;
-      top: 12px;
-      right: 15px;
-      z-index: 99999;
-
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-
-      background: #ffffff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.15);
-      font-family: Arial, sans-serif;
-    }
-
-    .stv-language-box label {
-      font-weight: bold;
-      color: #123456;
-      font-size: 13px;
-    }
-
-    .stv-language-box select {
-      padding: 8px;
-      border: 1px solid #0866b3;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-      background: #f5f9ff;
-      color: #123456;
-    }
-
-    @media(max-width:600px) {
-      .stv-language-box {
-        top: 8px;
-        right: 8px;
-        padding: 5px 7px;
-        gap: 5px;
-      }
-
-      .stv-language-box label {
-        font-size: 11px;
-      }
-
-      .stv-language-box select {
-        max-width: 135px;
-        padding: 6px;
-        font-size: 11px;
-      }
-    }
-  </style>
-
-  <label for="stvLanguageSelector">🌐 Ururimi / Language:</label>
-
-  <select id="stvLanguageSelector" onchange="setStvLanguage(this.value)">
-    <option value="rw">🇷🇼 Kinyarwanda</option>
-    <option value="en">🇬🇧 English</option>
-    <option value="fr">🇫🇷 Français</option>
-    <option value="sw">🇹🇿 Kiswahili</option>
-    <option value="pt">🇵🇹 Português</option>
-    <option value="es">🇪🇸 Español</option>
-    <option value="ar">🇸🇦 العربية</option>
-    <option value="de">🇩🇪 Deutsch</option>
-    <option value="zh-CN">🇨🇳 中文</option>
-  </select>
-
-</div>
 
 /************************************************
  API
